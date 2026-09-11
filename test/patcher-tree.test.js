@@ -145,3 +145,66 @@ test('a tree with no gameinfo at all is still refused, and says which file', (t)
     'the file it cannot do without is named in the error',
   );
 });
+
+/*
+ * The signature list belongs to the build of Dota that is installed right now.
+ *
+ * Valve ships a new dota.signatures with every build: the hash of every DLL it checks, and a
+ * DIGEST over the lot. This app appends one line to it. Rebuilding that file from a copy taken
+ * weeks ago puts an old build's hashes back, the client compares its real DLLs against them and
+ * refuses matchmaking - while the app reports patched, signed and vanilla, because nothing here
+ * ever looked at the rest of the list.
+ *
+ * Measured on a real installation on 2026-09-11: the backup was from 29 July and named
+ * dota2.exe~SHA1:0A281119…, the game's own list said 72ED2906…, and the next apply() would have
+ * written the July one back over it.
+ */
+const listFor = (build, branchBuf) => {
+  const h = patcher.fileHashes(branchBuf);
+  const dll = (name, seed) => `...\\${name}~SHA1:${seed.repeat(40).slice(0, 40)};CRC:${seed.repeat(8).slice(0, 8)}`;
+  return [
+    `...\\..\\..\\dota\\gameinfo_branchspecific.gi~SHA1:${h.sha1};CRC:${h.crc}`,
+    dll('client.dll', build), dll('dota2.exe', build),
+    `DIGEST:${build.repeat(64).slice(0, 64)}`,
+  ].join('\r\n') + '\r\n';
+};
+const exeHash = (text) => (text.match(/dota2\.exe~SHA1:(\w{40})/) || [])[1];
+
+test('the patch is signed into the list the installed build shipped, not an older one', (t) => {
+  const { game, backupDir, sig } = tree(t, true);
+  const vanilla = fs.readFileSync(patcher.paths(game).branch);
+  fs.writeFileSync(sig, Buffer.from(listFor('A', vanilla), 'latin1'));
+
+  patcher.apply({ gamePath: game, folder: FOLDER, backupDir });
+  assert.equal(exeHash(fs.readFileSync(sig, 'latin1')), 'A'.repeat(40), 'build A to start with');
+
+  /* Dota updates to build B while our line is still in the file. The app's copy of the list
+     stays at A, because a file that still carries our line is not taken as new ground truth. */
+  const patchedBranch = fs.readFileSync(patcher.paths(game).branch);
+  fs.writeFileSync(sig, Buffer.from(
+    listFor('B', vanilla).replace(/\s+$/, '') + '\r\n' + patcher.signatureLine(patchedBranch) + '\r\n', 'latin1',
+  ));
+
+  patcher.apply({ gamePath: game, folder: FOLDER, backupDir });
+
+  const after = fs.readFileSync(sig, 'latin1');
+  assert.equal(exeHash(after), 'B'.repeat(40),
+    'the list still belongs to the build that is installed, not to the one that was');
+  assert.ok(after.includes(patcher.signatureLine(fs.readFileSync(patcher.paths(game).branch))),
+    'and our own line is in it exactly once');
+  assert.equal(after.split('gameinfo_branchspecific').length - 1, 2, 'Valve\'s entry and ours, no more');
+});
+
+test('signing twice does not pile our line up in the list', (t) => {
+  const { game, backupDir, sig } = tree(t, true);
+  const vanilla = fs.readFileSync(patcher.paths(game).branch);
+  fs.writeFileSync(sig, Buffer.from(listFor('A', vanilla), 'latin1'));
+
+  patcher.apply({ gamePath: game, folder: FOLDER, backupDir });
+  patcher.apply({ gamePath: game, folder: FOLDER, backupDir });
+  patcher.apply({ gamePath: game, folder: FOLDER, backupDir });
+
+  const after = fs.readFileSync(sig, 'latin1');
+  assert.equal(after.split('gameinfo_branchspecific').length - 1, 2, 'one Valve entry, one of ours');
+  assert.equal(exeHash(after), 'A'.repeat(40), "and Valve's own lines are untouched");
+});

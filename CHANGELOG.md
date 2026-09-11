@@ -2,6 +2,28 @@
 
 What changed in each release. The app updates itself, so you get all of this without reinstalling.
 
+## 2.6.10
+
+### Matchmaking works again after a Dota update
+
+With mods on, a Dota update could leave the game refusing to queue. Nothing in the app looked
+wrong: it reported the patch on, signed and in order.
+
+Dota ships a list of hashes for the files it checks, and it ships a new one with every build.
+This app adds one line to that list for the file it edits. What it got wrong was where it read
+the rest of the list from: a copy it had saved the first time you turned mods on, which on one
+machine was six weeks and a dozen Dota patches old. So after an update it put that old list back,
+the client compared its own current binaries against hashes from weeks earlier, and refused to
+queue.
+
+It now writes the list the installed build shipped, plus its one line. The saved copy is not read
+any more.
+
+**If queueing is still refused after this update:** the old list may still be sitting in your game
+folder, and nothing this app does can know what the right one was. Steam, Dota 2, Properties,
+Installed Files, Verify integrity of game files puts it back, and takes a minute. The next Dota
+patch replaces it too.
+
 ## 2.6.9
 
 ### Safe mode can be switched off on Linux

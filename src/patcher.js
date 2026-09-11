@@ -348,7 +348,25 @@ function apply({ gamePath, folder, backupDir }) {
   writeAtomic(p.branch, branchBuf);
 
   if (hasList) {
-    const sigOrig = stripSignatures(fs.readFileSync(path.join(backupDir, path.basename(p.signatures) + '.orig'), 'latin1'));
+    /* From the list the game has right now, never from the backup.
+     *
+     * Valve ships a new dota.signatures with every build: the hash of every DLL the client
+     * checks, and a DIGEST over the lot. Ours is one line appended after that DIGEST, and
+     * stripSignatures takes off exactly that much - so the current file minus our line is, by
+     * construction, the list this build shipped.
+     *
+     * Building it from the backup instead put an older build's hashes back. On a real
+     * installation on 2026-09-11 that backup was from 29 July: it named
+     * dota2.exe~SHA1:0A281119 where the game's own list said 72ED2906, so the client compared
+     * its real binaries against six-week-old hashes and refused matchmaking. The app reported
+     * patched, signed and vanilla throughout, because nothing here ever looked at the rest of
+     * the list - only at whether our own line was in it.
+     *
+     * The backup is still written, and revert() still falls back to it, but nothing builds
+     * from it any more: a copy of a file that changes every patch cannot be the ground truth
+     * for the patch after it.
+     */
+    const sigOrig = stripSignatures(fs.readFileSync(p.signatures, 'latin1'));
     const line = signatureLine(branchBuf);
     writeAtomic(p.signatures, Buffer.from(sigOrig.replace(/\s+$/, '') + '\r\n' + line + '\r\n', 'latin1'));
   }
@@ -369,9 +387,12 @@ function apply({ gamePath, folder, backupDir }) {
  */
 function revert({ gamePath, folder, backupDir }) {
   const p = paths(gamePath);
+  /* Same reasoning as apply(): what Valve shipped is the file the game has now, minus our line.
+     The backup is the fallback for the one case the live file cannot answer - it is not there. */
   const sigSrc = path.join(backupDir, path.basename(p.signatures) + '.orig');
-  if (fs.existsSync(sigSrc)) {
-    writeAtomic(p.signatures, Buffer.from(stripSignatures(fs.readFileSync(sigSrc, 'latin1')), 'latin1'));
+  const sigNow = fs.existsSync(p.signatures) ? p.signatures : (fs.existsSync(sigSrc) ? sigSrc : null);
+  if (sigNow) {
+    writeAtomic(p.signatures, Buffer.from(stripSignatures(fs.readFileSync(sigNow, 'latin1')), 'latin1'));
   }
   const branchSrc = path.join(backupDir, path.basename(p.branch) + '.orig');
   if (fs.existsSync(branchSrc)) {
