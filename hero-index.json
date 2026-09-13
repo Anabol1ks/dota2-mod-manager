@@ -1,6 +1,6 @@
 {
   "heroes": 147,
-  "mods": 1316,
+  "mods": 1317,
   "byHero": {
     "abaddon": {
       "name": "Abaddon",
@@ -162,6 +162,7 @@
         {"name":"Brewmaster Aghanim","categoryId":"heroes","styleLabel":null,"slots":["back","misc","arms","shoulder","weapon"]},
         {"name":"Brewmaster Jousting Panda","categoryId":"heroes","styleLabel":null,"slots":["back","misc","arms","shoulder","weapon","head"]},
         {"name":"Brewmaster Military Saint","categoryId":"heroes","styleLabel":null,"slots":["back","misc","arms","shoulder","weapon","head"]},
+        {"name":"Brewmaster Wilding Tiger","categoryId":"heroes","styleLabel":null,"slots":["back","misc","arms","head","shoulder","weapon"]},
         {"name":"Green Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Nemestice Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Red Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
