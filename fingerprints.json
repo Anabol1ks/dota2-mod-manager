@@ -1,5 +1,5 @@
 {
-  "count": 1309,
+  "count": 1311,
   "mods": {
     "0000ecb27ee7db1063087b627a7cdb94651a4655": [{"name":"Windranger Autumn Arcana","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "002fe0eee5ace922f363486ddc1f979d8f2c232e": [{"name":"Gold River","categoryId":"river","styleLabel":null,"type":"vpk"}],
@@ -1089,6 +1089,7 @@
     "db388f67867389e5f0eeab35b950c7cb6bea958e": [{"name":"Ursa Swift Claw","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "db5eabdbedf2de959eac27d76382c26ce48608df": [{"name":"Tusk Odobenus Footman","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "db63099208f902504f33c019c5d922b95c076b00": [{"name":"Centaur Infernal Cavalcade","categoryId":"hero-items","styleLabel":"Golden","type":"vpk"}],
+    "dbeaa3bde3cd15f874c84bf9a754782e7628cc2e": [{"name":"Juggernaut Fireborn Assault","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "dc1e3f25ae249d9722f1e3485651f815a3813c41": [{"name":"Gyrocopter Kongou","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "dc30a378af4bca454926d16c1089ca1d89afba28": [{"name":"Axe Gawr Gura","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "dc538c913ff7c1d0ab691ca36b690438828233e5": [{"name":"Ogre Magi Amakusa Shiro","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
@@ -1308,6 +1309,7 @@
     "fee409cdd00cb7ff9c87cfe592ec3430450faf22": [{"name":"Faceless Void Battlefury","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "ff070d073c9e58a87ad45d790ac4bf15e568d5c2": [{"name":"Curious Snaptrap","categoryId":"wards","styleLabel":null,"type":"vpk"}],
     "ff752c85e3504906fc95e6194a7b76653a1a8aab": [{"name":"Queen of Pain Deny","categoryId":"creep-deny","styleLabel":null,"type":"vpk"}],
+    "ffa30d8f05dd5ea034162b28c6183476744272b9": [{"name":"Void Hud","categoryId":"huds","styleLabel":null,"type":"vpk"}],
     "ffd33ba9b45b0dae57e863cdf9dc43a881a5528c": [{"name":"Blossom Rem","categoryId":"backgrounds","styleLabel":null,"type":"vpk"}],
     "fff4b08164276d99f04ca0b72c7d0d41aecf1e40": [{"name":"Legion Commander Automaton","categoryId":"heroes","styleLabel":null,"type":"vpk"}]
   },
