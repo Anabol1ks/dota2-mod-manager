@@ -365,8 +365,13 @@ test('every file the app expects from our own mirror is a file the site actually
       `net.js does not actually route ${remotePath} to our mirror`,
     );
     // and the site puts it there
+    //
+    // The name used to go in as name.replace(/\./g, '\.'), and in a string '\.' is just '.':
+    // every dot was replaced with itself and stayed a regex wildcard, so "mods.json" also
+    // matched "modsXjson". CodeQL flagged it twice; the check was weaker than it read.
+    const literal = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     assert.ok(
-      new RegExp(`'${name.replace(/\./g, '\.')}'`).test(mirrorTool),
+      new RegExp(`'${literal}'`).test(mirrorTool),
       `site/tools/mirror.mjs never copies ${name}, so our mirror would answer with the 404 page`,
     );
   }

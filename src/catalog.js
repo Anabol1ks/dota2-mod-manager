@@ -137,9 +137,12 @@ class Catalog {
   async refresh() {
     for (const name of DATA_FILES) {
       // through the mirrors: this is the one fetch that has to work before the app can show
-      // anything at all, and raw.githubusercontent is not reachable everywhere
-      // through the mirrors: this is the one fetch that has to work before the app can show
-      // anything at all, and raw.githubusercontent is not reachable everywhere
+      // anything at all, and raw.githubusercontent is not reachable everywhere.
+      //
+      // CodeQL reads this as network data written to a file, and so it is. What reaches the
+      // disk has already passed fetchSigned: an ed25519 signature against the key pinned in
+      // catalog-signature.js, then JSON.parse. The name is one of DATA_FILES, a constant, so
+      // nothing that arrives over the network decides where it is written.
       fs.writeFileSync(this.cachePath(name), await this.fetchSigned(name));
     }
 
