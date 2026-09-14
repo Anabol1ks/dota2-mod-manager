@@ -228,6 +228,7 @@
     {
       "id": "hero-items",
       "mods": [
+        {"name":"Chen Green Infernal","styleLabel":null,"image":{"src":"/mods/chen-green-infernal.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1789398422},
         {
           "name": "Keeper of the Light Wings of Daybreak",
           "styleLabel": null,
@@ -602,8 +603,7 @@
         {"name":"Disruptor Tractor","styleLabel":null,"image":{"src":"/mods/disruptor-tractor.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892},
         {"name":"Earthshaker Carrot","styleLabel":null,"image":{"src":"/mods/earthshaker-carrot.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892},
         {"name":"Sniper Dragon Lore","styleLabel":null,"image":{"src":"/mods/sniper-dragon-lore.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892},
-        {"name":"Tiny Banana","styleLabel":null,"image":{"src":"/mods/tiny-banana.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892},
-        {"name":"Chen Green Infernal","styleLabel":null,"image":{"src":"/mods/chen-green-infernal.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":null}
+        {"name":"Tiny Banana","styleLabel":null,"image":{"src":"/mods/tiny-banana.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892}
       ]
     },
     {
