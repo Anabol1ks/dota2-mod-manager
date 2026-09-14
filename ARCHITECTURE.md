@@ -350,4 +350,4 @@ that location is not writable.
 | `tools/sandbox.js` | The throwaway game tree |
 | `tools/r2-sync.mjs`, `tools/r2-release.mjs`, `tools/r2-client.js` | The archive mirror, the update mirror, and the signing they share |
 | `tools/gen-fingerprints.js` | Regenerating the published fingerprint map |
-| `tools/seo-report.mjs` | The weekly search report posted to an issue |
+| `tools/seo-report.mjs`, `tools/seo-state.mjs` | The weekly reach and search report posted to [issue #3](https://github.com/TheFleece/dota2-mod-manager/issues/3), and the numbers it carries from one week to the next inside the comment |
