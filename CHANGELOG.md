@@ -24,6 +24,16 @@ folder, and nothing this app does can know what the right one was. Steam, Dota 2
 Installed Files, Verify integrity of game files puts it back, and takes a minute. The next Dota
 patch replaces it too.
 
+### A preset brings back the mods it names
+
+Applying a preset whose mods were no longer installed switched every other mod off, switched on
+only the members still there, and said "Preset applied". The card above the button already said
+how many of its mods were missing; the button just never did anything about it.
+
+Now the mods the catalog still has are installed first, and then the preset is applied. A mod of
+your own that is not on this computer cannot be fetched from anywhere, so the app names it instead
+of leaving it out without a word.
+
 ## 2.6.9
 
 ### Safe mode can be switched off on Linux
