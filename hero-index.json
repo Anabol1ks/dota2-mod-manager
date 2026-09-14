@@ -1,6 +1,6 @@
 {
   "heroes": 147,
-  "mods": 1317,
+  "mods": 1319,
   "byHero": {
     "abaddon": {
       "name": "Abaddon",
@@ -225,6 +225,7 @@
       "mods": [
         {"name":"Aghanim Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Blue Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
+        {"name":"Chen Green Infernal","categoryId":"hero-items","styleLabel":null,"slots":["weapon"]},
         {"name":"Chen Infernal Psychic","categoryId":"heroes","styleLabel":null,"slots":["arms","head","mount","shoulder","weapon"]},
         {"name":"Chen Lelouch","categoryId":"heroes","styleLabel":null,"slots":["arms","misc","head","mount","shoulder","weapon"]},
         {"name":"Chen Seed of Strife","categoryId":"heroes","styleLabel":null,"slots":["arms","head","mount","shoulder","weapon"]},
@@ -1068,6 +1069,7 @@
         {"name":"Red Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Shadow Fiend King of Vipers","categoryId":"heroes","styleLabel":"Style II","slots":["arms","head","shoulder"]},
         {"name":"Shadow Fiend King of Vipers","categoryId":"heroes","styleLabel":"Style III","slots":["arms","head","shoulder"]},
+        {"name":"Shadow Fiend Lightning Soul","categoryId":"heroes","styleLabel":null,"slots":["head","wings","shoulder","arms"]},
         {"name":"Shadow Fiend White","categoryId":"heroes","styleLabel":null,"slots":["shoulder","head","arms","misc"]},
         {"name":"TI10 Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"TI12 Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},

@@ -1,5 +1,5 @@
 {
-  "count": 1312,
+  "count": 1315,
   "mods": {
     "0000ecb27ee7db1063087b627a7cdb94651a4655": [{"name":"Windranger Autumn Arcana","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "002fe0eee5ace922f363486ddc1f979d8f2c232e": [{"name":"Gold River","categoryId":"river","styleLabel":null,"type":"vpk"}],
@@ -98,6 +98,7 @@
     "109b442316dea2b94b9a4836eac9287e85da4f72": [{"name":"Centaur Infernal Menace","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "10a6698af454ee765046775753da7b4c28852402": [{"name":"Malenia","categoryId":"backgrounds","styleLabel":null,"type":"vpk"}],
     "10cdcdaf40b00af0cc1ee085da7211b2a130c110": [{"name":"Sasuke Invoker","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
+    "10ef9cfc9eb33d5e7baf6e57c8bd752ac18d455d": [{"name":"Gotohouse Hud","categoryId":"huds","styleLabel":null,"type":"vpk"}],
     "10f807db0be9fedb665b3927888ae3604622fca8": [{"name":"Chen Seed of Strife","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "110e6998ee90998c4eb623c507d23d6b40e08495": [{"name":"Bare Natures Prophet","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "111d62deeb1f7fb1c481bab9d35ea881cab66b7e": [{"name":"Jakiro Kiyohime","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
@@ -666,6 +667,7 @@
     "84ace77cc846be8e7f9e082febfb0bf7d5330f6a": [{"name":"TI10 Blink Dagger","categoryId":"item-effects","styleLabel":null,"type":"vpk"}],
     "84c4227342d57b536b27623aa51564e54c08bfb7": [{"name":"Luna Moonfall","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "85459493bd0fb361a647d1a7df47674ae2fe6a97": [{"name":"Flash Step Blink","categoryId":"sounds","styleLabel":null,"type":"vpk"}],
+    "85586a44ee31cbd004931134bb98ea7d27a2f595": [{"name":"Shadow Fiend Lightning Soul","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "85b3e92823e03f59d6a353b3a6f748c74309e7c3": [{"name":"Crystal Maiden Ice Blossom","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "85d0960fb1c73305627fd7cde50c377fe532eaa4": [{"name":"Anti-Mage Prime","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "85eca7ec4d0188d4e0841794d5389bdc4b296843": [{"name":"Purple Legion Commander","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
@@ -863,6 +865,7 @@
     "ac1a3cb4c3912a3f05faece5c7ecf295c5b21c6d": [{"name":"Battle Pass 2022 Emblem","categoryId":"emblems","styleLabel":null,"type":"vpk"}],
     "ac38414c2da65726f3fb0bb97bfa8a948fcf2753": [{"name":"Centaur Otday","categoryId":"hero-sounds","styleLabel":null,"type":"vpk"}],
     "ac4ef5acde2dabd9fa32863ac0755823b65403e5": [{"name":"Ogre Magi Freeboot Fortunes","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
+    "acdbe7c2e1c9733f5c0e24cd020b9f04a5ae8ba8": [{"name":"Chen Green Infernal","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "ad02467e7e05db3fc1a3a4f963d837055db96288": [{"name":"Simple Dark Terrain Minify","categoryId":"terrains","styleLabel":"Green","type":"vpk"}],
     "ad40626c7a93234647906b7af19cf1a98622fe22": [{"name":"Orange River","categoryId":"river","styleLabel":null,"type":"vpk"}],
     "ad5a1e0901aeafa17278ce38014b5563a776c31c": [{"name":"TI9 Fountain Regen","categoryId":"item-effects","styleLabel":null,"type":"vpk"}],

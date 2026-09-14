@@ -602,7 +602,8 @@
         {"name":"Disruptor Tractor","styleLabel":null,"image":{"src":"/mods/disruptor-tractor.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892},
         {"name":"Earthshaker Carrot","styleLabel":null,"image":{"src":"/mods/earthshaker-carrot.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892},
         {"name":"Sniper Dragon Lore","styleLabel":null,"image":{"src":"/mods/sniper-dragon-lore.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892},
-        {"name":"Tiny Banana","styleLabel":null,"image":{"src":"/mods/tiny-banana.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892}
+        {"name":"Tiny Banana","styleLabel":null,"image":{"src":"/mods/tiny-banana.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1768637892},
+        {"name":"Chen Green Infernal","styleLabel":null,"image":{"src":"/mods/chen-green-infernal.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":null}
       ]
     },
     {
@@ -1395,6 +1396,7 @@
     {
       "id": "huds",
       "mods": [
+        {"name":"Gotohouse Hud","styleLabel":null,"image":{"src":"/mods/gotohouse-hud.webp","width":854,"height":480},"author":"Morecursed","authorUrl":null,"date":1789396660},
         {"name":"Void Hud","styleLabel":null,"image":{"src":"/mods/void-hud.webp","width":854,"height":480},"author":"lssqqqq","authorUrl":"https://t.me/lssqqqq","date":1789278465},
         {"name":"Total Black Hud","styleLabel":null,"image":{"src":"/mods/total-black-hud.webp","width":854,"height":480},"author":"Morecursed","authorUrl":null,"date":1789234312},
         {"name":"Ken Kaneki Hud","styleLabel":null,"image":{"src":"/mods/ken-kaneki-hud.webp","width":854,"height":480},"author":"YuyaKizami","authorUrl":"https://t.me/YuyaKizami","date":1788726574},
