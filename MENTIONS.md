@@ -19,11 +19,22 @@ Every link below was opened on **2026-09-15**. Counts are as of that day. For ho
 | [The catalog's list of tool versions](https://github.com/h6rd/Dota2PornFxWeb/blob/main/assets/data/tool-versions.json) | Tracks this project's releases with a sha256 for every release file, next to h6rd's own tools (2.6.9 on the day of checking). The site's `script.js` puts this repository on the same list of tools it checks hashes for |
 | [D2PFX wiki, installing mods](https://d2pfxwiki.pages.dev/en/install) ([Russian](https://d2pfxwiki.pages.dev/ru/install)) | Section 5, "Automatic installation via Mod Manager", sends readers to this app |
 
-### Video
+### Videos
 
-| Where | Who | Published | Notes |
+All in Russian.
+
+| Video | Who | Published | Notes |
 |---|---|---|---|
-| [Как ставить любые моды, шмотки и карты в Dota 2 еще легче? \| Dota 2 Mod Manager](https://www.youtube.com/watch?v=Z_yalpuP6pA) | [hanta](https://www.youtube.com/@hqnta) | 2026-08-21 | A walkthrough of the app in Russian. 7,478 views |
+| [Как ставить любые моды, шмотки и карты в Dota 2 еще легче? \| Dota 2 Mod Manager](https://www.youtube.com/watch?v=Z_yalpuP6pA) | [hanta](https://www.youtube.com/@hqnta), YouTube | 2026-08-21 | A walkthrough of the app. 7,478 views |
+| [Ставлю моды на Dota 2 за 5 минут \| Dota 2 Mod Manager](https://www.youtube.com/watch?v=RWBGYSjN-Ow) | [dricsy66](https://www.youtube.com/@dricsy66), YouTube | 2026-08-18 | Installing mods with the app, four minutes. 1,038 views |
+| [Short clip](https://www.tiktok.com/@romantic_9991/video/7683011914242313492) | [romantic_9991](https://www.tiktok.com/@romantic_9991), TikTok | 2026-09-08 | The app's catalog on screen, tagged as a guide to replacement skins |
+| [Short clip](https://www.tiktok.com/@romantic_9991/video/7682934300328660245) | [romantic_9991](https://www.tiktok.com/@romantic_9991), TikTok | 2026-09-07 | A second clip from the same account |
+
+### Discussions
+
+| Where | Started by | Date | What it is about |
+|---|---|---|---|
+| [Steam Community, Dota 2 General Discussions: Банят ли за Dota 2 Mod Manager / Do you get banned for using Dota 2 Mod Manager?](https://steamcommunity.com/app/570/discussions/0/617711086156701153/) | A Dota 2 player on Steam | 2026-09-13 | A player asks, in Russian and English, whether using the app can get an account banned, having noticed how many people in their games run it. 5 posts |
 
 ### Projects built from this one
 
@@ -31,7 +42,7 @@ The code is GPL-3.0, so anyone may take it. These did and say so.
 
 | Project | Author | Credit given |
 |---|---|---|
-| [VANTA DOTA2 HUB](https://github.com/artem-prime42/VANTA-DOTA2-HUB), formerly Dota2Skins Manager | [artem-prime42](https://github.com/artem-prime42) | The README's Credits section names this project as the code it modified, dated 2026-07-21, with a link. The project's site, [dota2skins.vercel.app](https://dota2skins.vercel.app/), says the manager was "created based on Dota 2 Mod Manager by Mykhailo Lynnyk" |
+| [VANTA DOTA2 HUB](https://github.com/artem-prime42/VANTA-DOTA2-HUB), formerly Dota2Skins Manager | [artem-prime42](https://github.com/artem-prime42) | The README's Credits section names this project as the code it modified, dated 2026-07-21, with a link. The project's site, [dota2skins.vercel.app](https://dota2skins.vercel.app/), says the manager was "created based on Dota 2 Mod Manager by Mykhailo Lynnyk". Its launch post on Reddit, [r/DotA2Mods](https://www.reddit.com/r/DotA2Mods/comments/1vgi58s/after_4_months_of_work_i_made_a_free_dota_2_mod/) (August 2026), says the same and links this repository as the original project |
 
 ### Forks on GitHub
 
@@ -52,6 +63,7 @@ The live list is [here](https://github.com/TheFleece/dota2-mod-manager/forks).
 | Where | Published | What it is |
 |---|---|---|
 | [Dota 2 Wiki (Fandom), Modding](https://dota2.fandom.com/wiki/Modding) | 2026-09-08 | The article's section on tools, which lists this app beside D2PFX and Dota2 Minify. The maintainer wrote that expansion, and the edit summary says so: [the edit](https://dota2.fandom.com/wiki/Modding?diff=2243470&oldid=2193641) |
+| [r/DotA2: The "-language mods" folder trick died, but the argument itself didnt](https://www.reddit.com/r/DotA2/comments/1vnicva/the_language_mods_folder_trick_died_but_the/) | August 2026 | How mod installation changed after the July 2026 Dota patch. It ends with a disclosure section saying the author maintains this app. 360 views |
 | [Steam Community guide: Моды на Dota 2 в 2026: почему гайд из гугла тебе врёт](https://steamcommunity.com/sharedfiles/filedetails/?id=3780888260) | 2026-08-13 | A Russian guide to installing Dota 2 mods in 2026, with links to the app. 97 unique visitors |
 
 ## The project's own addresses
