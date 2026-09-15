@@ -803,7 +803,9 @@ if (!YANDEX_TOKEN) {
     /* Yandex counts its own problems and grades them itself, so they are worth repeating rather
        than re-deriving: FATAL is the site being dropped, CRITICAL is on its way there. */
     for (const [grade, count] of Object.entries(summary.site_problems ?? {})) {
-      if (num(count) > 0) notes.push(`Yandex lists ${plural(num(count), `${grade.toLowerCase().replace(/_/g, ' ')} site problem`)} under Diagnostics in its console.`);
+      const noun = { FATAL: 'fatal problem', CRITICAL: 'critical problem', POSSIBLE_PROBLEM: 'possible problem', RECOMMENDATION: 'recommendation' }[grade]
+        || `${grade.toLowerCase().replace(/_/g, ' ')} problem`;
+      if (num(count) > 0) notes.push(`Yandex lists ${plural(num(count), noun)} under Diagnostics in its console.`);
     }
     if (typeof summary.searchable_pages_count === 'number' && underCovered(summary.searchable_pages_count)) {
       notes.push(`Yandex holds ${fmt(summary.searchable_pages_count)} pages${ofSitemap}.`);
