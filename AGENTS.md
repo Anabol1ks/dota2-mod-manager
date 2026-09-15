@@ -9,7 +9,7 @@ read nothing else.
 
 ## What this is
 
-A desktop mod manager for Dota 2. Electron 43 on Node 24, plain HTML, CSS and JavaScript in the
+A desktop mod manager for Dota 2. Electron 44 on Node 24, plain HTML, CSS and JavaScript in the
 renderer — **no bundler, no framework, no build step for the UI**. If a change would need
 webpack, TypeScript compilation or a component library, it is the wrong change.
 

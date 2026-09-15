@@ -212,7 +212,7 @@ npm run sandbox:seed      # одноразовое дерево игры с на
 npm run start:sandbox     # приложение против него, а не против своей игры
 ```
 
-Node 24, Electron 43, без сборщика: рендерер — обычные HTML, CSS и JavaScript. Каждый релиз
+Node 24, Electron 44, без сборщика: рендерер — обычные HTML, CSS и JavaScript. Каждый релиз
 делает [`release.yml`](.github/workflows/release.yml) из того коммита, на который указывает тег.
 
 **Если задумал больше, чем починку — сначала issue.** Это одно сообщение, и оно спасает от
