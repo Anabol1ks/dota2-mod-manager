@@ -2,6 +2,22 @@
 
 What changed in each release. The app updates itself, so you get all of this without reinstalling.
 
+## 2.6.11
+
+### Built on Electron 44
+
+The app moves from Electron 43 to 44, and with it to a newer Chromium carrying the last month of
+security fixes. Nothing in the window should look or behave differently. Before this went out, a
+catalog mod was installed through the window on 44 and landed on disk the same way it did on 43.
+
+### The zip library, updated for a security advisory
+
+adm-zip, which the app uses to read mod archives, had an advisory: when it unpacks an archive onto
+disk, it follows links already sitting in that folder, so a crafted archive could write a file
+outside it. This app never lets adm-zip unpack onto disk. It reads each file into memory, checks
+its path and size, and writes it itself, so no mod you installed could have used the hole. The
+fixed version is in anyway, together with a newer YAML reader for the update check.
+
 ## 2.6.10
 
 ### Matchmaking works again after a Dota update
