@@ -16,7 +16,7 @@ Every link below was opened on **2026-09-15**. Counts are as of that day. For ho
 |---|---|
 | [Catalog README, Credits](https://github.com/h6rd/Dota2PornFxWeb#readme) | Lists [Fleece](https://github.com/TheFleece) for creating Dota 2 Mod Manager, linked to this repository |
 | [Catalog site](https://h6rd.github.io/Dota2PornFxWeb/) | Footer link "Mod Manager", pointing at [dota2modmanager.com](https://dota2modmanager.com/) |
-| [`assets/data/tool-versions.json`](https://github.com/h6rd/Dota2PornFxWeb/blob/main/assets/data/tool-versions.json) | Tracks this project's releases with a sha256 for every release file, next to h6rd's own tools (2.6.9 on the day of checking). The site's `script.js` puts this repository on the same list of tools it checks hashes for |
+| [The catalog's list of tool versions](https://github.com/h6rd/Dota2PornFxWeb/blob/main/assets/data/tool-versions.json) | Tracks this project's releases with a sha256 for every release file, next to h6rd's own tools (2.6.9 on the day of checking). The site's `script.js` puts this repository on the same list of tools it checks hashes for |
 | [D2PFX wiki, installing mods](https://d2pfxwiki.pages.dev/en/install) ([Russian](https://d2pfxwiki.pages.dev/ru/install)) | Section 5, "Automatic installation via Mod Manager", sends readers to this app |
 
 ### Video
