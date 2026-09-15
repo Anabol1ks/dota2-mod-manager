@@ -198,7 +198,8 @@ is loading a tracker, and nothing has to be committed for the picture to move.
 | [Search report](.github/workflows/seo.yml) | Weekly, not per push: downloads, update checks, and visits from Google, Bing and Yandex, posted to [one public issue](https://github.com/TheFleece/dota2-mod-manager/issues/3) with every earlier week above it |
 
 Nothing here commits back to `main`. Workflows that need to remember something between runs
-keep it in the Actions cache, because a bot commit per run is how a log stops being readable.
+keep it in the Actions cache, or, for the weekly report, at the end of its own comment, because
+a bot commit per run is how a log stops being readable.
 
 <br>
 
@@ -277,6 +278,10 @@ writing VPK archives is done by this repository's own code, which is why `src/vp
 - **[hanta](https://www.youtube.com/@hqnta)** filmed a
   [walkthrough](https://www.youtube.com/watch?v=Z_yalpuP6pA) in Russian, which answers more
   questions than this page does for anyone who would rather watch than read.
+
+Every other page that links here, from the catalog's README to the projects built from this
+code, is listed with dates in [MENTIONS.md](MENTIONS.md). The few the maintainer wrote are in a
+list of their own.
 
 <br>
 
