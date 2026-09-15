@@ -132,3 +132,19 @@ test('the version DECISIONS.md was last read at is a version that was released',
   const ahead = a > x || (a === x && (b > y || (b === y && c > z)));
   assert.ok(!ahead, `DECISIONS.md says it was read at ${version}; this is ${pkg.version}`);
 });
+
+test('the Electron version the documents name is the one package.json installs', () => {
+  /* Dependabot moves Electron a major version with one merge, and three documents say which one
+     the app runs on. Nothing in that merge touches them, so they would go on naming the old
+     version until somebody happened to read the line. */
+  const major = String((pkg.devDependencies || {}).electron || '').match(/\d+/);
+  assert.ok(major, 'package.json no longer names an Electron version');
+  const wrong = [];
+  for (const doc of DOCS.concat(['site/src/i18n/facts.ts', 'site/src/pages/llms.txt.ts'])) {
+    if (!fs.existsSync(path.join(ROOT, doc))) continue;
+    for (const m of read(doc).matchAll(/\bElectron (\d+)\b/g)) {
+      if (m[1] !== major[0]) wrong.push(`${doc} says Electron ${m[1]}; package.json installs ${major[0]}`);
+    }
+  }
+  assert.deepEqual([...new Set(wrong)], [], [...new Set(wrong)].join('; '));
+});
