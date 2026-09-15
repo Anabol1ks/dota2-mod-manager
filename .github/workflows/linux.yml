@@ -54,6 +54,7 @@ jobs:
           entry=$(ls squashfs-root/*.desktop | head -1)
           cat "$entry"
           grep -q 'x-scheme-handler/d2mm' "$entry"
+          grep -q 'application/x-d2mm' "$entry"
 
       - uses: actions/upload-artifact@v7
         with:
