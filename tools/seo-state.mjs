@@ -127,7 +127,9 @@ export function stateFromTables(body) {
     if (q) state.yQueries = q;
   }
 
-  return Object.keys(state).length ? state : null;
+  // Marked, because those tables held 25 queries picked by clicks: next to a list of 60 picked by
+  // impressions, most of the difference is the cut and not the week, so "new this week" stays quiet.
+  return Object.keys(state).length ? { ...state, fromTables: true } : null;
 }
 
 /** Last week's numbers from last week's report, whichever way it kept them. */
@@ -159,6 +161,31 @@ export function positionBuckets(list) {
     b.clicks += q.clicks || 0;
   }
   return buckets.map(({ upTo, ...b }) => b);
+}
+
+/**
+ * Bing's query stats as one week. The API answers with a row per query per week going back
+ * months, so the same query arrives several times, and the first report printed "dota 2 mods"
+ * four times with a different number each. Only the latest seven days count; a query that
+ * appears twice inside them is added up, its position weighted by how often each row was shown.
+ */
+export function latestWeekOfQueries(rows) {
+  const dated = (rows || []).filter((r) => r.query && r.date);
+  const latest = dated.reduce((m, r) => (r.date > m ? r.date : m), '');
+  if (!latest) return [];
+  const from = new Date(Date.parse(latest) - 6 * 86400000).toISOString().slice(0, 10);
+  const byQuery = new Map();
+  for (const r of dated) {
+    if (r.date < from) continue;
+    const acc = byQuery.get(r.query) || { query: r.query, clicks: 0, impressions: 0, weighted: 0 };
+    acc.clicks += r.clicks || 0;
+    acc.impressions += r.impressions || 0;
+    acc.weighted += (r.position || 0) * (r.impressions || 0);
+    byQuery.set(r.query, acc);
+  }
+  return [...byQuery.values()]
+    .map(({ weighted, ...q }) => ({ ...q, position: q.impressions ? weighted / q.impressions : 0 }))
+    .sort((a, b) => b.impressions - a.impressions);
 }
 
 /** How many addresses a sitemap lists. */

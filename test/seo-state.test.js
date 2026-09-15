@@ -25,6 +25,7 @@ test('a report from before the state block still gives back its headline numbers
   assert.equal(s.googlePages, 275);
   assert.deepEqual(s.yandex, { sqi: 10, inSearch: 360, excluded: 0 });
   assert.deepEqual(s.yandexTraffic, { shows: 5520, clicks: 879 });
+  assert.equal(s.fromTables, true, 'a state read off tables says so, so "new this week" can stay quiet');
 });
 
 test('the query tables come back too, so "new this week" can work on the first comparison', async () => {
@@ -73,6 +74,22 @@ test('click-through rate and position buckets', async () => {
   assert.deepEqual(b.map((x) => x.queries), [2, 1, 1, 1]);
   assert.equal(b[0].impressions, 110);
   assert.equal(b[0].clicks, 31);
+});
+
+test('Bing queries become one week, each query once', async () => {
+  const { latestWeekOfQueries } = await load();
+  const week = latestWeekOfQueries([
+    { date: '2026-09-08', query: 'dota 2 mods', clicks: 1, impressions: 10, position: 2 },
+    { date: '2026-09-08', query: 'dota 2 mods', clicks: 2, impressions: 30, position: 4 },
+    { date: '2026-08-31', query: 'dota 2 mods', clicks: 9, impressions: 99, position: 9 },
+    { date: '2026-09-08', query: 'd2pfx', clicks: 0, impressions: 5, position: 7 },
+    { query: 'no date' },
+  ]);
+  assert.deepEqual(week, [
+    { query: 'dota 2 mods', clicks: 3, impressions: 40, position: 3.5 },
+    { query: 'd2pfx', clicks: 0, impressions: 5, position: 7 },
+  ]);
+  assert.deepEqual(latestWeekOfQueries([]), []);
 });
 
 test('a sitemap is counted by its addresses, not assumed', async () => {

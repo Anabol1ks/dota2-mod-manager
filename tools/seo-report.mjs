@@ -39,7 +39,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
-import { encodeState, previousState, ctr, positionBuckets, countLocs } from './seo-state.mjs';
+import { encodeState, previousState, ctr, positionBuckets, countLocs, latestWeekOfQueries } from './seo-state.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..');
@@ -235,6 +235,18 @@ function delta(now, before) {
   return `${fmt(now)} (${sign}${rounded})`;
 }
 
+/** A position to one decimal, and how far it moved. Lower is better, so a minus is good news. */
+function deltaPos(now, before) {
+  const shown = now.toFixed(1);
+  if (before === undefined || before === null) return shown;
+  const d = now - before;
+  if (Math.abs(d) < 0.05) return `${shown} (=)`;
+  return `${shown} (${d > 0 ? '+' : ''}${d.toFixed(1)})`;
+}
+
+/** "1 page", "3 pages". */
+const plural = (n, word) => `${fmt(n)} ${word}${n === 1 ? '' : 's'}`;
+
 /** Just the movement, for a column that sits next to the number itself. */
 function movement(now, before) {
   if (before === undefined || before === null) return 'first week';
@@ -411,17 +423,17 @@ if (!BING_KEY) {
     /* Queries. The interesting part is not the top ten, which barely move, but what appeared
        for the first time: those are the pages that just started ranking for something. */
     const queries = await bing('GetQueryStats');
-    const list = (Array.isArray(queries) ? queries : [])
-      .map((q) => ({
-        query: q.Query,
-        clicks: num(q.Clicks),
-        impressions: num(q.Impressions),
-        position: num(q.AvgImpressionPosition),
-      }))
-      .filter((q) => q.query)
-      .sort((a, b) => b.impressions - a.impressions);
+    const list = latestWeekOfQueries((Array.isArray(queries) ? queries : []).map((q) => ({
+      date: asDate(q.Date),
+      query: q.Query,
+      clicks: num(q.Clicks),
+      impressions: num(q.Impressions),
+      position: num(q.AvgImpressionPosition),
+    })));
 
-    now.queries = Object.fromEntries(list.slice(0, 60).map((q) => [q.query, { i: q.impressions, p: q.position }]));
+    /* More queries are kept than are shown, so that "new this week" means new and not "was 61st
+       last week". A state read back off an old report's tables had 25, so it stays quiet then. */
+    now.queries = Object.fromEntries(list.slice(0, 200).map((q) => [q.query, { i: q.impressions, p: q.position }]));
 
     if (list.length) {
       lines.push('<details><summary>Top queries</summary>');
@@ -431,19 +443,21 @@ if (!BING_KEY) {
       for (const q of list.slice(0, 25)) {
         const before = was.queries?.[q.query];
         lines.push(
-          `| ${safe(q.query)} | ${delta(q.impressions, before?.i)} | ${fmt(q.clicks)} | ${delta(q.position, before?.p)} |`,
+          `| ${safe(q.query)} | ${delta(q.impressions, before?.i)} | ${fmt(q.clicks)} | ${deltaPos(q.position, before?.p)} |`,
         );
       }
       lines.push('');
       lines.push('</details>');
       lines.push('');
 
-      const fresh = list.filter((q) => was.queries && !(q.query in was.queries)).slice(0, 15);
+      const fresh = list.slice(0, 60).filter((q) => was.queries && !was.fromTables && !(q.query in was.queries)).slice(0, 15);
       if (fresh.length) {
         lines.push(`**New this week:** ${fresh.map((q) => `\`${q.query}\``).join(', ')}`);
         lines.push('');
       }
-      const lost = Object.keys(was.queries ?? {}).filter((q) => !(q in now.queries)).slice(0, 15);
+      const lost = was.fromTables ? [] : Object.entries(was.queries ?? {})
+        .sort((a, b) => b[1].i - a[1].i).slice(0, 25).map(([q]) => q)
+        .filter((q) => !(q in now.queries)).slice(0, 15);
       if (lost.length) {
         lines.push(`**Stopped showing:** ${lost.map((q) => `\`${q}\``).join(', ')}`);
         lines.push('');
@@ -485,10 +499,10 @@ if (!BING_KEY) {
       lines.push('');
 
       if (underCovered(last.inIndex)) notes.push(`Bing holds ${fmt(last.inIndex)} pages${ofSitemap}.`);
-      if (last.notFound > 0) notes.push(`${fmt(last.notFound)} pages answered 4xx.`);
-      if (last.serverErrors > 0) notes.push(`${fmt(last.serverErrors)} pages answered 5xx, which is ours to fix.`);
-      if (last.errors > 0) notes.push(`${fmt(last.errors)} crawl failures (DNS, timeouts).`);
-      if (last.blocked > 0) notes.push(`${fmt(last.blocked)} pages blocked by robots.txt.`);
+      if (last.notFound > 0) notes.push(`Bing got 4xx from ${plural(last.notFound, 'page')}.`);
+      if (last.serverErrors > 0) notes.push(`Bing got 5xx from ${plural(last.serverErrors, 'page')}, which is ours to fix.`);
+      if (last.errors > 0) notes.push(`Bing had ${plural(last.errors, 'crawl failure')} (DNS, timeouts).`);
+      if (last.blocked > 0) notes.push(`robots.txt blocked Bing from ${plural(last.blocked, 'page')}.`);
     }
   } catch (err) {
     lines.push('### Bing');
@@ -544,7 +558,8 @@ if (!GOOGLE_KEY) {
     lines.push('|---|---|---|---|');
     lines.push(`| Clicks | ${fmt(clicks)} | ${movement(clicks, was.google?.clicks)} | ${fmt(num(mrow?.clicks))} |`);
     lines.push(`| Impressions | ${fmt(impressions)} | ${movement(impressions, was.google?.impressions)} | ${fmt(num(mrow?.impressions))} |`);
-    lines.push(`| Click-through rate | ${pct(rate)} | ${rate !== null && typeof was.google?.ctr === 'number' ? movement(rate, was.google.ctr) : 'first week'} | ${pct(ctr(num(mrow?.clicks), num(mrow?.impressions)))} |`);
+    const wasRate = typeof was.google?.ctr === 'number' ? was.google.ctr : (was.google ? ctr(was.google.clicks, was.google.impressions) : null);
+    lines.push(`| Click-through rate | ${pct(rate)} | ${rate !== null && wasRate !== null ? movement(rate, wasRate) : 'first week'} | ${pct(ctr(num(mrow?.clicks), num(mrow?.impressions)))} |`);
     lines.push(`| Average position (lower is better) | ${position.toFixed(1)} | ${movement(position, was.google?.position)} | ${num(mrow?.position).toFixed(1)} |`);
     lines.push('');
 
@@ -571,12 +586,13 @@ if (!GOOGLE_KEY) {
         impressions: num(r.impressions),
         position: num(r.position),
       })).filter((q) => q.query).sort((a, b) => b.impressions - a.impressions);
-      now.gQueries = Object.fromEntries(queryRows.slice(0, 60).map((q) => [q.query, { i: q.impressions, p: q.position }]));
+      now.gQueries = Object.fromEntries(queryRows.slice(0, 200).map((q) => [q.query, { i: q.impressions, p: q.position }]));
       now.gQueryCount = queryRows.length;
 
       /* Where on the result page the site is, weighted by what people saw. An average of 6.2
          can be half the queries at the top and half on page two; this says which. */
-      lines.push(`| Where the site shows up (${fmt(queryRows.length)} queries, vs last week ${movement(queryRows.length, was.gQueryCount)}) | Queries | Impressions | Clicks |`);
+      const countMove = typeof was.gQueryCount === 'number' ? `, ${movement(queryRows.length, was.gQueryCount)} on last week` : '';
+      lines.push(`| Where the site shows up (${fmt(queryRows.length)} queries${countMove}) | Queries | Impressions | Clicks |`);
       lines.push('|---|---|---|---|');
       for (const b of positionBuckets(queryRows)) {
         lines.push(`| ${b.label} | ${fmt(b.queries)} | ${fmt(b.impressions)} | ${fmt(b.clicks)} |`);
@@ -590,13 +606,13 @@ if (!GOOGLE_KEY) {
         lines.push('|---|---|---|---|');
         for (const q of queryRows.slice(0, 25)) {
           const before = was.gQueries?.[q.query];
-          lines.push(`| ${safe(q.query)} | ${delta(q.impressions, before?.i)} | ${fmt(q.clicks)} | ${delta(q.position, before?.p)} |`);
+          lines.push(`| ${safe(q.query)} | ${delta(q.impressions, before?.i)} | ${fmt(q.clicks)} | ${deltaPos(q.position, before?.p)} |`);
         }
         lines.push('');
         lines.push('</details>');
         lines.push('');
 
-        const fresh = queryRows.slice(0, 60).filter((q) => was.gQueries && !(q.query in was.gQueries)).slice(0, 15);
+        const fresh = queryRows.slice(0, 60).filter((q) => was.gQueries && !was.fromTables && !(q.query in was.gQueries)).slice(0, 15);
         if (fresh.length) {
           lines.push(`**New this week:** ${fresh.map((q) => `\`${q.query}\``).join(', ')}`);
           lines.push('');
@@ -754,7 +770,7 @@ if (!YANDEX_TOKEN) {
     const shows = list.reduce((n, q) => n + q.impressions, 0);
     const clicks = list.reduce((n, q) => n + q.clicks, 0);
     now.yandexTraffic = { shows, clicks };
-    now.yQueries = Object.fromEntries(list.slice(0, 40).map((q) => [q.query, { i: q.impressions, p: q.position }]));
+    now.yQueries = Object.fromEntries(list.slice(0, 100).map((q) => [q.query, { i: q.impressions, p: q.position }]));
     glance.yandex = clicks;
 
     lines.push(`| Across the top ${list.length} queries, ${dateFrom} to ${dateTo} | | |`);
@@ -771,13 +787,13 @@ if (!YANDEX_TOKEN) {
       lines.push('|---|---|---|---|');
       for (const q of list.slice(0, 25)) {
         const before = was.yQueries?.[q.query];
-        lines.push(`| ${safe(q.query)} | ${delta(q.impressions, before?.i)} | ${fmt(q.clicks)} | ${delta(q.position, before?.p)} |`);
+        lines.push(`| ${safe(q.query)} | ${delta(q.impressions, before?.i)} | ${fmt(q.clicks)} | ${deltaPos(q.position, before?.p)} |`);
       }
       lines.push('');
       lines.push('</details>');
       lines.push('');
 
-      const fresh = list.slice(0, 40).filter((q) => was.yQueries && !(q.query in was.yQueries)).slice(0, 15);
+      const fresh = list.slice(0, 40).filter((q) => was.yQueries && !was.fromTables && !(q.query in was.yQueries)).slice(0, 15);
       if (fresh.length) {
         lines.push(`**New this week:** ${fresh.map((q) => `\`${q.query}\``).join(', ')}`);
         lines.push('');
@@ -787,7 +803,7 @@ if (!YANDEX_TOKEN) {
     /* Yandex counts its own problems and grades them itself, so they are worth repeating rather
        than re-deriving: FATAL is the site being dropped, CRITICAL is on its way there. */
     for (const [grade, count] of Object.entries(summary.site_problems ?? {})) {
-      if (num(count) > 0) notes.push(`Yandex reports ${count} ${grade.toLowerCase()} site problem(s), listed in the console under Diagnostics.`);
+      if (num(count) > 0) notes.push(`Yandex lists ${plural(num(count), `${grade.toLowerCase().replace(/_/g, ' ')} site problem`)} under Diagnostics in its console.`);
     }
     if (typeof summary.searchable_pages_count === 'number' && underCovered(summary.searchable_pages_count)) {
       notes.push(`Yandex holds ${fmt(summary.searchable_pages_count)} pages${ofSitemap}.`);
