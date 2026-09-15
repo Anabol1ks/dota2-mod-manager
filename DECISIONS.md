@@ -271,7 +271,8 @@ is never waived.
 `userdata-listing.txt` starts with the app's own folder, which on Windows is under
 `C:\Users\<account name>`, and the report names the game folder. The user exports the file and
 attaches it themselves, so nothing leaves the machine on its own, but the account name rides
-along. Masking both to `%USERPROFILE%` and a placeholder is a small change nobody has made.
+along. Masking both to `%USERPROFILE%` and a placeholder is a small change nobody has made yet;
+it is open as a first issue, [#17](https://github.com/TheFleece/dota2-mod-manager/issues/17).
 
 *Check:* `src/diagnostics.js`, `folderListingText`.
 
@@ -293,7 +294,8 @@ which is what a name that does not exist looks like by the time it gets there.
 What it still does not do: click anything. No mod is installed, no switch is thrown, no screen is
 opened. So a handler that throws the moment somebody presses a button gets through, which is
 exactly what happened in 2.6.5 and 2.6.6 - the window came up perfectly and installing was dead.
-It also runs on Linux only, and only when the paths it watches change.
+It also runs on Linux only, and only when the paths it watches change. Making it press Install is
+[#19](https://github.com/TheFleece/dota2-mod-manager/issues/19).
 
 The next step is driving it: `MM_CLICK` already exists for that, and the sandbox already holds
 real mods. Not built.
