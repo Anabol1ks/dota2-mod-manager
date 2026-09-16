@@ -97,6 +97,16 @@ Per file, because one number hides the answer: the aggregate read 76.10% on the 
 written, while `src/presets-service.js` sat at 13.8% of its lines. Write tests, then
 `node tools/coverage.mjs --update` to raise the lines. Never lower one to make a run green.
 
+A drop in a file your change did not touch usually means the file's own tests never reached
+those lines. Node merges coverage from every test process, and a line that no test runs can
+still come out covered in one run and uncovered in the next. `src/safe-zip.js` did this in
+September 2026: 100% on one Linux run, 98.8% on the next, and no test at all for an archive in
+memory that is over the size limit. To see what a file's own tests cover, run them alone:
+
+```bash
+node --test --experimental-test-coverage test/safe-zip.test.js
+```
+
 ## File size
 
 ```bash
@@ -175,7 +185,9 @@ against nothing, so both fail the run.
 
 Running them costs a suite run each, which is why this is not part of `npm run verify`. What runs
 on every push is `test/mutate.test.js`, holding every mutant against today's source without running
-any of them. Write the test for something a user would notice losing, then add the mutant that
+any of them. The whole set runs on Linux every Wednesday (`.github/workflows/mutation.yml`), and on
+any pull request that changes the mutants, the tool or that workflow; the radar reports the
+workflow if it goes red or quiet. Write the test for something a user would notice losing, then add the mutant that
 would have caught its absence.
 
 ## Every user-facing string exists twice
