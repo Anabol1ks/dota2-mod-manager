@@ -1,5 +1,5 @@
 {
-  "count": 1320,
+  "count": 1324,
   "mods": {
     "0000ecb27ee7db1063087b627a7cdb94651a4655": [{"name":"Windranger Autumn Arcana","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "002fe0eee5ace922f363486ddc1f979d8f2c232e": [{"name":"Gold River","categoryId":"river","styleLabel":null,"type":"vpk"}],
@@ -110,6 +110,7 @@
     "12c2a853683cf961b8720b6c42c480c7b6676637": [{"name":"Rainy Girl","categoryId":"backgrounds","styleLabel":null,"type":"vpk"}],
     "1302813cfb626b723661fdae2139ec60a3d18b5e": [{"name":"Kunkka Shadow Blade","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "1307446d8eafe88779dc575c46d529aae62b5438": [{"name":"Magnus Shock of the Anvil","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
+    "139f152e0ee4f1750494eea7c697af430f252e49": [{"name":"Dagon Cobra Kick","categoryId":"sounds","styleLabel":null,"type":"vpk"}],
     "13a54da150130ab6d5bb0c4ee1048eabe0788377": [{"name":"Dry River","categoryId":"river","styleLabel":null,"type":"vpk"}],
     "13a8e4327ed9ae9bd1d1eece42d1b4db898b49e5": [{"name":"Snapfire Whippersnapper","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "13c6dd4f95c42746e61a9b92457b076e3a7528ee": [{"name":"Pangolier Gentleman","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
@@ -122,6 +123,7 @@
     "154c09a39be23b471cb00be78701d28c898470ba": [{"name":"Invoker Magus Apex","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "1576f7cdaa0cc153b4f183ffb337146cb834ed6f": [{"name":"Night Stalker Remilia","categoryId":"heroes","styleLabel":"Style II","type":"vpk"}],
     "15954cf71f2456326155cad58c0557ef66a131f3": [{"name":"Hoodwink Tomokan Footsoldier","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
+    "15dfe5925cb8f72bae73d88ca94c6a5e4e8ff60e": [{"name":"Batrider Night Marauder","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "15f18defb0d37347490e82ea40ba8fc3fa15c587": [{"name":"IO Purple","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "1628c50b8f2be12cced7ef7635f1cbd00a8bdf88": [{"name":"Ursa Immortal Hallowed Hunt","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "1632e854d2243f4042dc712bf314722d2a4ae7d1": [{"name":"Yellow Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"type":"vpk"}],
@@ -257,6 +259,7 @@
     "3135736696ccb6ebeadcb6412ba13ff2c50b01e1": [{"name":"Ghost Shadow Fiend","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "3136f5bb1c534d78818cb3c7f66a88fbf2b8b865": [{"name":"Mars Diretide Shimmer","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "319d6163191789c87c127674d4a353bd204ad236": [{"name":"White Natures Prophet","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
+    "31c522042a8a7c0f7693f93eb29fe4b3f1652f85": [{"name":"Star Sage Phoenix","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "320547dee6e020fb98248b4644544cfd141db210": [{"name":"Baby Roshan 2018","categoryId":"couriers","styleLabel":null,"type":"vpk"}],
     "334fa768ee49901d94a94e8a28f60cedcd84923f": [{"name":"Dark Seer Forlorn Precipice","categoryId":"hero-items","styleLabel":"Golden","type":"vpk"}],
     "3369264efa107c9c9257d525f59cd06f1e74910e": [{"name":"Sherman Crystal Maiden","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
@@ -662,6 +665,7 @@
     "838c42dfdacf6c176ed00e32a9cdf0ae3212bce8": [{"name":"Sad Maomao","categoryId":"backgrounds","styleLabel":null,"type":"vpk"}],
     "83f32f027c60e4c5d0af866234ee6d0ad13549d5": [{"name":"Pine Dire Creeps","categoryId":"creeps","styleLabel":null,"type":"vpk"}],
     "8410dde81b7d894ff22f7fb03faf0dec4814cdc7": [{"name":"Crimson Hud","categoryId":"huds","styleLabel":null,"type":"vpk"}],
+    "842782a967f7dca1432611ee9faaa6b18cd905ad": [{"name":"Reverse Lone Druid","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "84284818ed2f0c2e0d97a6e88c6af9182542fc38": [{"name":"Shadow Fiend","categoryId":"backgrounds","styleLabel":null,"type":"vpk"}],
     "842c40a233a3fdcaad9821c46889226c7cd9312a": [{"name":"Rubick Dark Mage","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "84456ad792a195d8d09c903b116a6c5eb5e6b2d3": [{"name":"TI7 Teleport III","categoryId":"item-effects","styleLabel":null,"type":"vpk"}],

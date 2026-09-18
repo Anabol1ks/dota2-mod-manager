@@ -1,6 +1,6 @@
 {
   "heroes": 147,
-  "mods": 1323,
+  "mods": 1326,
   "byHero": {
     "abaddon": {
       "name": "Abaddon",
@@ -109,6 +109,7 @@
       "mods": [
         {"name":"Aghanim Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Batrider Chubzarik Prime","categoryId":"heroes","styleLabel":null,"slots":["belt","back","head","mount","misc","shoulder"]},
+        {"name":"Batrider Night Marauder","categoryId":"heroes","styleLabel":null,"slots":["belt","back","head","mount"]},
         {"name":"Batrider Night Snotty","categoryId":"heroes","styleLabel":null,"slots":["belt","back","head","mount"]},
         {"name":"Blue Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Green Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
@@ -860,6 +861,7 @@
         {"name":"Lone Druid Immortal","categoryId":"heroes","styleLabel":null,"slots":["arms","head","shoulder","misc","weapon"]},
         {"name":"Nemestice Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Red Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
+        {"name":"Reverse Lone Druid","categoryId":"heroes","styleLabel":null,"slots":["arms","head","shoulder","misc","weapon"]},
         {"name":"TI10 Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"TI12 Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"TI9 Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
@@ -1204,6 +1206,7 @@
         {"name":"Ice Phoenix","categoryId":"heroes","styleLabel":null,"slots":[]},
         {"name":"Nemestice Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Red Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
+        {"name":"Star Sage Phoenix","categoryId":"heroes","styleLabel":null,"slots":["misc","head","wings"]},
         {"name":"TI10 Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"TI12 Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"TI9 Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},

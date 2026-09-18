@@ -4175,6 +4175,163 @@
       ]
     },
     {
+      "id": "lone_druid",
+      "name": "Lone Druid",
+      "slug": "lone-druid",
+      "mods": [
+        {
+          "name": "Lone Druid Immortal",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["arms","head","shoulder","misc","weapon"],
+          "image": {"src":"/mods/lone-druid-immortal.webp","width":854,"height":480},
+          "author": "depex",
+          "authorUrl": "https://t.me/depexfx",
+          "date": 1788207347
+        },
+        {
+          "name": "Reverse Lone Druid",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["arms","head","shoulder","misc","weapon"],
+          "image": {"src":"/mods/reverse-lone-druid.webp","width":854,"height":480},
+          "author": "Миша Талант",
+          "authorUrl": "https://t.me/madberserker",
+          "date": 1789727816
+        },
+        {
+          "name": "Lone Druid Cauldron of Xahryx",
+          "categoryId": "hero-items",
+          "styleLabel": null,
+          "slots": ["weapon"],
+          "image": {"src":"/mods/lone-druid-cauldron-of-xahryx.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1777750466
+        },
+        {
+          "name": "Lone Druid Cauldron of Xahryx",
+          "categoryId": "hero-items",
+          "styleLabel": "Retro",
+          "slots": ["weapon"],
+          "image": {"src":"/mods/lone-druid-cauldron-of-xahryx-retro.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1777750466
+        },
+        {
+          "name": "Lone Druid Cauldron of Xahryx",
+          "categoryId": "hero-items",
+          "styleLabel": "Retro v2",
+          "slots": ["weapon"],
+          "image": {"src":"/mods/lone-druid-cauldron-of-xahryx-retro-v2.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1777750466
+        },
+        {
+          "name": "Lone Druid Claws of Nuranu",
+          "categoryId": "hero-items",
+          "styleLabel": null,
+          "slots": ["arms"],
+          "image": {"src":"/mods/lone-druid-claws-of-nuranu.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1777750466
+        },
+        {
+          "name": "Aghanim Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/aghanim-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Blue Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/blue-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Green Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/green-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Nemestice Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/nemestice-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Red Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/red-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI10 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti10-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI12 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti12-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI9 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti9-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Yellow Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/yellow-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        }
+      ]
+    },
+    {
       "id": "arc_warden",
       "name": "Arc Warden",
       "slug": "arc-warden",
@@ -4807,153 +4964,6 @@
           "author": null,
           "authorUrl": null,
           "date": 1778951513
-        },
-        {
-          "name": "Aghanim Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/aghanim-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Blue Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/blue-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Green Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/green-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Nemestice Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/nemestice-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Red Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/red-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI10 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti10-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI12 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti12-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI9 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti9-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Yellow Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/yellow-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        }
-      ]
-    },
-    {
-      "id": "lone_druid",
-      "name": "Lone Druid",
-      "slug": "lone-druid",
-      "mods": [
-        {
-          "name": "Lone Druid Immortal",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["arms","head","shoulder","misc","weapon"],
-          "image": {"src":"/mods/lone-druid-immortal.webp","width":854,"height":480},
-          "author": "depex",
-          "authorUrl": "https://t.me/depexfx",
-          "date": 1788207347
-        },
-        {
-          "name": "Lone Druid Cauldron of Xahryx",
-          "categoryId": "hero-items",
-          "styleLabel": null,
-          "slots": ["weapon"],
-          "image": {"src":"/mods/lone-druid-cauldron-of-xahryx.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1777750466
-        },
-        {
-          "name": "Lone Druid Cauldron of Xahryx",
-          "categoryId": "hero-items",
-          "styleLabel": "Retro",
-          "slots": ["weapon"],
-          "image": {"src":"/mods/lone-druid-cauldron-of-xahryx-retro.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1777750466
-        },
-        {
-          "name": "Lone Druid Cauldron of Xahryx",
-          "categoryId": "hero-items",
-          "styleLabel": "Retro v2",
-          "slots": ["weapon"],
-          "image": {"src":"/mods/lone-druid-cauldron-of-xahryx-retro-v2.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1777750466
-        },
-        {
-          "name": "Lone Druid Claws of Nuranu",
-          "categoryId": "hero-items",
-          "styleLabel": null,
-          "slots": ["arms"],
-          "image": {"src":"/mods/lone-druid-claws-of-nuranu.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1777750466
         },
         {
           "name": "Aghanim Ranged Attack",
@@ -7114,6 +7124,133 @@
       ]
     },
     {
+      "id": "batrider",
+      "name": "Batrider",
+      "slug": "batrider",
+      "mods": [
+        {
+          "name": "Batrider Chubzarik Prime",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["belt","back","head","mount","misc","shoulder"],
+          "image": {"src":"/mods/batrider-chubzarik-prime.webp","width":854,"height":480},
+          "author": "александр",
+          "authorUrl": "https://t.me/+VY-_XaaDg00wYmI6",
+          "date": 1788815201
+        },
+        {
+          "name": "Batrider Night Marauder",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["belt","back","head","mount"],
+          "image": {"src":"/mods/batrider-night-marauder.webp","width":854,"height":480},
+          "author": "J0nathan550",
+          "authorUrl": "https://github.com/J0nathan550",
+          "date": 1789739955
+        },
+        {
+          "name": "Batrider Night Snotty",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["belt","back","head","mount"],
+          "image": {"src":"/mods/batrider-night-snotty.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1763577476
+        },
+        {
+          "name": "Aghanim Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/aghanim-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Blue Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/blue-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Green Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/green-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Nemestice Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/nemestice-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Red Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/red-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI10 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti10-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI12 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti12-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI9 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti9-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Yellow Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/yellow-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        }
+      ]
+    },
+    {
       "id": "dark_willow",
       "name": "Dark Willow",
       "slug": "dark-willow",
@@ -7783,6 +7920,124 @@
           "authorUrl": null,
           "date": 1774198352
         },
+        {
+          "name": "Aghanim Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/aghanim-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Blue Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/blue-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Green Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/green-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Nemestice Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/nemestice-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Red Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/red-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI10 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti10-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI12 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti12-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI9 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti9-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Yellow Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/yellow-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        }
+      ]
+    },
+    {
+      "id": "pheonix",
+      "name": "Phoenix",
+      "slug": "phoenix",
+      "mods": [
+        {
+          "name": "Black Phoenix",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["head","misc","wings"],
+          "image": {"src":"/mods/black-phoenix.webp","width":854,"height":480},
+          "author": "VPKDota",
+          "authorUrl": "https://t.me/vpkdota",
+          "date": 1777663732
+        },
+        {
+          "name": "Star Sage Phoenix",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["misc","head","wings"],
+          "image": {"src":"/mods/star-sage-phoenix.webp","width":854,"height":480},
+          "author": "J0nathan550",
+          "authorUrl": "https://github.com/J0nathan550",
+          "date": 1789739955
+        },
+        {"name":"Ice Phoenix","categoryId":"heroes","styleLabel":null,"slots":[],"image":{"src":"/mods/ice-phoenix.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1773474303},
         {
           "name": "Aghanim Ranged Attack",
           "categoryId": "ranged-attack",
@@ -8745,123 +9000,6 @@
       ]
     },
     {
-      "id": "batrider",
-      "name": "Batrider",
-      "slug": "batrider",
-      "mods": [
-        {
-          "name": "Batrider Chubzarik Prime",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["belt","back","head","mount","misc","shoulder"],
-          "image": {"src":"/mods/batrider-chubzarik-prime.webp","width":854,"height":480},
-          "author": "александр",
-          "authorUrl": "https://t.me/+VY-_XaaDg00wYmI6",
-          "date": 1788815201
-        },
-        {
-          "name": "Batrider Night Snotty",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["belt","back","head","mount"],
-          "image": {"src":"/mods/batrider-night-snotty.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1763577476
-        },
-        {
-          "name": "Aghanim Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/aghanim-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Blue Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/blue-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Green Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/green-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Nemestice Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/nemestice-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Red Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/red-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI10 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti10-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI12 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti12-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI9 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti9-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Yellow Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/yellow-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        }
-      ]
-    },
-    {
       "id": "centaur",
       "name": "Centaur",
       "slug": "centaur",
@@ -9003,114 +9141,6 @@
           "authorUrl": null,
           "date": 1771681325
         },
-        {
-          "name": "Aghanim Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/aghanim-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Blue Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/blue-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Green Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/green-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Nemestice Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/nemestice-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Red Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/red-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI10 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti10-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI12 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti12-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI9 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti9-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Yellow Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/yellow-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        }
-      ]
-    },
-    {
-      "id": "pheonix",
-      "name": "Phoenix",
-      "slug": "phoenix",
-      "mods": [
-        {
-          "name": "Black Phoenix",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["head","misc","wings"],
-          "image": {"src":"/mods/black-phoenix.webp","width":854,"height":480},
-          "author": "VPKDota",
-          "authorUrl": "https://t.me/vpkdota",
-          "date": 1777663732
-        },
-        {"name":"Ice Phoenix","categoryId":"heroes","styleLabel":null,"slots":[],"image":{"src":"/mods/ice-phoenix.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1773474303},
         {
           "name": "Aghanim Ranged Attack",
           "categoryId": "ranged-attack",
