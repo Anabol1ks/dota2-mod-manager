@@ -56,7 +56,7 @@
   "vulnerability_report_process_status": "Met",
   "vulnerability_report_process_justification": "SECURITY.md: https://github.com/TheFleece/dota2-mod-manager/blob/main/SECURITY.md",
   "vulnerability_report_private_status": "Met",
-  "vulnerability_report_private_justification": "GitHub private vulnerability reporting is enabled, and SECURITY.md sends reporters there.",
+  "vulnerability_report_private_justification": "GitHub private vulnerability reporting is enabled, and SECURITY.md sends reporters there: https://github.com/TheFleece/dota2-mod-manager/blob/main/SECURITY.md",
   "vulnerability_report_response_status": "Met",
   "vulnerability_report_response_justification": "No vulnerability report has been received. SECURITY.md promises a first reply within 48 hours, and the daily job watches that promise.",
   "build_status": "Met",
