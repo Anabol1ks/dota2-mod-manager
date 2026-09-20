@@ -1,6 +1,6 @@
 {
   "heroes": 147,
-  "mods": 1336,
+  "mods": 1338,
   "byHero": {
     "abaddon": {
       "name": "Abaddon",
@@ -187,6 +187,7 @@
       "mods": [
         {"name":"Broodmother Epoch of the Abysm","categoryId":"heroes","styleLabel":null,"slots":["head","misc","legs"]},
         {"name":"Broodmother Golden Orbweaver","categoryId":"heroes","styleLabel":null,"slots":["misc","head","legs"]},
+        {"name":"Broodmother Immortal Antiquity","categoryId":"heroes","styleLabel":null,"slots":["misc","head","legs"]},
         {"name":"Broodmother Redan","categoryId":"heroes","styleLabel":null,"slots":["misc","head","legs"]},
         {"name":"Broodmother Silken Queen","categoryId":"heroes","styleLabel":null,"slots":["misc","head","legs"]},
         {"name":"Broodmother Undermount Candles","categoryId":"heroes","styleLabel":null,"slots":["misc","legs","head","back"]},
@@ -1704,6 +1705,7 @@
         {"name":"Tinker Cripple","categoryId":"hero-items","styleLabel":null,"slots":[]},
         {"name":"Tinker Deathsman","categoryId":"heroes","styleLabel":null,"slots":["back","head","arms","shoulder"]},
         {"name":"Tinker Deep Hornet","categoryId":"heroes","styleLabel":null,"slots":["back","head","arms","shoulder"]},
+        {"name":"Tinker Flame","categoryId":"heroes","styleLabel":null,"slots":["head","back","arms","shoulder"]},
         {"name":"Tinker Fortified Fabricator","categoryId":"heroes","styleLabel":null,"slots":["back","head","arms","shoulder"]},
         {"name":"Tinker Frusy","categoryId":"heroes","styleLabel":null,"slots":["back","head","arms","shoulder","legs","weapon","misc"]},
         {"name":"Tinker Immortal","categoryId":"heroes","styleLabel":null,"slots":["misc","head","back","arms","shoulder"]},
