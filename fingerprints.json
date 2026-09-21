@@ -1,5 +1,5 @@
 {
-  "count": 1350,
+  "count": 1352,
   "mods": {
     "0000ecb27ee7db1063087b627a7cdb94651a4655": [{"name":"Windranger Autumn Arcana","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "002fe0eee5ace922f363486ddc1f979d8f2c232e": [{"name":"Gold River","categoryId":"river","styleLabel":null,"type":"vpk"}],
@@ -593,6 +593,7 @@
     "7185132cc1487e89ff5a8bbe0c44c154d68defc8": [{"name":"Floes Tower","categoryId":"wards","styleLabel":null,"type":"vpk"}],
     "718945bc148baab8036b5669eee98d125565e9f0": [{"name":"Emblem Lsq Black Star","categoryId":"emblems","styleLabel":null,"type":"vpk"}],
     "718e4455f59d6bf30c357a49ab480a9d6d965b25": [{"name":"Juggernaut Okita Souji","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
+    "71b0812ef68613aa1106a2b98d386c2bf075e036": [{"name":"Beastmaster Egxrdemxn","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "71ec23c82980ad867b9d5a497cdb68d38e45d378": [{"name":"Underlord Immortal Ravenous","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "720d001915238dab457ad7110ca2d4da95211cb7": [{"name":"Defense Grid","categoryId":"mega-kill","styleLabel":null,"type":"vpk"}],
     "725dc6f90edebe7ec014dc5aeb2869c7d2472cd1": [{"name":"Dark Moon Baby Roshan","categoryId":"couriers","styleLabel":null,"type":"vpk"}],
@@ -678,6 +679,7 @@
     "838c42dfdacf6c176ed00e32a9cdf0ae3212bce8": [{"name":"Sad Maomao","categoryId":"backgrounds","styleLabel":null,"type":"vpk"}],
     "83f32f027c60e4c5d0af866234ee6d0ad13549d5": [{"name":"Pine Dire Creeps","categoryId":"creeps","styleLabel":null,"type":"vpk"}],
     "8410dde81b7d894ff22f7fb03faf0dec4814cdc7": [{"name":"Crimson Hud","categoryId":"huds","styleLabel":null,"type":"vpk"}],
+    "8421c16e3d684ac491d14b0f760081005547de73": [{"name":"All Grandmasters","categoryId":"other","styleLabel":null,"type":"vpk"}],
     "842782a967f7dca1432611ee9faaa6b18cd905ad": [{"name":"Reverse Lone Druid","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "84284818ed2f0c2e0d97a6e88c6af9182542fc38": [{"name":"Shadow Fiend","categoryId":"backgrounds","styleLabel":null,"type":"vpk"}],
     "842c40a233a3fdcaad9821c46889226c7cd9312a": [{"name":"Rubick Dark Mage","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
@@ -1196,7 +1198,6 @@
     "e6df540526a126767546f1ab7edb67e7d3434b77": [{"name":"Homelander Invoker","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "e6f62e71a2639edb0cee66e78cd766c17d5fb2b4": [{"name":"Hestia","categoryId":"mega-kill","styleLabel":null,"type":"vpk"}],
     "e70d182bc22e9aed02057bfef6a92c753cac95c2": [{"name":"TI7 Teleport","categoryId":"item-effects","styleLabel":null,"type":"vpk"}],
-    "e71201e4557a9d125d833e45c19b3022defcf924": [{"name":"All Grandmasters","categoryId":"other","styleLabel":null,"type":"vpk"}],
     "e73cebd3889799731f334c330e77c2d6cbe2cb10": [{"name":"Batrider Chubzarik Prime","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "e7403ec01742117cff95a841a8d3391b19fdfa2e": [{"name":"Crownfall Dire Creeps","categoryId":"creeps","styleLabel":null,"type":"vpk"}],
     "e74790a89fbae69fab1fb65f8740ed93b55c50ce": [{"name":"Phantom Assassin Avowance","categoryId":"hero-items","styleLabel":"Crimson","type":"vpk"}],
@@ -1215,6 +1216,7 @@
     "e89240d646f10f4748bd34776627d1072d05b5e0": [{"name":"TI9 Cursor","categoryId":"cursors","styleLabel":null,"type":"files"}],
     "e901cb6ba5de3776595897b9a40d01eba385cb02": [{"name":"Magnus Eyes of Ardenok","categoryId":"hero-items","styleLabel":"Crimson","type":"vpk"}],
     "e923928787935eaa1af26592f009d3955c0da544": [{"name":"Bare Pangolier","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
+    "e932cff7e8e8014b4d3edb2204ba9a0f040960b6": [{"name":"Windranger Papizi","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "e949ef185431fe0210cad5272015c9c4f4286d20": [{"name":"Chaos IO","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "e94d16194721d6b3cdad0febc2e2f7c121263d55": [{"name":"Lion Fin Kings Charm","categoryId":"hero-items","styleLabel":"Retro","type":"vpk"}],
     "e9a22c31ba9e8ba9af6ea229a6ca479f6184728f": [{"name":"Old Items","categoryId":"item-icons","styleLabel":null,"type":"vpk"}],
