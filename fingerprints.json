@@ -1,5 +1,5 @@
 {
-  "count": 1361,
+  "count": 1360,
   "mods": {
     "0000ecb27ee7db1063087b627a7cdb94651a4655": [{"name":"Windranger Autumn Arcana","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "002fe0eee5ace922f363486ddc1f979d8f2c232e": [{"name":"Gold River","categoryId":"river","styleLabel":null,"type":"vpk"}],
@@ -123,7 +123,6 @@
     "14c843344afb3ec57799f4dd76b95a78b3eb93b0": [{"name":"Earthshaker Carrot","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "14e970aaee8ab78b475a44b15bda1a6f1c143e68": [{"name":"Stone Trees","categoryId":"trees","styleLabel":null,"type":"vpk"}],
     "15166e8305a7d519dd03e2b2d8a600cfb6d9ffa7": [{"name":"Dead Eyes","categoryId":"backgrounds","styleLabel":null,"type":"vpk"}],
-    "154b75fdb0097b6844d5d955ba8513b36e90f312": [{"name":"Pudge Abberant Observer","categoryId":"heroes","styleLabel":null,"type":"vpk"}],
     "154c09a39be23b471cb00be78701d28c898470ba": [{"name":"Invoker Magus Apex","categoryId":"hero-items","styleLabel":null,"type":"vpk"}],
     "1576f7cdaa0cc153b4f183ffb337146cb834ed6f": [{"name":"Night Stalker Remilia","categoryId":"heroes","styleLabel":"Style II","type":"vpk"}],
     "15954cf71f2456326155cad58c0557ef66a131f3": [{"name":"Hoodwink Tomokan Footsoldier","categoryId":"heroes","styleLabel":null,"type":"vpk"}],

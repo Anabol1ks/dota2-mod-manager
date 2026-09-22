@@ -1,6 +1,6 @@
 {
   "heroes": 147,
-  "mods": 1352,
+  "mods": 1351,
   "byHero": {
     "abaddon": {
       "name": "Abaddon",
@@ -1261,7 +1261,6 @@
       "name": "Pudge",
       "mods": [
         {"name":"Gopo Pudge","categoryId":"heroes","styleLabel":null,"slots":["back","belt","arms","head"]},
-        {"name":"Pudge Abberant Observer","categoryId":"heroes","styleLabel":null,"slots":["back","belt","arms","head","weapon","misc"]},
         {"name":"Pudge Arcana Elephant","categoryId":"heroes","styleLabel":null,"slots":["weapon","belt","misc","head","back","arms"]},
         {"name":"Pudge Candy Cat","categoryId":"heroes","styleLabel":null,"slots":["back","belt","arms","head","weapon","misc"]},
         {"name":"Pudge CM","categoryId":"heroes","styleLabel":null,"slots":["back","belt","arms","head","weapon"]},
