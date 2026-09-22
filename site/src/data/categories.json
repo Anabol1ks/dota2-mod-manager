@@ -1540,20 +1540,16 @@
       ]
     },
     {
-      "id": "versus-screens",
-      "mods": [
-        {"name":"Diretide Versus Screen","styleLabel":null,"image":{"src":"/mods/diretide-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
-        {"name":"Muerta Versus Screen","styleLabel":null,"image":{"src":"/mods/muerta-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
-        {"name":"Nemestice Versus Screen","styleLabel":null,"image":{"src":"/mods/nemestice-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
-        {"name":"TI 2024 Versus Screen","styleLabel":null,"image":{"src":"/mods/ti-2024-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
-        {"name":"TI9 Versus Screen I","styleLabel":null,"image":{"src":"/mods/ti9-versus-screen-i.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
-        {"name":"TI9 Versus Screen II","styleLabel":null,"image":{"src":"/mods/ti9-versus-screen-ii.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
-        {"name":"Winter Versus Screen","styleLabel":null,"image":{"src":"/mods/winter-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295}
-      ]
-    },
-    {
       "id": "herofx",
       "mods": [
+        {
+          "name": "Ancient Apparition Shatterblast",
+          "styleLabel": null,
+          "image": {"src":"/mods/ancient-apparition-shatterblast.webp","width":854,"height":480},
+          "author": "Ромчик",
+          "authorUrl": "https://watchmy.bio/shidehara",
+          "date": 1790113207
+        },
         {
           "name": "Keeper of the Light Northlight Illuminance",
           "styleLabel": null,
@@ -1588,6 +1584,18 @@
         },
         {"name":"Enigma World Chasm Artifact","styleLabel":null,"image":{"src":"/mods/enigma-world-chasm-artifact.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1766284079},
         {"name":"Sniper Ardalan Interdictor","styleLabel":null,"image":{"src":"/mods/sniper-ardalan-interdictor-2.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1765442943}
+      ]
+    },
+    {
+      "id": "versus-screens",
+      "mods": [
+        {"name":"Diretide Versus Screen","styleLabel":null,"image":{"src":"/mods/diretide-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
+        {"name":"Muerta Versus Screen","styleLabel":null,"image":{"src":"/mods/muerta-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
+        {"name":"Nemestice Versus Screen","styleLabel":null,"image":{"src":"/mods/nemestice-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
+        {"name":"TI 2024 Versus Screen","styleLabel":null,"image":{"src":"/mods/ti-2024-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
+        {"name":"TI9 Versus Screen I","styleLabel":null,"image":{"src":"/mods/ti9-versus-screen-i.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
+        {"name":"TI9 Versus Screen II","styleLabel":null,"image":{"src":"/mods/ti9-versus-screen-ii.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295},
+        {"name":"Winter Versus Screen","styleLabel":null,"image":{"src":"/mods/winter-versus-screen.webp","width":854,"height":480},"author":null,"authorUrl":null,"date":1770643295}
       ]
     },
     {

@@ -1,6 +1,6 @@
 {
   "heroes": 147,
-  "mods": 1351,
+  "mods": 1352,
   "byHero": {
     "abaddon": {
       "name": "Abaddon",
@@ -27,6 +27,7 @@
       "name": "Ancient Apparition",
       "mods": [
         {"name":"Aghanim Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
+        {"name":"Ancient Apparition Shatterblast","categoryId":"herofx","styleLabel":null,"slots":[]},
         {"name":"Ancient Apparition Yoshino","categoryId":"heroes","styleLabel":null,"slots":["shoulder","tail","misc","arms","head"]},
         {"name":"Bloody Ancient Apparition","categoryId":"heroes","styleLabel":null,"slots":["shoulder","tail"]},
         {"name":"Blue Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
