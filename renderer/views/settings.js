@@ -18,7 +18,7 @@
 import { $ } from '../core/dom.js';
 import { state } from '../core/store.js';
 import { registerView, pane } from '../core/router.js';
-import { esc, fmtMB } from '../ui/format.js';
+import { esc, fmtMB, plural } from '../ui/format.js';
 import { toast } from '../ui/toast.js';
 import { diagnosticsDialog, showWhatsNew } from '../ui/dialog.js';
 import { refreshSidebarStatus } from '../ui/statusbar.js';
@@ -37,6 +37,8 @@ export async function renderSettings() {
   const scalePct = Math.round((Number(s.uiScale) || 1) * 100);
   const cacheSize = await window.api.misc.cacheSize();
   const appVersion = await window.api.update.version();
+  let cleanHistory = [];
+  try { cleanHistory = await window.api.patch.history(); } catch { /* older build */ }
   // the Source 2 toolchain: shown as a size and a button, never downloaded on its own
   let vrf = null;
   try { vrf = (await window.api.tools.state()).tools.find((x) => x.name === 'vrf') || null; } catch { /* older build */ }
@@ -144,6 +146,11 @@ export async function renderSettings() {
         <button class="btn btn-sm" id="diagExportBtn"><span class="ms">bug_report</span>${L`Экспортировать отчёт`}</button>
       </div>
       <div class="settings-hint">${L`Проверка только читает состояние и ничего не меняет. Отчёт содержит путь к игре, список модов и журнал — он нужен, если что-то не работает.`}</div>
+      ${cleanHistory.length ? `
+      <div class="restore-history">
+        <div class="restore-history-title"><span class="ms">history</span>${L`Последние возвраты к чистой Dota`}</div>
+        ${cleanHistory.slice(0, 5).map((h) => `<div class="restore-history-row"><span>${new Date(h.at).toLocaleString(window.i18nLocale())}</span><span>${h.modsDisabled || 0} ${plural(h.modsDisabled || 0, 'мод отключён', 'мода отключено', 'модов отключено')}</span><span class="restore-ok"><span class="ms">check_circle</span>${L`готово`}</span></div>`).join('')}
+      </div>` : ''}
     </div>
 
     <div class="settings-block" style="--i:6">
