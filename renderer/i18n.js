@@ -108,6 +108,11 @@ const EN = {
   'Безопасный режим выключен — эффекты и косметика доступны': 'Safe mode off — effects and cosmetics are available',
   'Безопасный режим включён, файлы игры восстановлены. Эффекты и косметика ждут, пока не выключишь его снова.':
     'Safe mode on, game files restored. Effects and cosmetics wait until you turn it off again.',
+  'Чистая Dota': 'Clean Dota',
+  'Выключить все моды, восстановить оригинальные файлы Dota 2 и запустить игру?':
+    'Turn off all mods, restore Dota 2’s original files, and launch the game?',
+  'Запустить чистую Dota': 'Launch clean Dota',
+  'Чистая Dota 2 восстановлена и запущена': 'Clean Dota 2 restored and launched',
 
   // ---------- the beta channel (settings, for the accounts the signed list names) ----------
   'Бета-версии': 'Beta builds',
