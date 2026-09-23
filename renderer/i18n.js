@@ -317,6 +317,13 @@ const EN = {
   'Скопировать отпечаток': 'Copy fingerprint',
   'Отпечаток скопирован': 'Fingerprint copied',
   'Не удалось скопировать отпечаток': 'Could not copy fingerprint',
+  'Изменить описание': 'Edit description',
+  'Добавить описание': 'Add description',
+  'Коротко опиши эту сборку': 'Briefly describe this collection',
+  'Напр. «Тёмная минималистичная тема для вечерних игр»': 'e.g. «A dark minimalist theme for evening games»',
+  'Сохранить описание': 'Save description',
+  'Описание сохранено': 'Description saved',
+  'Описание очищено': 'Description cleared',
   'Выбрать всё': 'Select all',
   'Отметь моды галочками — объединить в пак или массово управлять':
     'Tick mods to combine them into a pack or manage in bulk',
