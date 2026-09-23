@@ -732,6 +732,15 @@ const EN = {
 
   // ---------- diagnostics ----------
   'Диагностика': 'Diagnostics',
+  'Проверить состояние': 'Check state',
+  'Проверка только читает состояние и ничего не меняет. Отчёт содержит путь к игре, список модов и журнал — он нужен, если что-то не работает.':
+    'The check only reads the state and changes nothing. The report contains the game path, mod list and log — use it when something does not work.',
+  'Найдены замечания': 'Items need attention',
+  'Всё в порядке': 'Everything looks good',
+  'Проверка ничего не меняла': 'The check changed nothing',
+  'Проверка не нашла проблем': 'The check found no problems',
+  'Путь к Dota, текущие моды и состояние менеджера выглядят нормально.':
+    'The Dota path, current mods and manager state look normal.',
   'Экспортировать отчёт': 'Export report',
   'Отчёт сохранён': 'Report saved',
 };
