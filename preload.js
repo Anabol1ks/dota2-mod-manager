@@ -104,6 +104,7 @@ contextBridge.exposeInMainWorld('api', {
     update: (id) => ipcRenderer.invoke('presets:update', id),
     rename: (id, name) => ipcRenderer.invoke('presets:rename', id, name),
     setNote: (id, note) => ipcRenderer.invoke('presets:note', id, note),
+    pin: (id, pinned) => ipcRenderer.invoke('presets:pin', id, pinned),
     delete: (id) => ipcRenderer.invoke('presets:delete', id),
     changeSet: (id) => ipcRenderer.invoke('presets:changeSet', id),
     apply: (id) => ipcRenderer.invoke('presets:apply', id),

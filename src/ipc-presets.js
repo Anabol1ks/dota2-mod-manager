@@ -121,6 +121,14 @@ function registerPresetsIpc({
     return { ok: true, note: clean };
   });
 
+  // Pinning is profile-library metadata only. It changes display order, never the mod set.
+  ipcMain.handle('presets:pin', (e, id, pinned) => {
+    const preset = library.getPreset(id);
+    if (!preset || preset.wanted) return { error: t('Пресет не найден') };
+    library.updatePreset(id, { pinned: !!pinned });
+    return { ok: true, pinned: !!pinned };
+  });
+
   ipcMain.handle('presets:delete', (e, id) => {
     presets.dropSharedPresetFile(library.getPreset(id));
     library.deletePreset(id);
@@ -162,6 +170,7 @@ function registerPresetsIpc({
     // A mod that could not be switched is the preset failing, exactly as before. A member that
     // could not be fetched is the preset applying without it, and is said as a warning.
     if (toggleErrors.length) return { error: [...errors, ...toggleErrors].join('\n') };
+    library.updatePreset(id, { lastAppliedAt: Date.now() });
     return { ok: true, installed, missing, errors };
   });
 
@@ -312,6 +321,7 @@ function registerPresetsIpc({
     // its freshly lifted blocks would sit in the library without ever reaching the build
     if (schemaTouched) schemaService.refresh();
     afterDeployMaster();
+    library.updatePreset(preset.id, { lastAppliedAt: Date.now() });
     sendProgress({ type: 'done', label: preset.name });
     return { ok: true, installed: preset.mods.length, errors };
   });

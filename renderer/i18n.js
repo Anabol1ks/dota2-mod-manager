@@ -472,6 +472,12 @@ const EN = {
   'Пресет «{0}» сохранён': 'Preset «{0}» saved',
   'Пресет применён': 'Preset applied',
   'Пресет применён · доустановлено {0} {1}': 'Preset applied · installed {0} {1} it was missing',
+  'Активный профиль': 'Active profile',
+  'Закрепить профиль': 'Pin profile',
+  'Открепить профиль': 'Unpin profile',
+  'Ещё не применялся': 'Not applied yet',
+  'Последнее применение: {0}': 'Last applied: {0}',
+  'Открыть ChangeSet без применения': 'Open ChangeSet without applying',
   'Своих модов нет на этом компьютере, из каталога их не вернуть: {0}': 'Your own mods are not on this computer, and the catalog cannot bring them back: {0}',
   'Удалить пресет «{0}»?': 'Delete preset «{0}»?',
 

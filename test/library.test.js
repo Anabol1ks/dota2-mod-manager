@@ -219,6 +219,23 @@ test('updating a build by id needs no retyped name, and refuses to touch a recei
   assert.equal(store.updatePresetMods('nobody'), null);
 });
 
+test('gallery metadata survives recapturing a profile', (t) => {
+  const { store } = lib(t);
+  store.add(modFields('One'));
+  store.savePreset('Build');
+  const preset = store.listPresets()[0];
+  store.updatePreset(preset.id, { pinned: true, lastAppliedAt: 123456789, note: 'Evening build' });
+
+  store.add(modFields('Two'));
+  store.savePreset('Build');
+
+  const saved = store.getPreset(preset.id);
+  assert.equal(saved.pinned, true);
+  assert.equal(saved.lastAppliedAt, 123456789);
+  assert.equal(saved.note, 'Evening build');
+  assert.equal(saved.mods.length, 2);
+});
+
 test('renaming and deleting a build', (t) => {
   const { store } = lib(t);
   store.savePreset('Before');

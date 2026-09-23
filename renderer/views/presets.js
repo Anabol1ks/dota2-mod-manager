@@ -167,7 +167,7 @@ function flashCopied(btn) {
  * applied in exactly the same way, but its effects now get a named, read-only stop first:
  * people can see the difference and decide, instead of inferring it from the saved name.
  */
-async function changeSetDialog(preset) {
+async function changeSetDialog(preset, { allowApply = true } = {}) {
   let plan;
   try {
     plan = await window.api.presets.changeSet(preset.id);
@@ -201,15 +201,15 @@ async function changeSetDialog(preset) {
           <div class="change-set-warning"><span class="ms">warning</span><div><b>${L`Нужно проверить`}</b><p>${L`В профиле есть моды, которых нет на этом компьютере. При применении менеджер попробует вернуть доступные из каталога; свои файлы пропустит.`}</p></div></div>
           <div class="change-list missing-list">${missingRows}${moreMissing ? `<div class="change-set-meta">+${moreMissing}</div>` : ''}</div>` : ''}
         <div class="confirm-actions">
-          <button class="btn" data-c="no">${L`Отмена`}</button>
-          <button class="btn btn-primary" data-c="yes"><span class="ms">play_arrow</span>${L`Применить после проверки`}</button>
+          <button class="btn" data-c="no">${allowApply ? L`Отмена` : L`Закрыть`}</button>
+          ${allowApply ? `<button class="btn btn-primary" data-c="yes"><span class="ms">play_arrow</span>${L`Применить после проверки`}</button>` : ''}
         </div>
       </div>`;
     document.body.appendChild(overlay);
     const done = (value) => { overlay.remove(); document.removeEventListener('keydown', onKey); resolve(value); };
     overlay.addEventListener('click', (e) => { if (e.target === overlay) done(false); });
     overlay.querySelector('[data-c="no"]').addEventListener('click', () => done(false));
-    overlay.querySelector('[data-c="yes"]').addEventListener('click', () => done(true));
+    overlay.querySelector('[data-c="yes"]')?.addEventListener('click', () => done(true));
     const onKey = (e) => { if (e.key === 'Escape') done(false); };
     document.addEventListener('keydown', onKey);
   });
@@ -227,7 +227,24 @@ async function changeSetDialog(preset) {
  * The full list is still there for anybody who wants to check a specific mod, one click away
  * and grouped, rather than in the way of everybody who does not.
  */
-const STRIP = 12;
+const STRIP = 6;
+
+function sortProfiles(a, b) {
+  // Received profiles are pending actions, so keep them visible before the user's gallery.
+  if (!!a.wanted !== !!b.wanted) return a.wanted ? -1 : 1;
+  if (!!a.pinned !== !!b.pinned) return Number(!!b.pinned) - Number(!!a.pinned);
+  return (b.lastAppliedAt || 0) - (a.lastAppliedAt || 0)
+    || (b.updatedAt || 0) - (a.updatedAt || 0);
+}
+
+function lastAppliedLabel(ts) {
+  if (!ts) return L`Ещё не применялся`;
+  const locale = document.documentElement.lang === 'ru' ? 'ru-RU' : 'en-US';
+  const value = new Intl.DateTimeFormat(locale, {
+    day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit',
+  }).format(new Date(ts));
+  return L`Последнее применение: ${value}`;
+}
 
 function presetThumbHtml(rec) {
   return libThumbHtml(rec, 'preset-thumb');
@@ -318,7 +335,7 @@ function sharedPresetCardHtml(p) {
 }
 
 export async function renderPresets() {
-  const presets = await window.api.presets.list();
+  const presets = (await window.api.presets.list()).sort(sortProfiles);
   const { installed } = await window.api.mods.list();
   const byId = new Map(installed.map((m) => [m.id, m]));
 
@@ -354,26 +371,41 @@ export async function renderPresets() {
       const absent = p.absent || [];
       const link = p.link || { count: 0, skipped: [] };
       const summary = p.changeSet?.summary;
+      const active = !!summary && !summary.missing && !summary.enable && !summary.disable;
+      card.classList.toggle('active', active);
+      card.classList.toggle('pinned', !!p.pinned);
       const stateChip = !summary ? ''
         : summary.missing ? `<span class="profile-state missing"><span class="ms">cloud_off</span>${L`Отсутствует: ${summary.missing}`}</span>`
-          : !summary.enable && !summary.disable ? `<span class="profile-state active"><span class="ms">check_circle</span>${L`Совпадает с текущим набором`}</span>`
+          : active ? `<span class="profile-state active"><span class="ms">check_circle</span>${L`Активный профиль`}</span>`
             : `<span class="profile-state"><span class="ms">sync</span>${L`Включить ${summary.enable} · выключить ${summary.disable}`}</span>`;
       const linkTitle = !link.count
         ? L`В пресете только свои моды — ссылка их не донесёт, отправь файлом`
         : link.skipped.length
           ? L`Ссылка донесёт ${link.count} из каталога; свои моды (${link.skipped.length}) в неё не влезут — для них нужен файл`
           : L`Скопировать короткую ссылку на пресет`;
+      const pinTitle = p.pinned ? L`Открепить профиль` : L`Закрепить профиль`;
       card.innerHTML = `
         <div class="preset-head">
-          <div class="preset-name">${esc(p.name)}</div>
-          <span class="text-meta">${recs.length + absent.length} ${plural(recs.length + absent.length, 'мод', 'мода', 'модов')}</span>
+          <div class="preset-title-wrap">
+            <div class="preset-name">${esc(p.name)}</div>
+            <div class="profile-meta">
+              <span><span class="ms">inventory_2</span>${recs.length + absent.length} ${plural(recs.length + absent.length, 'мод', 'мода', 'модов')}</span>
+              <span><span class="ms">history</span>${esc(lastAppliedLabel(p.lastAppliedAt))}</span>
+            </div>
+          </div>
+          <button class="profile-pin ${p.pinned ? 'on' : ''}" data-pin="${p.id}" title="${esc(pinTitle)}" aria-label="${esc(pinTitle)}"><span class="ms">star</span></button>
+        </div>
+        <div class="profile-status-row">
           ${stateChip}
           ${absent.length ? `<span class="text-meta preset-absent" title="${esc(absent.map((a) => a.name).join(', '))}">${L`${absent.length} не установлено`}</span>` : ''}
-          <button class="btn btn-sm btn-primary" data-apply="${p.id}"><span class="ms">fact_check</span>${L`Проверить изменения`}</button>
-          <button class="btn btn-sm" data-share="${p.id}" title="${esc(linkTitle)}"><span class="ms">ios_share</span>${L`Поделиться`}</button>
         </div>
-        ${p.note ? `<div class="preset-note">${esc(p.note)}</div>` : ''}
-        ${presetBodyHtml(recs, absent)}`;
+        ${p.note ? `<div class="preset-note profile-description">${esc(p.note)}</div>` : ''}
+        ${presetBodyHtml(recs, absent)}
+        <div class="preset-actions">
+          <button class="btn btn-sm" data-changeset="${p.id}" title="${esc(L`Открыть ChangeSet без применения`)}"><span class="ms">fact_check</span>ChangeSet</button>
+          <button class="btn btn-sm btn-primary" data-apply="${p.id}"><span class="ms">play_arrow</span>${L`Применить`}</button>
+          <button class="btn btn-sm" data-share="${p.id}" title="${esc(linkTitle)}"><span class="ms">ios_share</span>${L`Поделиться`}</button>
+        </div>`;
     }
     list.appendChild(card);
   });
@@ -386,6 +418,23 @@ export async function renderPresets() {
     renderPresets();
   });
   $('#importPresetBtn').addEventListener('click', async () => handlePresetImport(await window.api.presets.importDialog()));
+
+  list.querySelectorAll('[data-pin]').forEach((b) => {
+    b.addEventListener('click', async () => {
+      const preset = presets.find((p) => p.id === b.dataset.pin);
+      if (!preset) return;
+      const r = await window.api.presets.pin(preset.id, !preset.pinned);
+      if (r.error) { toast(r.error, 'error', 6000); return; }
+      renderPresets();
+    });
+  });
+
+  list.querySelectorAll('[data-changeset]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const preset = presets.find((p) => p.id === b.dataset.changeset);
+      if (preset) changeSetDialog(preset, { allowApply: false });
+    });
+  });
 
   list.querySelectorAll('[data-apply]').forEach((b) => {
     b.addEventListener('click', async () => {
@@ -418,6 +467,7 @@ export async function renderPresets() {
     const p = presets.find((x) => x.id === card.querySelector('[data-apply]')?.dataset.apply);
     if (!p) return null;
     return [
+      { label: p.pinned ? L`Открепить профиль` : L`Закрепить профиль`, icon: 'star', onPick: async () => { await window.api.presets.pin(p.id, !p.pinned); renderPresets(); } },
       { label: L`Обновить по текущему состоянию`, icon: 'save', onPick: () => updatePreset(p.id) },
       { label: L`Переименовать`, icon: 'edit', onPick: () => renamePreset(p) },
       { label: p.note ? L`Изменить описание` : L`Добавить описание`, icon: 'notes', onPick: () => editPresetNote(p) },
