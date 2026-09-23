@@ -73,11 +73,16 @@ function registerPresetsIpc({
       // The screen shows the whole set and says which part of it is missing, rather than
       // quietly listing the leftovers as if that were the build.
       const members = library.presetMembers(p);
+      const changeSet = planChangeSet({ library, preset: p });
       return {
         ...p,
         modIds: members.filter((m) => m.rec).map((m) => m.rec.id),
         absent: members.filter((m) => !m.rec).map((m) => m.identity),
         link: { count: mods.length, skipped },
+        // The gallery needs a small status chip, not another source of truth. Keep the full
+        // list of changes behind its own IPC call; this summary is enough to find a profile
+        // that already matches the current collection without writing anywhere.
+        changeSet: { summary: changeSet.summary, ready: changeSet.ready },
       };
     }));
   });
