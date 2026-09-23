@@ -194,6 +194,21 @@ function pakFileHtml(rec) {
   return `<span class="lib-pak selectable" title="${esc(L`Файл в папке модов`)}">${esc(name)}</span>`;
 }
 
+// A manual import remains a local file: no Workshop lookup, account connection, or hidden
+// download. The record keeps only a human-readable source label and an optional content
+// fingerprint — never an absolute path from the user's computer.
+function provenanceMetaHtml(rec) {
+  const source = rec.provenance;
+  if (!source) return '';
+  const kind = {
+    file: L`выбранный файл`, folder: L`папка с модами`, dropped: L`перетащенный файл`, manual: L`ручной импорт`,
+  }[source.kind] || L`ручной импорт`;
+  const at = source.importedAt ? new Date(source.importedAt).toLocaleString(window.i18nLocale()) : null;
+  const detail = [kind, source.label, at && `${L`добавлен`}: ${at}`, source.fingerprint && L`отпечаток содержимого`]
+    .filter(Boolean).join(' · ');
+  return `<span class="lib-tag" title="${esc(`${L`Локальный импорт`}: ${detail}`)}"><span class="ms">fingerprint</span>${L`свой импорт`}</span>`;
+}
+
 function normalRowHtml(rec, i, masterOff) {
   const cosmetic = isCosmeticRec(rec);
   const selectable = !isFontRec(rec);
@@ -211,7 +226,7 @@ function normalRowHtml(rec, i, masterOff) {
         : libThumbHtml(rec, 'lib-thumb')}
       <div class="lib-info">
         <div class="lib-name">${esc(rec.name)}${rec.styleLabel ? ` <span class="lib-style-label">(${esc(rec.styleLabel)})</span>` : ''}${rec.match ? ` <span class="lib-tag match">${esc(matchLabel(rec.match))}</span>` : rec.info ? ` <span class="lib-tag">${esc(rec.info)}</span>` : ''}${schemaTagHtml(rec)}${coveredTagHtml(rec)}</div>
-        <div class="lib-meta"><span>${esc(catLabel)}</span>${pakFileHtml(rec)}</div>
+        <div class="lib-meta"><span>${esc(catLabel)}</span>${provenanceMetaHtml(rec)}${pakFileHtml(rec)}</div>
       </div>
       <div class="lib-actions">
         ${isFontRec(rec)
@@ -249,6 +264,14 @@ function rowMenuItems(rec) {
     },
     langDir && { label: L`Распаковать в папку`, icon: 'folder_open', onPick: () => unpackRecord(rec.id) },
     rec.subjects >= 2 && { label: L`Разобрать по героям`, icon: 'call_split', onPick: () => splitRecord(rec.id) },
+    rec.provenance?.fingerprint && {
+      label: L`Скопировать отпечаток`, icon: 'fingerprint', onPick: async () => {
+        try {
+          await navigator.clipboard?.writeText(rec.provenance.fingerprint);
+          toast(L`Отпечаток скопирован`, 'ok');
+        } catch { toast(L`Не удалось скопировать отпечаток`, 'error'); }
+      },
+    },
     { separator: true },
     { label: L`Удалить`, icon: 'delete', danger: true, onPick: () => deleteRecord(rec.id) },
   ].filter(Boolean);
