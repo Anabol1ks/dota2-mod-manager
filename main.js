@@ -770,10 +770,10 @@ function importStep(stage) {
 // Copy what the user handed over into the lang folder and register it in the library. The two
 // ways in differ only in which importer reads them, so they share the bar, the error and the
 // "done" that has to arrive whichever way it ends.
-async function runImport(take, input) {
+async function runImport(take, input, origin = {}) {
   try {
     const staged = await take(installer, input, importStep(t('Копирование модов')));
-    return await registerImportResults(staged, importStep(t('Разбор модов')));
+    return await registerImportResults(staged, importStep(t('Разбор модов')), origin);
   } catch (err) {
     return { error: String(err.message || err) };
   } finally {
@@ -781,9 +781,13 @@ async function runImport(take, input) {
   }
 }
 
-const importVpkPaths = (paths) => runImport(importer.importVpks, Array.isArray(paths) ? paths : []);
+const importVpkPaths = (paths, kind = 'manual') => runImport(
+  importer.importVpks, Array.isArray(paths) ? paths : [], { kind },
+);
 // from raw bytes: the drag-and-drop fallback for when a real path cannot be resolved
-const importVpkBuffers = (items) => runImport(importer.importVpkBuffers, Array.isArray(items) ? items : []);
+const importVpkBuffers = (items) => runImport(
+  importer.importVpkBuffers, Array.isArray(items) ? items : [], { kind: 'dropped' },
+);
 
 // ---------- item schema (game/dota_mods) ----------
 // The engine reads scripts/items/items_game.txt through the MOD path - the game's own dota
