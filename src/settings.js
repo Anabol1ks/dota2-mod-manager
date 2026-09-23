@@ -52,6 +52,8 @@ const DEFAULTS = {
   // last version whose release notes the user was shown. Null on a fresh install, which is
   // why nobody gets a "what's new" popup for a version they just installed by hand.
   lastSeenVersion: null,
+  // The last clean-state exits are local audit history, not backups or game content.
+  cleanRestoreHistory: [],
 };
 
 class Settings {
