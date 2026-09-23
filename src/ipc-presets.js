@@ -113,6 +113,14 @@ function registerPresetsIpc({
     return { ok: true, name: clean };
   });
 
+  // A profile note is local metadata: it describes the collection, never changes its mods.
+  // It is bounded before storage and can be carried into an explicit .d2mm export later.
+  ipcMain.handle('presets:note', (e, id, note) => {
+    const clean = String(note || '').trim().slice(0, 240);
+    if (!library.updatePreset(id, { note: clean })) return { error: t('Пресет не найден') };
+    return { ok: true, note: clean };
+  });
+
   ipcMain.handle('presets:delete', (e, id) => {
     presets.dropSharedPresetFile(library.getPreset(id));
     library.deletePreset(id);
