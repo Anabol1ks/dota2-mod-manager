@@ -36,7 +36,16 @@ the user can return the manager's changes to a clean state.
 - Change-set screen and confirmation flow.
 - Clean-state restore with a verification report.
 - Import provenance for manually supplied VPK/ZIP files.
-- Mod Doctor and restore-point history.
+- Read-only Mod Doctor with a human-readable safety verdict.
+- Restore-point history and a post-restore verification report.
+
+## Delivered in the first PR
+
+- Profiles show a read-only change set before apply and can be described, shared, and reviewed.
+- `Чистая Dota` restores the manager's original files and disables managed packs without deleting
+  the user's library or profiles.
+- Manual imports retain a source kind and content fingerprint, never an absolute local path.
+- Mod Doctor runs the same checks as the support report without writing to the game folder.
 
 ## Attribution
 
