@@ -2581,89 +2581,99 @@
       ]
     },
     {
-      "id": "crystal_maiden",
-      "name": "Crystal Maiden",
-      "slug": "crystal-maiden",
+      "id": "furion",
+      "name": "Natures Prophet",
+      "slug": "natures-prophet",
       "mods": [
         {
-          "name": "Crystal Maiden Tamamo no Mae",
+          "name": "Golden Natures Prophet",
           "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["misc","back","shoulder","weapon","head","arms","tail","legs"],
-          "image": {"src":"/mods/crystal-maiden-tamamo-no-mae.webp","width":854,"height":480},
-          "author": "Kisilev",
-          "authorUrl": "https://vk.com/id363951132",
-          "date": 1765446533
+          "slots": ["misc","arms","back","shoulder","head","legs","weapon"],
+          "image": {"src":"/mods/golden-natures-prophet.webp","width":854,"height":480},
+          "author": "shears001",
+          "authorUrl": "https://discord.com/users/1204344805748903948",
+          "date": 1790118406
         },
         {
-          "name": "Crystal Maiden Cirno",
+          "name": "Natures Prophet Saya",
           "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["misc","back","shoulder","weapon","head","arms","tail"],
-          "image": {"src":"/mods/crystal-maiden-cirno.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1767093656
+          "slots": ["misc","arms","back","head","weapon","shoulder","legs"],
+          "image": {"src":"/mods/natures-prophet-saya.webp","width":854,"height":480},
+          "author": "SanyaBane",
+          "authorUrl": "https://steamcommunity.com/profiles/76561198072955043",
+          "date": 1775470500
         },
         {
-          "name": "Crystal Maiden Immortal Arcana",
+          "name": "Bare Natures Prophet",
           "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["back","misc","shoulder","weapon","head"],
-          "image": {"src":"/mods/crystal-maiden-immortal-arcana.webp","width":854,"height":480},
-          "author": "lansory",
-          "authorUrl": "https://discord.com/users/1108248721768071210",
-          "date": 1787732850
+          "slots": ["arms","back","head","misc","weapon"],
+          "image": {"src":"/mods/bare-natures-prophet.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1765720497
         },
         {
-          "name": "Sherman Crystal Maiden",
+          "name": "Fire Natures Prophet",
           "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["misc","back","shoulder","weapon","head"],
-          "image": {"src":"/mods/sherman-crystal-maiden.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1758967933
+          "slots": ["misc","arms","back","head","weapon"],
+          "image": {"src":"/mods/fire-natures-prophet.webp","width":854,"height":480},
+          "author": "wannakissyou",
+          "authorUrl": "https://t.me/wannakissyouuu",
+          "date": 1788293360
         },
         {
-          "name": "Crystal Maiden Ice Blossom",
-          "categoryId": "hero-items",
-          "styleLabel": "Golden",
-          "slots": ["weapon"],
-          "image": {"src":"/mods/crystal-maiden-ice-blossom-golden.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1783354875
-        },
-        {
-          "name": "Crystal Maiden Ice Blossom",
-          "categoryId": "hero-items",
+          "name": "Natures Prophet Allfather",
+          "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["weapon"],
-          "image": {"src":"/mods/crystal-maiden-ice-blossom.webp","width":854,"height":480},
+          "slots": ["misc","arms","back","head","weapon"],
+          "image": {"src":"/mods/natures-prophet-allfather.webp","width":854,"height":480},
           "author": null,
           "authorUrl": null,
-          "date": 1783354875
+          "date": 1782202798
         },
         {
-          "name": "Crystal Maiden Yulsarias Glacier",
-          "categoryId": "hero-items",
+          "name": "Natures Prophet Farm Champion",
+          "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["head"],
-          "image": {"src":"/mods/crystal-maiden-yulsarias-glacier.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1783354875
+          "slots": ["misc","arms","back","head","weapon"],
+          "image": {"src":"/mods/natures-prophet-farm-champion.webp","width":854,"height":480},
+          "author": "Mopsyara",
+          "authorUrl": "https://t.me/+AM_aLD0x2TcwY2My",
+          "date": 1787413498
         },
         {
-          "name": "Crystal Maiden Yulsarias Mantle",
-          "categoryId": "hero-items",
+          "name": "Natures Prophet Immortal Allfather",
+          "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["shoulder"],
-          "image": {"src":"/mods/crystal-maiden-yulsarias-mantle.webp","width":854,"height":480},
+          "slots": ["misc","arms","back","head","weapon"],
+          "image": {"src":"/mods/natures-prophet-immortal-allfather.webp","width":854,"height":480},
+          "author": "frayserclick",
+          "authorUrl": "https://t.me/frayserclick",
+          "date": 1786953206
+        },
+        {
+          "name": "Natures Prophet Spectral Sage",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["misc","arms","back","head","weapon"],
+          "image": {"src":"/mods/natures-prophet-spectral-sage.webp","width":854,"height":480},
+          "author": "Defiree",
+          "authorUrl": "https://vk.com/defiree2mods",
+          "date": 1772728491
+        },
+        {
+          "name": "White Natures Prophet",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["misc","weapon","head","back","arms"],
+          "image": {"src":"/mods/white-natures-prophet.webp","width":854,"height":480},
           "author": null,
           "authorUrl": null,
-          "date": 1783354875
+          "date": 1788958573
         },
         {
           "name": "Aghanim Ranged Attack",
@@ -2758,89 +2768,89 @@
       ]
     },
     {
-      "id": "furion",
-      "name": "Natures Prophet",
-      "slug": "natures-prophet",
+      "id": "crystal_maiden",
+      "name": "Crystal Maiden",
+      "slug": "crystal-maiden",
       "mods": [
         {
-          "name": "Natures Prophet Saya",
+          "name": "Crystal Maiden Tamamo no Mae",
           "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["misc","arms","back","head","weapon","shoulder","legs"],
-          "image": {"src":"/mods/natures-prophet-saya.webp","width":854,"height":480},
-          "author": "SanyaBane",
-          "authorUrl": "https://steamcommunity.com/profiles/76561198072955043",
-          "date": 1775470500
+          "slots": ["misc","back","shoulder","weapon","head","arms","tail","legs"],
+          "image": {"src":"/mods/crystal-maiden-tamamo-no-mae.webp","width":854,"height":480},
+          "author": "Kisilev",
+          "authorUrl": "https://vk.com/id363951132",
+          "date": 1765446533
         },
         {
-          "name": "Bare Natures Prophet",
+          "name": "Crystal Maiden Cirno",
           "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["arms","back","head","misc","weapon"],
-          "image": {"src":"/mods/bare-natures-prophet.webp","width":854,"height":480},
+          "slots": ["misc","back","shoulder","weapon","head","arms","tail"],
+          "image": {"src":"/mods/crystal-maiden-cirno.webp","width":854,"height":480},
           "author": null,
           "authorUrl": null,
-          "date": 1765720497
+          "date": 1767093656
         },
         {
-          "name": "Fire Natures Prophet",
+          "name": "Crystal Maiden Immortal Arcana",
           "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["misc","arms","back","head","weapon"],
-          "image": {"src":"/mods/fire-natures-prophet.webp","width":854,"height":480},
-          "author": "wannakissyou",
-          "authorUrl": "https://t.me/wannakissyouuu",
-          "date": 1788293360
+          "slots": ["back","misc","shoulder","weapon","head"],
+          "image": {"src":"/mods/crystal-maiden-immortal-arcana.webp","width":854,"height":480},
+          "author": "lansory",
+          "authorUrl": "https://discord.com/users/1108248721768071210",
+          "date": 1787732850
         },
         {
-          "name": "Natures Prophet Allfather",
+          "name": "Sherman Crystal Maiden",
           "categoryId": "heroes",
           "styleLabel": null,
-          "slots": ["misc","arms","back","head","weapon"],
-          "image": {"src":"/mods/natures-prophet-allfather.webp","width":854,"height":480},
+          "slots": ["misc","back","shoulder","weapon","head"],
+          "image": {"src":"/mods/sherman-crystal-maiden.webp","width":854,"height":480},
           "author": null,
           "authorUrl": null,
-          "date": 1782202798
+          "date": 1758967933
         },
         {
-          "name": "Natures Prophet Farm Champion",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["misc","arms","back","head","weapon"],
-          "image": {"src":"/mods/natures-prophet-farm-champion.webp","width":854,"height":480},
-          "author": "Mopsyara",
-          "authorUrl": "https://t.me/+AM_aLD0x2TcwY2My",
-          "date": 1787413498
-        },
-        {
-          "name": "Natures Prophet Immortal Allfather",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["misc","arms","back","head","weapon"],
-          "image": {"src":"/mods/natures-prophet-immortal-allfather.webp","width":854,"height":480},
-          "author": "frayserclick",
-          "authorUrl": "https://t.me/frayserclick",
-          "date": 1786953206
-        },
-        {
-          "name": "Natures Prophet Spectral Sage",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["misc","arms","back","head","weapon"],
-          "image": {"src":"/mods/natures-prophet-spectral-sage.webp","width":854,"height":480},
-          "author": "Defiree",
-          "authorUrl": "https://vk.com/defiree2mods",
-          "date": 1772728491
-        },
-        {
-          "name": "White Natures Prophet",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["misc","weapon","head","back","arms"],
-          "image": {"src":"/mods/white-natures-prophet.webp","width":854,"height":480},
+          "name": "Crystal Maiden Ice Blossom",
+          "categoryId": "hero-items",
+          "styleLabel": "Golden",
+          "slots": ["weapon"],
+          "image": {"src":"/mods/crystal-maiden-ice-blossom-golden.webp","width":854,"height":480},
           "author": null,
           "authorUrl": null,
-          "date": 1788958573
+          "date": 1783354875
+        },
+        {
+          "name": "Crystal Maiden Ice Blossom",
+          "categoryId": "hero-items",
+          "styleLabel": null,
+          "slots": ["weapon"],
+          "image": {"src":"/mods/crystal-maiden-ice-blossom.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1783354875
+        },
+        {
+          "name": "Crystal Maiden Yulsarias Glacier",
+          "categoryId": "hero-items",
+          "styleLabel": null,
+          "slots": ["head"],
+          "image": {"src":"/mods/crystal-maiden-yulsarias-glacier.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1783354875
+        },
+        {
+          "name": "Crystal Maiden Yulsarias Mantle",
+          "categoryId": "hero-items",
+          "styleLabel": null,
+          "slots": ["shoulder"],
+          "image": {"src":"/mods/crystal-maiden-yulsarias-mantle.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1783354875
         },
         {
           "name": "Aghanim Ranged Attack",
@@ -5873,6 +5883,153 @@
       ]
     },
     {
+      "id": "venomancer",
+      "name": "Venomancer",
+      "slug": "venomancer",
+      "mods": [
+        {
+          "name": "Ice Venomancer",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["arms","misc","shoulder","tail"],
+          "image": {"src":"/mods/ice-venomancer.webp","width":854,"height":480},
+          "author": "Darkness",
+          "authorUrl": "https://t.me/Darkness_Logovo",
+          "date": 1768072022
+        },
+        {
+          "name": "Venomancer Poisonous Assassin",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["arms","misc","shoulder","tail"],
+          "image": {"src":"/mods/venomancer-poisonous-assassin.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1781024680
+        },
+        {
+          "name": "Venomancer Poisonous Assassin",
+          "categoryId": "heroes",
+          "styleLabel": "Purple",
+          "slots": ["arms","misc","shoulder","tail"],
+          "image": {"src":"/mods/venomancer-poisonous-assassin-purple.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1781024680
+        },
+        {
+          "name": "Venomancer Zuzik",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["arms","misc","shoulder","tail"],
+          "image": {"src":"/mods/venomancer-zuzik.webp","width":854,"height":480},
+          "author": "Миша Талант",
+          "authorUrl": "https://t.me/madberserker",
+          "date": 1790118406
+        },
+        {
+          "name": "Venomancer Peashooter",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["misc"],
+          "image": {"src":"/mods/venomancer-peashooter.webp","width":854,"height":480},
+          "author": "laskotdota",
+          "authorUrl": "https://t.me/laskotdota",
+          "date": 1781266231
+        },
+        {
+          "name": "Aghanim Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/aghanim-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Blue Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/blue-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Green Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/green-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Nemestice Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/nemestice-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Red Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/red-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI10 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti10-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI12 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti12-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "TI9 Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/ti9-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        },
+        {
+          "name": "Yellow Diretide Ranged Attack",
+          "categoryId": "ranged-attack",
+          "styleLabel": null,
+          "slots": [],
+          "image": {"src":"/mods/yellow-diretide-ranged-attack.webp","width":1280,"height":720},
+          "author": null,
+          "authorUrl": null,
+          "date": 1764003644
+        }
+      ]
+    },
+    {
       "id": "ancient_apparition",
       "name": "Ancient Apparition",
       "slug": "ancient-apparition",
@@ -7140,143 +7297,6 @@
           "author": "Kisilev",
           "authorUrl": "https://vk.com/id363951132",
           "date": 1770175798
-        },
-        {
-          "name": "Aghanim Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/aghanim-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Blue Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/blue-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Green Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/green-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Nemestice Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/nemestice-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Red Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/red-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI10 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti10-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI12 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti12-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "TI9 Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/ti9-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        },
-        {
-          "name": "Yellow Diretide Ranged Attack",
-          "categoryId": "ranged-attack",
-          "styleLabel": null,
-          "slots": [],
-          "image": {"src":"/mods/yellow-diretide-ranged-attack.webp","width":1280,"height":720},
-          "author": null,
-          "authorUrl": null,
-          "date": 1764003644
-        }
-      ]
-    },
-    {
-      "id": "venomancer",
-      "name": "Venomancer",
-      "slug": "venomancer",
-      "mods": [
-        {
-          "name": "Ice Venomancer",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["arms","misc","shoulder","tail"],
-          "image": {"src":"/mods/ice-venomancer.webp","width":854,"height":480},
-          "author": "Darkness",
-          "authorUrl": "https://t.me/Darkness_Logovo",
-          "date": 1768072022
-        },
-        {
-          "name": "Venomancer Poisonous Assassin",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["arms","misc","shoulder","tail"],
-          "image": {"src":"/mods/venomancer-poisonous-assassin.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1781024680
-        },
-        {
-          "name": "Venomancer Poisonous Assassin",
-          "categoryId": "heroes",
-          "styleLabel": "Purple",
-          "slots": ["arms","misc","shoulder","tail"],
-          "image": {"src":"/mods/venomancer-poisonous-assassin-purple.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1781024680
-        },
-        {
-          "name": "Venomancer Peashooter",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["misc"],
-          "image": {"src":"/mods/venomancer-peashooter.webp","width":854,"height":480},
-          "author": "laskotdota",
-          "authorUrl": "https://t.me/laskotdota",
-          "date": 1781266231
         },
         {
           "name": "Aghanim Ranged Attack",
@@ -13892,6 +13912,43 @@
       ]
     },
     {
+      "id": "ringmaster",
+      "name": "Ringmaster",
+      "slug": "ringmaster",
+      "mods": [
+        {
+          "name": "Harrows Harvest Ringmaster",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["arms","belt","head","weapon"],
+          "image": {"src":"/mods/harrows-harvest-ringmaster.webp","width":854,"height":480},
+          "author": null,
+          "authorUrl": null,
+          "date": 1766284079
+        },
+        {
+          "name": "Joker Ringmaster",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["arms","head","weapon"],
+          "image": {"src":"/mods/joker-ringmaster.webp","width":854,"height":480},
+          "author": "Defiree",
+          "authorUrl": "https://vk.com/defiree2mods",
+          "date": 1774899033
+        },
+        {
+          "name": "Ringmaster Ibalai",
+          "categoryId": "heroes",
+          "styleLabel": null,
+          "slots": ["belt"],
+          "image": {"src":"/mods/ringmaster-ibalai.webp","width":854,"height":480},
+          "author": "Миша Талант",
+          "authorUrl": "https://t.me/madberserker",
+          "date": 1790118406
+        }
+      ]
+    },
+    {
       "id": "tidehunter",
       "name": "Tidehunter",
       "slug": "tidehunter",
@@ -14081,33 +14138,6 @@
           "author": null,
           "authorUrl": null,
           "date": 1766284079
-        }
-      ]
-    },
-    {
-      "id": "ringmaster",
-      "name": "Ringmaster",
-      "slug": "ringmaster",
-      "mods": [
-        {
-          "name": "Harrows Harvest Ringmaster",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["arms","belt","head","weapon"],
-          "image": {"src":"/mods/harrows-harvest-ringmaster.webp","width":854,"height":480},
-          "author": null,
-          "authorUrl": null,
-          "date": 1766284079
-        },
-        {
-          "name": "Joker Ringmaster",
-          "categoryId": "heroes",
-          "styleLabel": null,
-          "slots": ["arms","head","weapon"],
-          "image": {"src":"/mods/joker-ringmaster.webp","width":854,"height":480},
-          "author": "Defiree",
-          "authorUrl": "https://vk.com/defiree2mods",
-          "date": 1774899033
         }
       ]
     },

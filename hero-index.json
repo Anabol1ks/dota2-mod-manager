@@ -1,6 +1,6 @@
 {
   "heroes": 147,
-  "mods": 1352,
+  "mods": 1355,
   "byHero": {
     "abaddon": {
       "name": "Abaddon",
@@ -528,6 +528,7 @@
         {"name":"Bare Natures Prophet","categoryId":"heroes","styleLabel":null,"slots":["arms","back","head","misc","weapon"]},
         {"name":"Blue Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Fire Natures Prophet","categoryId":"heroes","styleLabel":null,"slots":["misc","arms","back","head","weapon"]},
+        {"name":"Golden Natures Prophet","categoryId":"heroes","styleLabel":null,"slots":["misc","arms","back","shoulder","head","legs","weapon"]},
         {"name":"Green Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]},
         {"name":"Natures Prophet Allfather","categoryId":"heroes","styleLabel":null,"slots":["misc","arms","back","head","weapon"]},
         {"name":"Natures Prophet Farm Champion","categoryId":"heroes","styleLabel":null,"slots":["misc","arms","back","head","weapon"]},
@@ -1346,7 +1347,8 @@
       "name": "Ringmaster",
       "mods": [
         {"name":"Harrows Harvest Ringmaster","categoryId":"heroes","styleLabel":null,"slots":["arms","belt","head","weapon"]},
-        {"name":"Joker Ringmaster","categoryId":"heroes","styleLabel":null,"slots":["arms","head","weapon"]}
+        {"name":"Joker Ringmaster","categoryId":"heroes","styleLabel":null,"slots":["arms","head","weapon"]},
+        {"name":"Ringmaster Ibalai","categoryId":"heroes","styleLabel":null,"slots":["belt"]}
       ]
     },
     "rubick": {
@@ -1822,6 +1824,7 @@
         {"name":"Venomancer Peashooter","categoryId":"heroes","styleLabel":null,"slots":["misc"]},
         {"name":"Venomancer Poisonous Assassin","categoryId":"heroes","styleLabel":null,"slots":["arms","misc","shoulder","tail"]},
         {"name":"Venomancer Poisonous Assassin","categoryId":"heroes","styleLabel":"Purple","slots":["arms","misc","shoulder","tail"]},
+        {"name":"Venomancer Zuzik","categoryId":"heroes","styleLabel":null,"slots":["arms","misc","shoulder","tail"]},
         {"name":"Yellow Diretide Ranged Attack","categoryId":"ranged-attack","styleLabel":null,"slots":[]}
       ]
     },
