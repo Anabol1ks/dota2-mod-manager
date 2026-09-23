@@ -25,7 +25,7 @@ registerView('presets', () => renderPresets());
 // Pre-flight for sharing: shows what travels as a catalog reference (free) and what has to
 // go in as bytes, so a 190 MB file is a choice and not a surprise. Returns the export
 // options, or null if cancelled.
-function shareDialog(plan) {
+function shareDialog(plan, preset) {
   const heavy = [];
   for (const e of plan.entries) {
     if (e.kind === 'embedded') heavy.push(e);
@@ -64,7 +64,7 @@ function shareDialog(plan) {
           </div>` : ''}
         ${gone ? `<div class="share-line muted"><span class="ms">block</span><div>${gone} ${plural(gone, 'мод не получится передать', 'мода не получится передать', 'модов не получится передать')}</div></div>` : ''}
         <input class="input" id="shareAuthor" placeholder="${L`Твой ник (необязательно)`}" maxlength="80" value="${esc(state.settings?.account?.username || '')}">
-        <input class="input" id="shareNote" placeholder="${L`Пара слов о сборке (необязательно)`}" maxlength="200">
+        <input class="input" id="shareNote" placeholder="${L`Пара слов о сборке (необязательно)`}" maxlength="200" value="${esc(preset?.note || '')}">
         <div class="share-total">${L`Размер файла:`} <b id="shareSize"></b></div>
         <div class="confirm-actions">
           <button class="btn" data-c="no">${L`Отмена`}</button>
@@ -372,6 +372,7 @@ export async function renderPresets() {
           <button class="btn btn-sm btn-primary" data-apply="${p.id}"><span class="ms">fact_check</span>${L`Проверить изменения`}</button>
           <button class="btn btn-sm" data-share="${p.id}" title="${esc(linkTitle)}"><span class="ms">ios_share</span>${L`Поделиться`}</button>
         </div>
+        ${p.note ? `<div class="preset-note">${esc(p.note)}</div>` : ''}
         ${presetBodyHtml(recs, absent)}`;
     }
     list.appendChild(card);
@@ -419,6 +420,7 @@ export async function renderPresets() {
     return [
       { label: L`Обновить по текущему состоянию`, icon: 'save', onPick: () => updatePreset(p.id) },
       { label: L`Переименовать`, icon: 'edit', onPick: () => renamePreset(p) },
+      { label: p.note ? L`Изменить описание` : L`Добавить описание`, icon: 'notes', onPick: () => editPresetNote(p) },
       { separator: true },
       { label: L`Удалить`, icon: 'delete', danger: true, onPick: () => deletePreset(p) },
     ];
@@ -434,7 +436,7 @@ export async function renderPresets() {
       const plan = await window.api.presets.exportPlan(b.dataset.share);
       if (plan.error) { toast(plan.error, 'error', 6000); return; }
       if (!plan.entries.length) { toast(L`В пресете нет модов`, 'warn'); return; }
-      const opts = await shareDialog(plan);
+      const opts = await shareDialog(plan, preset);
       if (!opts) return;
       const r = await window.api.presets.exportFile(b.dataset.share, opts);
       if (r.cancelled) return;
@@ -474,6 +476,17 @@ async function renamePreset(p) {
   if (!name) return;
   const r = await window.api.presets.rename(p.id, name);
   if (r.error) { toast(r.error, 'error', 6000); return; }
+  renderPresets();
+}
+
+async function editPresetNote(p) {
+  const note = await promptDialog(L`Коротко опиши эту сборку`, {
+    placeholder: L`Напр. «Тёмная минималистичная тема для вечерних игр»`, value: p.note || '', okLabel: L`Сохранить описание`, allowEmpty: true,
+  });
+  if (note === null) return;
+  const r = await window.api.presets.setNote(p.id, note);
+  if (r.error) { toast(r.error, 'error', 6000); return; }
+  toast(r.note ? L`Описание сохранено` : L`Описание очищено`, 'ok');
   renderPresets();
 }
 
