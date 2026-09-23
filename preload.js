@@ -135,6 +135,7 @@ contextBridge.exposeInMainWorld('api', {
     runTool: (dirName) => ipcRenderer.invoke('misc:runTool', dirName),
   },
   diag: {
+    check: () => ipcRenderer.invoke('diag:check'),
     export: () => ipcRenderer.invoke('diag:export'),
     reportError: (msg) => ipcRenderer.send('diag:rendererError', msg),
   },
