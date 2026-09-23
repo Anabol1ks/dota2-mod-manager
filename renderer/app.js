@@ -78,6 +78,30 @@ $('#launchBtn')?.addEventListener('click', async () => {
   toast(state.masterOff ? L`Запуск Dota 2 без модов…` : L`Запуск Dota 2 с модами…`);
 });
 
+// A reversible one-click route back to an ordinary Dota launch.  It never deletes a mod or a
+// profile: the main process turns the managed files off and restores the originals it backed up.
+$('#cleanLaunchBtn')?.addEventListener('click', async () => {
+  if (!state.settings?.dotaPathValid) { toast(L`Сначала укажи путь к Dota 2 в настройках`, 'warn'); return; }
+  const clean = await confirmDialog(L`Выключить все моды, восстановить оригинальные файлы Dota 2 и запустить игру?`, {
+    okLabel: L`Запустить чистую Dota`, danger: false,
+  });
+  if (!clean) return;
+  const btn = $('#cleanLaunchBtn');
+  btn.disabled = true;
+  const r = await window.api.patch.restoreCleanState();
+  btn.disabled = false;
+  if (r.error) { toast(r.error, 'error'); return; }
+  state.masterOff = true;
+  state.settings = { ...state.settings, schemaPatch: false };
+  paintMasterSwitch();
+  await Promise.all([refreshCosmeticSlots(), refreshPatchState()]);
+  invalidateViews();
+  if (state.view === 'catalog' && state.activeCategory.startsWith(COSMETIC_PREFIX)) state.activeCategory = 'all';
+  if (state.view === 'catalog' || state.view === 'library') render();
+  await window.api.game.launch();
+  toast(L`Чистая Dota 2 восстановлена и запущена`);
+});
+
 // Discord account in the title bar. Empty (and invisible) when the build has no client id,
 // so a user never meets a sign-in button that cannot work.
 function paintAccount() {
