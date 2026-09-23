@@ -741,6 +741,11 @@ const EN = {
   'Проверка не нашла проблем': 'The check found no problems',
   'Путь к Dota, текущие моды и состояние менеджера выглядят нормально.':
     'The Dota path, current mods and manager state look normal.',
+  'Последние возвраты к чистой Dota': 'Recent returns to clean Dota',
+  'готово': 'done',
+  'мод отключён': 'mod disabled',
+  'мода отключено': 'mods disabled',
+  'модов отключено': 'mods disabled',
   'Экспортировать отчёт': 'Export report',
   'Отчёт сохранён': 'Report saved',
 };
