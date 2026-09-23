@@ -1065,8 +1065,8 @@ function registerIpc() {
 
   // ----- what the app was told from the network ----- (src/ipc-game.js)
   registerGameIpc({
-    blocked, diag, dotaIsRunning, gameIcons, icons, library, modPreviews, remoteConfig,
-    repairAfterPatch, schemaService, settings, toolchain,
+    applyMasterToCursors, blocked, diag, dotaIsRunning, gameIcons, icons, installer, library,
+    modPreviews, refreshPresence, remoteConfig, repairAfterPatch, schemaService, settings, toolchain,
     patchRepair: () => patchRepair,
     setPatchRepair,
   });
