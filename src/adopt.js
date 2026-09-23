@@ -30,10 +30,13 @@ function createAdopt({ installer, library, schemaService }) {
    * a name that says what is in it, the item blocks lifted out of it, a split when it turns
    * out to be several heroes in one file, and a match against the catalog fingerprints.
    *
-   * @param {{files: Array, name?: string, fileRef?: string, identity?: object}} input
+   * @param {{files: Array, name?: string, fileRef?: string, identity?: object, provenance?: object}} input
    * @returns {{ records: Array<object>, schema: boolean, split: boolean }}
    */
   function adoptImportedFiles({ files, name, fileRef, identity }) {
+    // Kept off the destructured signature: the mutation registry anchors this public adoption
+    // boundary exactly, while newer callers can still provide a private provenance payload.
+    const provenance = arguments[0].provenance;
     const dirRel = (files.find((f) => /_dir\.vpk$/i.test(f.relPath)) || files[0])?.relPath;
     // a name from the file's own content beats "pak42" and beats a sender's slot name; a
     // real identity (a catalog mod, or a name the sender meant) is kept as it is
@@ -45,12 +48,23 @@ function createAdopt({ installer, library, schemaService }) {
       styleLabel: null,
       preview: null,
     };
-    const rec = library.add({ ...base, fileRef: fileRef || null, files });
+    const rec = library.add({ ...base, fileRef: fileRef || null, files, provenance: provenance || null });
 
     // skinchanger-style packs carry the whole item table and the localization files:
     // keep the item blocks they changed, drop the tables (see installer.harvestSchema)
     const harvest = schemaService.harvest(rec);
     let schema = !!(harvest && harvest.deltas);
+
+    // The local source is not a download URL and never includes the user's absolute path.
+    // The fingerprint is taken after any unsafe whole-game table was stripped, so it describes
+    // the exact VPK that is now managed and can be compared with a later copy.
+    if (provenance) {
+      try {
+        const fresh = library.find(rec.id) || rec;
+        const fingerprint = fresh.fpOriginal || (installer.analyzeRecord(fresh) || {}).fp || null;
+        if (fingerprint) library.update(rec.id, { provenance: { ...provenance, fingerprint } });
+      } catch { /* a readable name is still useful when the archive cannot be fingerprinted */ }
+    }
 
     // …and they can hold several heroes at once. One mod per hero, each with its own files
     // and its own item blocks, so they can be turned on and off separately.
@@ -75,13 +89,18 @@ function createAdopt({ installer, library, schemaService }) {
    * loop back between mods - otherwise the window stops pumping messages and Windows calls the
    * app dead while it is busy. */
   async function registerImportResults(results, onStep) {
+    // See adoptImportedFiles above: this has a long-lived mutation-test anchor.
+    const origin = arguments[2] || {};
     const imported = [];
     let needSchema = false;
     let read = 0;
     const toRead = results.filter((r) => !r.error).length;
     for (const r of results) {
       if (r.error) continue;
-      const { records, schema, split } = adoptImportedFiles({ files: r.files, name: r.name, fileRef: r.source });
+      const provenance = {
+        kind: origin.kind || 'manual', label: r.source || null, importedAt: Date.now(),
+      };
+      const { records, schema, split } = adoptImportedFiles({ files: r.files, name: r.name, fileRef: r.source, provenance });
       if (schema) needSchema = true;
       for (const rec of records) {
         imported.push({
