@@ -98,6 +98,13 @@ contextBridge.exposeInMainWorld('api', {
     extractMembers: (packId, memberIds) => ipcRenderer.invoke('packs:extractMembers', packId, memberIds),
     disband: (packId) => ipcRenderer.invoke('packs:disband', packId),
   },
+  workshop: {
+    resolve: (url) => ipcRenderer.invoke('workshop:resolve', url),
+    list: () => ipcRenderer.invoke('workshop:list'),
+    save: (card) => ipcRenderer.invoke('workshop:save', card),
+    addToPreset: (workshopId, presetId) => ipcRenderer.invoke('workshop:addToPreset', workshopId, presetId),
+    importLocal: (workshopId, mode) => ipcRenderer.invoke('workshop:importLocal', workshopId, mode),
+  },
   presets: {
     list: () => ipcRenderer.invoke('presets:list'),
     save: (name) => ipcRenderer.invoke('presets:save', name),

@@ -7,7 +7,7 @@
        moving every relative URL on the page to another host. Navigation itself is refused
        in main.js (see createWindow), which is the part CSP has no say over. -->
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://raw.githubusercontent.com https://cdn.dota2modmanager.com data:; media-src https://raw.githubusercontent.com https://cdn.dota2modmanager.com blob:; connect-src 'self'; object-src 'none'; frame-src 'none'; child-src 'none'; form-action 'none'; base-uri 'none'">
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://raw.githubusercontent.com https://cdn.dota2modmanager.com https://images.steamusercontent.com https://steamuserimages-a.akamaihd.net data:; media-src https://raw.githubusercontent.com https://cdn.dota2modmanager.com blob:; connect-src 'self'; object-src 'none'; frame-src 'none'; child-src 'none'; form-action 'none'; base-uri 'none'">
   <title>Loadout Lab</title>
   <!-- Order matters: tokens define the scales, base and shell set the ground
        rules, component files follow. Adding a file means adding it here. -->
@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="styles/guide.css">
   <link rel="stylesheet" href="styles/library.css">
   <link rel="stylesheet" href="styles/presets.css">
+  <link rel="stylesheet" href="styles/workshop.css">
   <link rel="stylesheet" href="styles/settings.css">
   <link rel="stylesheet" href="styles/feedback.css">
   <link rel="stylesheet" href="styles/transitions.css">
@@ -50,6 +51,7 @@
         <button class="tb-tab active" data-view="catalog" data-i18n="Каталог">Catalog</button>
         <button class="tb-tab" data-view="library" data-i18n="Мои моды">My mods<span class="tb-badge" id="libCount"></span></button>
         <button class="tb-tab" data-view="presets" data-i18n="Пресеты">Presets</button>
+        <button class="tb-tab" data-view="workshop">Workshop</button>
         <button class="tb-tab" data-view="settings" data-i18n="Настройки">Settings</button>
       </nav>
 

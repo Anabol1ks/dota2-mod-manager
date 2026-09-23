@@ -478,6 +478,17 @@ const EN = {
   'Ещё не применялся': 'Not applied yet',
   'Последнее применение: {0}': 'Last applied: {0}',
   'Открыть ChangeSet без применения': 'Open ChangeSet without applying',
+
+  // ---------- Workshop Link ----------
+  'Сначала создай профиль': 'Create a profile first', 'Выбери профиль…': 'Choose a profile…', 'Dota 2 · AppID 570 подтверждён': 'Dota 2 · AppID 570 verified', '{0} {1} привязано': '{0} {1} linked',
+  'AppID 570 указан в ссылке; метаданные Steam недоступны': 'AppID 570 is in the link; Steam metadata is unavailable', 'Метаданные Steam недоступны — AppID проверить не удалось': 'Steam metadata is unavailable — AppID could not be verified',
+  'Сохранить карточку': 'Save card', 'Автор не указан': 'Author unavailable', 'Открыть в Steam': 'Open in Steam', 'Сохранить в профиль': 'Save to profile', 'Привязать локальный мод': 'Link local mod', 'Выбери профиль': 'Choose a profile',
+  'Workshop-карточка сохранена': 'Workshop card saved', 'Workshop-карточка добавлена в профиль': 'Workshop card added to profile', 'Проверить ссылку': 'Check link', 'Только ссылка и публичные метаданные': 'Link and public metadata only',
+  'Workshop-ссылок пока нет': 'No Workshop links yet', 'Вставь ссылку Steam Workshop': 'Paste a Steam Workshop link', 'Импорт завершён, но мод для привязки не найден': 'Import finished, but no local mod was found to link',
+  'Файл выбираешь ты сам. Workshop ничего не скачивает: используется обычный проверяемый импорт Loadout Lab.': 'You choose the file yourself. Workshop downloads nothing: Loadout Lab uses its normal validated import.',
+  'Сохрани ссылку Steam Workshop как источник и при желании привяжи к ней свой локальный мод. Loadout Lab не подписывается, не авторизуется в Steam и не скачивает содержимое Workshop.': 'Save a Steam Workshop link as provenance and optionally link your own local mod. Loadout Lab does not subscribe, sign in to Steam, or download Workshop content.',
+  'Добавление карточки не меняет файлы Dota 2. Локальный файл импортируется только после отдельного выбора.': 'Adding a card does not change Dota 2 files. A local file is imported only after a separate explicit choice.',
+  'Вставь ссылку на страницу Dota 2 Workshop. Если Steam отдаст метаданные, здесь появятся название, автор и превью; иначе останутся ID и ссылка.': 'Paste a Dota 2 Workshop page link. If Steam returns metadata, the title, author and preview appear here; otherwise the ID and link remain.',
   'Своих модов нет на этом компьютере, из каталога их не вернуть: {0}': 'Your own mods are not on this computer, and the catalog cannot bring them back: {0}',
   'Удалить пресет «{0}»?': 'Delete preset «{0}»?',
 

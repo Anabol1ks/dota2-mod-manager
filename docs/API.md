@@ -55,6 +55,7 @@ the code, not in this page.
 | [`src/updater.js`](#srcupdaterjs) | Where an installed copy looks for a new version, and on which channel. |
 | [`src/vpk.js`](#srcvpkjs) | Minimal reader for the index of Source-engine VPK "_dir" files (v1/v2). |
 | [`src/vtex.js`](#srcvtexjs) | The picture inside a compiled Source 2 texture, when it is already a picture. |
+| [`src/workshop.js`](#srcworkshopjs) | Dota 2's Steam application id, required for every verified Workshop card. |
 
 ## src/adopt.js
 
@@ -3430,3 +3431,63 @@ function pngFromVtex(buf)
 @param {Buffer} buf contents of a .vtex_c
 @returns {Buffer|null} the PNG file it carries, or null when it carries pixels instead
 ```
+
+## src/workshop.js
+
+Dota 2's Steam application id, required for every verified Workshop card.
+
+### `DOTA_APP_ID`
+
+```js
+const DOTA_APP_ID = 570
+```
+
+Dota 2's Steam application id, required for every verified Workshop card.
+
+### `DETAILS_URL`
+
+```js
+const DETAILS_URL = 'https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/'
+```
+
+Public metadata endpoint; it returns item facts, not Workshop file bytes.
+
+### `WorkshopLinkError`
+
+```js
+class WorkshopLinkError extends Error
+```
+
+A parse/validation error carrying a stable code for the IPC layer to localise.
+
+### `parseWorkshopUrl`
+
+```js
+function parseWorkshopUrl(input)
+```
+
+Parse one HTTPS Steam Community Workshop URL and return its canonical numeric identity.
+
+### `resolveWorkshopLink`
+
+```js
+async function resolveWorkshopLink(input, { fetchImpl = globalThis.fetch, timeoutMs = 12000 } = {})
+```
+
+Resolve public metadata when possible; otherwise return the parsed ID-only fallback card.
+
+### `sanitizeWorkshopCard`
+
+```js
+function sanitizeWorkshopCard(raw)
+```
+
+Reduce any card-like input to the small path-free shape safe to store or export.
+
+### `safePreviewUrl`
+
+```js
+function safePreviewUrl(value)
+```
+
+Keep only HTTPS preview URLs from Steam's known image hosts.

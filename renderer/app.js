@@ -30,6 +30,7 @@ import { bindHotkeys } from './ui/hotkeys.js';
 import { handleImportResult } from './views/library.js';
 import { loadCatalog } from './views/catalog.js';
 import { handlePresetImport } from './views/presets.js';
+import './views/workshop.js';
 import './views/settings.js';
 
 // A crash the user can't explain is the hardest kind to fix from a support chat. Both land

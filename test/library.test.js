@@ -236,6 +236,38 @@ test('gallery metadata survives recapturing a profile', (t) => {
   assert.equal(saved.mods.length, 2);
 });
 
+test('Workshop id is stored, attached to a profile, and linked to local provenance without losing its fingerprint', (t) => {
+  const { store } = lib(t);
+  const local = store.add(modFields('Local Workshop copy', {
+    categoryId: 'imported',
+    provenance: { kind: 'workshop', label: 'local.vpk', fingerprint: 'fp-local' },
+  }));
+  const card = store.saveWorkshopLink({
+    workshopId: '2482407495',
+    appId: 570,
+    title: 'Siltbreaker Revised',
+    author: 'Brat Pup 9',
+    url: 'https://steamcommunity.com/sharedfiles/filedetails/?id=2482407495',
+    metadataAvailable: true,
+    verifiedDota: true,
+  });
+  assert.equal(card.workshopId, '2482407495');
+  assert.equal(store.listWorkshopLinks()[0].workshopId, '2482407495');
+
+  store.linkWorkshopMods(card.workshopId, [local.id]);
+  assert.equal(store.find(local.id).provenance.workshopId, '2482407495');
+  assert.equal(store.find(local.id).provenance.fingerprint, 'fp-local', 'linking must not replace the import fingerprint');
+
+  const refreshed = store.saveWorkshopLink({ ...card, title: 'Updated Workshop title' });
+  assert.equal(refreshed.title, 'Updated Workshop title');
+  assert.deepEqual(refreshed.linkedModIds, [local.id], 'refreshing metadata must keep the local link');
+
+  store.savePreset('Workshop build');
+  const preset = store.listPresets()[0];
+  assert.ok(store.addWorkshopToPreset(preset.id, card.workshopId));
+  assert.deepEqual(store.presetWorkshopCards(preset).map((x) => x.workshopId), ['2482407495']);
+});
+
 test('renaming and deleting a build', (t) => {
   const { store } = lib(t);
   store.savePreset('Before');

@@ -97,13 +97,19 @@ function createAdopt({ installer, library, schemaService }) {
     const toRead = results.filter((r) => !r.error).length;
     for (const r of results) {
       if (r.error) continue;
+      const workshopId = /^\d{1,20}$/.test(String(origin.workshopId || '')) ? String(origin.workshopId) : null;
       const provenance = {
         kind: origin.kind || 'manual', label: r.source || null, importedAt: Date.now(),
+        ...(workshopId ? {
+          workshopId,
+          workshopUrl: `https://steamcommunity.com/sharedfiles/filedetails/?id=${workshopId}`,
+        } : {}),
       };
       const { records, schema, split } = adoptImportedFiles({ files: r.files, name: r.name, fileRef: r.source, provenance });
       if (schema) needSchema = true;
       for (const rec of records) {
         imported.push({
+          id: rec.id,
           name: rec.name,
           relPath: rec.files[0].relPath,
           merged: split ? 0 : r.merged || 0,

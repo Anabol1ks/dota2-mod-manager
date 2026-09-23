@@ -78,6 +78,38 @@
   border-radius: var(--radius-xs);
   background: var(--surface-hover);
 }
+.profile-workshop {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.profile-workshop-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+.profile-workshop-label .ms { font-size: 14px; color: var(--primary-soft); }
+.profile-workshop-chip {
+  max-width: 220px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--bg-elev);
+  color: var(--text-muted);
+  padding: 3px 8px;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-workshop-chip:hover { color: var(--text); border-color: var(--border-strong); }
+.profile-workshop-id { color: var(--text-faint); margin-left: 3px; }
 .preset-actions {
   display: flex;
   flex-wrap: wrap;

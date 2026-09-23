@@ -79,6 +79,7 @@ function registerPresetsIpc({
         modIds: members.filter((m) => m.rec).map((m) => m.rec.id),
         absent: members.filter((m) => !m.rec).map((m) => m.identity),
         link: { count: mods.length, skipped },
+        workshop: library.presetWorkshopCards(p),
         // The gallery needs a small status chip, not another source of truth. Keep the full
         // list of changes behind its own IPC call; this summary is enough to find a profile
         // that already matches the current collection without writing anywhere.
@@ -214,6 +215,7 @@ function registerPresetsIpc({
         author: { name: (opts && String(opts.author || '').slice(0, 80)) || '' },
         app: app.getVersion(),
         catalogFetchedAt: catalog.cacheInfo().fetchedAt,
+        workshop: library.presetWorkshopCards(preset),
       }, entries);
       sendProgress({ type: 'done', label: preset.name });
       return { ok: true, path: written.path, size: written.size };

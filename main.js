@@ -60,6 +60,7 @@ const { settingsViewFor } = require('./src/settings-view');
 const { registerSettingsIpc } = require('./src/ipc-settings');
 const { registerGameIpc } = require('./src/ipc-game');
 const { registerDiagnosticsIpc } = require('./src/ipc-diagnostics');
+const { registerWorkshopIpc } = require('./src/ipc-workshop');
 
 /* Presets and sharing, wired once the services they use exist. Assigned in whenReady
  * below; every call site reads it late, which is the same lifetime the bare functions had
@@ -781,8 +782,9 @@ async function runImport(take, input, origin = {}) {
   }
 }
 
-const importVpkPaths = (paths, kind = 'manual') => runImport(
-  importer.importVpks, Array.isArray(paths) ? paths : [], { kind },
+const importVpkPaths = (paths, origin = 'manual') => runImport(
+  importer.importVpks, Array.isArray(paths) ? paths : [],
+  typeof origin === 'string' ? { kind: origin } : origin,
 );
 // from raw bytes: the drag-and-drop fallback for when a real path cannot be resolved
 const importVpkBuffers = (items) => runImport(
@@ -817,6 +819,7 @@ const PRESENCE_VIEWS = {
   catalog: 'Смотрит каталог модов',
   library: 'В своей библиотеке',
   presets: 'Собирает пресет',
+  workshop: 'Смотрит Workshop',
   cosmetics: 'Выбирает косметику',
   tools: 'В инструментах',
   guides: 'Читает гайды',
@@ -1052,6 +1055,7 @@ function registerIpc() {
     // read late: Steam's verify rewrites this while the app is running
     verifyStuck: () => verifyStuck,
   });
+  registerWorkshopIpc({ library, importVpkPaths, win: () => win });
 
   // ----- launch + master mods switch -----
 

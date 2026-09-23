@@ -10,7 +10,7 @@
  * it into src/ or main.js would bundle main-process code into the page, or fail to load and
  * leave the screen blank.
  *
- * Measured on 2026-09-16: thirteen modules in src/ reach Electron, every one of them directly
+ * Measured on 2026-09-23: fourteen modules in src/ reach Electron, every one of them directly
  * (the ipc-* modules, discord-auth, mod-preview, presets-service, uninstall-window), and no
  * module reaches it through another. The list below is that measurement. It may shrink - a
  * module that stops needing Electron should come off it - and it may not grow without somebody
@@ -35,6 +35,7 @@ const ELECTRON_USERS = [
   'src/ipc-presets.js',
   'src/ipc-settings.js',
   'src/ipc-window.js',
+  'src/ipc-workshop.js',
   'src/mod-preview.js',
   'src/presets-service.js',
   'src/uninstall-window.js',

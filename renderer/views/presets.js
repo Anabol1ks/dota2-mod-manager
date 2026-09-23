@@ -311,6 +311,20 @@ function presetBodyHtml(recs, absent = []) {
     </details>`;
 }
 
+function profileWorkshopHtml(cards = []) {
+  if (!Array.isArray(cards) || !cards.length) return '';
+  return `
+    <div class="profile-workshop">
+      <span class="profile-workshop-label"><span class="ms">link</span>Workshop</span>
+      ${cards.map((card) => `
+        <button class="profile-workshop-chip" data-workshop-url="${esc(card.url)}"
+                title="${esc(card.title || ('Workshop #' + card.workshopId))}">
+          ${esc(card.title || ('#' + card.workshopId))}
+          <span class="profile-workshop-id">#${esc(card.workshopId)}</span>
+        </button>`).join('')}
+    </div>`;
+}
+
 // a received preset that hasn't been installed yet
 function sharedPresetCardHtml(p) {
   const s = p.status || { installed: 0, download: 0, embedded: 0, free: 0, unavailable: [] };
@@ -329,6 +343,7 @@ function sharedPresetCardHtml(p) {
       <button class="btn btn-sm btn-danger" data-pdel="${p.id}">${L`Удалить`}</button>
     </div>
     ${p.source?.note ? `<div class="preset-note">${esc(p.source.note)}</div>` : ''}
+    ${profileWorkshopHtml(p.workshop)}
     <div class="preset-mods">${bits.join(' · ') || L`нечего устанавливать`}</div>
     ${s.unavailable.length ? `
       <div class="preset-warn"><span class="ms">warning</span>${L`Не найдены ни у тебя, ни в файле:`} ${esc(s.unavailable.slice(0, 5).join(', '))}${s.unavailable.length > 5 ? '…' : ''}</div>` : ''}`;
@@ -400,6 +415,7 @@ export async function renderPresets() {
           ${absent.length ? `<span class="text-meta preset-absent" title="${esc(absent.map((a) => a.name).join(', '))}">${L`${absent.length} не установлено`}</span>` : ''}
         </div>
         ${p.note ? `<div class="preset-note profile-description">${esc(p.note)}</div>` : ''}
+        ${profileWorkshopHtml(p.workshop)}
         ${presetBodyHtml(recs, absent)}
         <div class="preset-actions">
           <button class="btn btn-sm" data-changeset="${p.id}" title="${esc(L`Открыть ChangeSet без применения`)}"><span class="ms">fact_check</span>ChangeSet</button>
@@ -418,6 +434,10 @@ export async function renderPresets() {
     renderPresets();
   });
   $('#importPresetBtn').addEventListener('click', async () => handlePresetImport(await window.api.presets.importDialog()));
+
+  list.querySelectorAll('[data-workshop-url]').forEach((b) => {
+    b.addEventListener('click', () => window.api.misc.openExternal(b.dataset.workshopUrl));
+  });
 
   list.querySelectorAll('[data-pin]').forEach((b) => {
     b.addEventListener('click', async () => {

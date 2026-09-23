@@ -148,6 +148,20 @@ test('a manual import records its local source and its resulting content fingerp
   assert.deepEqual(records[0].provenance, { ...provenance, fingerprint: 'sha256:mod-content' });
 });
 
+test('a Workshop import keeps the Workshop id beside the resulting fingerprint', async (t) => {
+  const { registerImportResults, library } = stand(t, { fingerprint: 'sha256:workshop-copy' });
+
+  const out = await registerImportResults([
+    { source: 'local-copy_dir.vpk', name: 'local copy', files: LANG('pak10') },
+  ], null, { kind: 'workshop', workshopId: '2482407495' });
+
+  const rec = library.find(out.imported[0].id);
+  assert.equal(rec.provenance.kind, 'workshop');
+  assert.equal(rec.provenance.workshopId, '2482407495');
+  assert.equal(rec.provenance.fingerprint, 'sha256:workshop-copy');
+  assert.equal(rec.provenance.workshopUrl, 'https://steamcommunity.com/sharedfiles/filedetails/?id=2482407495');
+});
+
 test('a batch registers what landed and hands back what did not', (t) => {
   const { registerImportResults } = stand(t, { contentName: 'Pudge Hook' });
 
