@@ -353,6 +353,11 @@ export async function renderPresets() {
       // or never installed on this machine. Saying so beats a count that quietly shrank.
       const absent = p.absent || [];
       const link = p.link || { count: 0, skipped: [] };
+      const summary = p.changeSet?.summary;
+      const stateChip = !summary ? ''
+        : summary.missing ? `<span class="profile-state missing"><span class="ms">cloud_off</span>${L`Отсутствует: ${summary.missing}`}</span>`
+          : !summary.enable && !summary.disable ? `<span class="profile-state active"><span class="ms">check_circle</span>${L`Совпадает с текущим набором`}</span>`
+            : `<span class="profile-state"><span class="ms">sync</span>${L`Включить ${summary.enable} · выключить ${summary.disable}`}</span>`;
       const linkTitle = !link.count
         ? L`В пресете только свои моды — ссылка их не донесёт, отправь файлом`
         : link.skipped.length
@@ -362,6 +367,7 @@ export async function renderPresets() {
         <div class="preset-head">
           <div class="preset-name">${esc(p.name)}</div>
           <span class="text-meta">${recs.length + absent.length} ${plural(recs.length + absent.length, 'мод', 'мода', 'модов')}</span>
+          ${stateChip}
           ${absent.length ? `<span class="text-meta preset-absent" title="${esc(absent.map((a) => a.name).join(', '))}">${L`${absent.length} не установлено`}</span>` : ''}
           <button class="btn btn-sm btn-primary" data-apply="${p.id}"><span class="ms">fact_check</span>${L`Проверить изменения`}</button>
           <button class="btn btn-sm" data-share="${p.id}" title="${esc(linkTitle)}"><span class="ms">ios_share</span>${L`Поделиться`}</button>
