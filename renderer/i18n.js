@@ -673,6 +673,17 @@ const EN = {
   'основано на Dota 2 Mod Manager by TheFleece': 'based on Dota 2 Mod Manager by TheFleece',
   'hanta снял видео о менеджере': 'hanta made a video about the manager',
 
+  // ---------- profile change review (renderer/views/presets.js) ----------
+  'Проверить изменения': 'Review changes',
+  'Изменения для «{0}»': 'Changes for “{0}”',
+  'Сначала посмотри, что поменяется. Ничего ещё не записано.': 'Review what will change. Nothing has been written yet.',
+  '{0} без изменений': '{0} unchanged',
+  'Всё уже совпадает с профилем.': 'Everything already matches this profile.',
+  'Нужно проверить': 'Needs attention',
+  'В профиле есть моды, которых нет на этом компьютере. При применении менеджер попробует вернуть доступные из каталога; свои файлы пропустит.':
+    'This profile has mods that are not on this computer. Applying it will try to restore catalog mods; personal files will be skipped.',
+  'Применить после проверки': 'Apply after review',
+
   // ---------- being uninstalled (renderer/uninstall.js) ----------
   'Удалить Loadout Lab': 'Remove Loadout Lab',
   'Программа будет удалена. Отметь, что забрать вместе с ней.':

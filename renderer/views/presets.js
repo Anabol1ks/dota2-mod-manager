@@ -163,6 +163,58 @@ function flashCopied(btn) {
   }, 5000);
 }
 
+/* A profile used to switch files as soon as its button was pressed. The profile can still be
+ * applied in exactly the same way, but its effects now get a named, read-only stop first:
+ * people can see the difference and decide, instead of inferring it from the saved name.
+ */
+async function changeSetDialog(preset) {
+  let plan;
+  try {
+    plan = await window.api.presets.changeSet(preset.id);
+  } catch (err) {
+    toast(String(err?.message || err), 'error', 6000);
+    return false;
+  }
+  if (plan.error) { toast(plan.error, 'error', 6000); return false; }
+
+  const modRow = (change) => {
+    const enabling = change.type === 'enable';
+    return `<div class="change-row ${enabling ? 'enable' : 'disable'}">
+      <span class="ms">${enabling ? 'toggle_on' : 'toggle_off'}</span>
+      <div class="change-row-copy"><b>${esc(change.mod.name)}</b><span>${enabling ? L`Включить` : L`Выключить`} · ${esc(catName(change.mod.categoryId))}</span></div>
+    </div>`;
+  };
+  const missingRows = plan.missing.slice(0, 6).map((mod) => `
+    <div class="change-row missing"><span class="ms">cloud_off</span><div class="change-row-copy"><b>${esc(mod.name)}</b><span>${esc(catName(mod.categoryId))}</span></div></div>`).join('');
+  const moreMissing = plan.missing.length - Math.min(plan.missing.length, 6);
+  const name = plan.profile?.name || preset.name;
+
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'confirm-overlay';
+    overlay.innerHTML = `
+      <div class="confirm-box change-set-box">
+        <div class="change-set-head"><span class="ms">fact_check</span><div><div class="change-set-title">${L`Изменения для «${name}»`}</div><div class="change-set-sub">${L`Сначала посмотри, что поменяется. Ничего ещё не записано.`}</div></div></div>
+        ${plan.changes.length ? `<div class="change-list">${plan.changes.map(modRow).join('')}</div>` : `<div class="change-set-clean"><span class="ms">check_circle</span>${L`Всё уже совпадает с профилем.`}</div>`}
+        ${plan.summary.unchanged ? `<div class="change-set-meta">${L`${plan.summary.unchanged} без изменений`}</div>` : ''}
+        ${plan.missing.length ? `
+          <div class="change-set-warning"><span class="ms">warning</span><div><b>${L`Нужно проверить`}</b><p>${L`В профиле есть моды, которых нет на этом компьютере. При применении менеджер попробует вернуть доступные из каталога; свои файлы пропустит.`}</p></div></div>
+          <div class="change-list missing-list">${missingRows}${moreMissing ? `<div class="change-set-meta">+${moreMissing}</div>` : ''}</div>` : ''}
+        <div class="confirm-actions">
+          <button class="btn" data-c="no">${L`Отмена`}</button>
+          <button class="btn btn-primary" data-c="yes"><span class="ms">play_arrow</span>${L`Применить после проверки`}</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    const done = (value) => { overlay.remove(); document.removeEventListener('keydown', onKey); resolve(value); };
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) done(false); });
+    overlay.querySelector('[data-c="no"]').addEventListener('click', () => done(false));
+    overlay.querySelector('[data-c="yes"]').addEventListener('click', () => done(true));
+    const onKey = (e) => { if (e.key === 'Escape') done(false); };
+    document.addEventListener('keydown', onKey);
+  });
+}
+
 /* What a preset looks like, instead of what it used to look like.
  *
  * A preset was printed as its mod names joined by dots. At five mods that is a sentence; at
@@ -311,7 +363,7 @@ export async function renderPresets() {
           <div class="preset-name">${esc(p.name)}</div>
           <span class="text-meta">${recs.length + absent.length} ${plural(recs.length + absent.length, 'мод', 'мода', 'модов')}</span>
           ${absent.length ? `<span class="text-meta preset-absent" title="${esc(absent.map((a) => a.name).join(', '))}">${L`${absent.length} не установлено`}</span>` : ''}
-          <button class="btn btn-sm btn-primary" data-apply="${p.id}">${L`Применить`}</button>
+          <button class="btn btn-sm btn-primary" data-apply="${p.id}"><span class="ms">fact_check</span>${L`Проверить изменения`}</button>
           <button class="btn btn-sm" data-share="${p.id}" title="${esc(linkTitle)}"><span class="ms">ios_share</span>${L`Поделиться`}</button>
         </div>
         ${presetBodyHtml(recs, absent)}`;
@@ -330,6 +382,8 @@ export async function renderPresets() {
 
   list.querySelectorAll('[data-apply]').forEach((b) => {
     b.addEventListener('click', async () => {
+      const preset = presets.find((p) => p.id === b.dataset.apply);
+      if (!preset || !await changeSetDialog(preset)) return;
       // Applying can now download the members that are not installed, which takes long enough
       // to press twice. And a channel that rejects must not leave the button lying about it:
       // that is the shape of the bug that made Install look like a hang for two releases.
