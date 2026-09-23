@@ -56,6 +56,8 @@ contextBridge.exposeInMainWorld('api', {
   patch: {
     state: () => ipcRenderer.invoke('patch:state'),
     setEnabled: (on) => ipcRenderer.invoke('patch:setEnabled', on),
+    // One reversible exit: turn off every managed mod and restore the game's original files.
+    restoreCleanState: () => ipcRenderer.invoke('patch:restoreCleanState'),
     refreshSchema: () => ipcRenderer.invoke('schema:refresh'),
     // what was done about the last Dota patch, and the two things the banner can ask for
     repairState: () => ipcRenderer.invoke('patch:repairState'),
