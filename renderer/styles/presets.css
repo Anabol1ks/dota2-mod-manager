@@ -14,6 +14,13 @@
 .preset-head { display: flex; align-items: center; gap: 12px; }
 .preset-name { font-weight: 700; font-size: 15px; flex: 1; font-family: var(--font-head); }
 .preset-mods { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.7; }
+.profile-state {
+  display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;
+  color: var(--text-muted); font-size: 11.5px; font-variant-numeric: tabular-nums;
+}
+.profile-state .ms { font-size: 14px; color: var(--primary-soft); }
+.profile-state.active, .profile-state.active .ms { color: var(--success); }
+.profile-state.missing, .profile-state.missing .ms { color: var(--warning); }
 
 /* ---------- what a preset is made of ---------- */
 /* the covers, because a set of mods is recognised by its pictures long before its names */
