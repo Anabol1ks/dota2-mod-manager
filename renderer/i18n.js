@@ -683,6 +683,9 @@ const EN = {
   'В профиле есть моды, которых нет на этом компьютере. При применении менеджер попробует вернуть доступные из каталога; свои файлы пропустит.':
     'This profile has mods that are not on this computer. Applying it will try to restore catalog mods; personal files will be skipped.',
   'Применить после проверки': 'Apply after review',
+  'Отсутствует: {0}': 'Missing: {0}',
+  'Совпадает с текущим набором': 'Matches the current collection',
+  'Включить {0} · выключить {1}': 'Enable {0} · disable {1}',
 
   // ---------- being uninstalled (renderer/uninstall.js) ----------
   'Удалить Loadout Lab': 'Remove Loadout Lab',
