@@ -116,7 +116,7 @@ export function confirmDialog(message, { okLabel = L`Удалить`, danger = t
 }
 
 // text-input dialog (returns the entered string, or null if cancelled)
-export function promptDialog(message, { placeholder = '', value = '', okLabel = L`ОК` } = {}) {
+export function promptDialog(message, { placeholder = '', value = '', okLabel = L`ОК`, allowEmpty = false } = {}) {
   return new Promise((resolve) => {
     const overlay = document.createElement('div');
     overlay.className = 'confirm-overlay';
@@ -134,10 +134,16 @@ export function promptDialog(message, { placeholder = '', value = '', okLabel = 
     const done = (v) => { overlay.remove(); document.removeEventListener('keydown', onKey); resolve(v); };
     overlay.addEventListener('click', (e) => { if (e.target === overlay) done(null); });
     overlay.querySelector('[data-c="no"]').addEventListener('click', () => done(null));
-    overlay.querySelector('[data-c="yes"]').addEventListener('click', () => done(input.value.trim() || null));
+    overlay.querySelector('[data-c="yes"]').addEventListener('click', () => {
+      const answer = input.value.trim();
+      done(allowEmpty ? answer : answer || null);
+    });
     const onKey = (e) => {
       if (e.key === 'Escape') done(null);
-      if (e.key === 'Enter') done(input.value.trim() || null);
+      if (e.key === 'Enter') {
+        const answer = input.value.trim();
+        done(allowEmpty ? answer : answer || null);
+      }
     };
     document.addEventListener('keydown', onKey);
     input.focus();
