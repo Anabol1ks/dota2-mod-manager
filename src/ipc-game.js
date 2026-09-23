@@ -54,6 +54,11 @@ function registerGameIpc({
     return patchRepair();
   });
 
+  ipcMain.handle('patch:history', () => {
+    const rows = settings.get('cleanRestoreHistory');
+    return Array.isArray(rows) ? rows.slice(0, 20) : [];
+  });
+
   // The one moment the app touches files of the game install: gated on an explicit yes,
   // reversible from the same switch, and every original is backed up in userData first.
   ipcMain.handle('patch:setEnabled', async (e, enabled) => {
@@ -83,7 +88,12 @@ function registerGameIpc({
       const mods = installer.setMasterEnabled(false);
       applyMasterToCursors(false);
       refreshPresence();
-      return { ok: true, modsDisabled: mods.changed || 0, restoredGameFiles: true };
+      const entry = { at: Date.now(), modsDisabled: mods.changed || 0, restoredGameFiles: true };
+      const history = settings.get('cleanRestoreHistory');
+      if (typeof settings.set === 'function') {
+        settings.set('cleanRestoreHistory', [entry, ...(Array.isArray(history) ? history : [])].slice(0, 20));
+      }
+      return { ok: true, modsDisabled: entry.modsDisabled, restoredGameFiles: true };
     } catch (err) {
       return { error: String(err.message || err) };
     }
