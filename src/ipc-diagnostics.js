@@ -40,6 +40,28 @@ function registerDiagnosticsIpc({
     if (rendererErrors().length > 50) rendererErrors().shift();
   });
 
+  // The in-app doctor is deliberately read-only.  It uses the same report builder as the
+  // support archive, but sends the renderer only human-sized verdicts rather than paths,
+  // logs, account data or the installed-mod inventory.
+  ipcMain.handle('diag:check', async () => {
+    try {
+      const doctorExtra = { dotaRunning: await dotaIsRunning() };
+      const { report } = buildReport({
+        settings, library, installer, schemaService, catalog, icons,
+        app: { version: app.getVersion(), logFile: logFile(), userDataDir: app.getPath('userData'), updateError: lastUpdateError() },
+        extra: doctorExtra,
+      });
+      const problems = (report.problems || []).map((p) => ({
+        level: p.level === 'broken' ? 'broken' : 'note',
+        what: String(p.what || '').slice(0, 240),
+        detail: String(p.detail || '').slice(0, 500),
+      }));
+      return { ok: true, healthy: !problems.length, problems };
+    } catch (err) {
+      return { error: String(err.message || err) };
+    }
+  });
+
   /* One button, and inside the archive two reports written for two different readers.
    *
    * SUMMARY.txt is a screen of plain sentences that opens with whether anything is wrong at

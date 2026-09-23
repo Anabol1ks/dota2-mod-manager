@@ -28,7 +28,7 @@ const LANG = (slot) => [{ root: 'lang', relPath: `${slot}_dir.vpk` }];
 function stand(t, how = {}) {
   const {
     contentName = null, subjects = 0, harvest = null, splitInto = null,
-    masterOff = false, analyzeThrows = false,
+    masterOff = false, analyzeThrows = false, fingerprint = null,
   } = how;
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'd2mm-adopt-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
@@ -39,7 +39,7 @@ function stand(t, how = {}) {
     displayNameForFile: (relPath) => { log.push(`name ${relPath}`); return contentName; },
     analyzeRecord: () => {
       if (analyzeThrows) throw new Error('not a vpk this machine can read');
-      return { subjects };
+      return { subjects, fp: fingerprint };
     },
     masterIsOff: () => masterOff,
     setMasterEnabled: (on) => log.push(`master ${on}`),
@@ -137,6 +137,29 @@ test('the item blocks a mod changed are lifted on the way in', (t) => {
 
   assert.equal(out.schema, true);
   assert.ok(log.includes('harvest'));
+});
+
+test('a manual import records its local source and its resulting content fingerprint', (t) => {
+  const { adoptImportedFiles } = stand(t, { fingerprint: 'sha256:mod-content' });
+  const provenance = { kind: 'file', label: 'my-set_dir.vpk', importedAt: 12345 };
+
+  const { records } = adoptImportedFiles({ files: LANG('pak10'), name: 'my set', provenance });
+
+  assert.deepEqual(records[0].provenance, { ...provenance, fingerprint: 'sha256:mod-content' });
+});
+
+test('a Workshop import keeps the Workshop id beside the resulting fingerprint', async (t) => {
+  const { registerImportResults, library } = stand(t, { fingerprint: 'sha256:workshop-copy' });
+
+  const out = await registerImportResults([
+    { source: 'local-copy_dir.vpk', name: 'local copy', files: LANG('pak10') },
+  ], null, { kind: 'workshop', workshopId: '2482407495' });
+
+  const rec = library.find(out.imported[0].id);
+  assert.equal(rec.provenance.kind, 'workshop');
+  assert.equal(rec.provenance.workshopId, '2482407495');
+  assert.equal(rec.provenance.fingerprint, 'sha256:workshop-copy');
+  assert.equal(rec.provenance.workshopUrl, 'https://steamcommunity.com/sharedfiles/filedetails/?id=2482407495');
 });
 
 test('a batch registers what landed and hands back what did not', (t) => {

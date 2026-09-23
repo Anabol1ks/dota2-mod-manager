@@ -81,3 +81,21 @@
 .settings-link { color: var(--primary-soft); cursor: pointer; font-size: var(--text-sm); }
 .settings-block .modal-note { margin-top: var(--space-3); }
 .settings-block .modal-note .btn { margin-left: var(--space-2); }
+
+.restore-history { margin-top: var(--space-3); border-top: 1px solid var(--border); padding-top: var(--space-2); }
+.restore-history-title { display: flex; align-items: center; gap: var(--space-2); color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-1); }
+.restore-history-title .ms { color: var(--primary-soft); font-size: var(--icon-sm); }
+.restore-history-row { display: flex; gap: var(--space-3); align-items: center; padding: 4px 0; color: var(--text-muted); font-size: 11.5px; }
+.restore-history-row > span:first-child { min-width: 160px; font-variant-numeric: tabular-nums; }
+.restore-ok { color: var(--success); margin-left: auto; display: inline-flex; align-items: center; gap: 3px; }
+.restore-ok .ms { font-size: 14px; }
+
+/* Mod Doctor is a verdict list, not the detailed support archive. */
+.doctor-box { max-width: 590px; }
+.doctor-results { display: grid; gap: var(--space-2); }
+.doctor-result { display: flex; gap: var(--space-2); padding: var(--space-2); border-radius: var(--radius-xs); background: var(--bg-elev); }
+.doctor-result > .ms { font-size: var(--icon-md); color: var(--primary-soft); }
+.doctor-result.broken { border-left: 3px solid var(--danger); }
+.doctor-result.broken > .ms { color: var(--danger); }
+.doctor-result > div { display: grid; gap: 2px; }
+.doctor-result span { color: var(--text-muted); font-size: var(--text-sm); line-height: 1.4; }

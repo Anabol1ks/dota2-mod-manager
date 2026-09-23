@@ -25,7 +25,7 @@ registerView('presets', () => renderPresets());
 // Pre-flight for sharing: shows what travels as a catalog reference (free) and what has to
 // go in as bytes, so a 190 MB file is a choice and not a surprise. Returns the export
 // options, or null if cancelled.
-function shareDialog(plan) {
+function shareDialog(plan, preset) {
   const heavy = [];
   for (const e of plan.entries) {
     if (e.kind === 'embedded') heavy.push(e);
@@ -64,7 +64,7 @@ function shareDialog(plan) {
           </div>` : ''}
         ${gone ? `<div class="share-line muted"><span class="ms">block</span><div>${gone} ${plural(gone, 'мод не получится передать', 'мода не получится передать', 'модов не получится передать')}</div></div>` : ''}
         <input class="input" id="shareAuthor" placeholder="${L`Твой ник (необязательно)`}" maxlength="80" value="${esc(state.settings?.account?.username || '')}">
-        <input class="input" id="shareNote" placeholder="${L`Пара слов о сборке (необязательно)`}" maxlength="200">
+        <input class="input" id="shareNote" placeholder="${L`Пара слов о сборке (необязательно)`}" maxlength="200" value="${esc(preset?.note || '')}">
         <div class="share-total">${L`Размер файла:`} <b id="shareSize"></b></div>
         <div class="confirm-actions">
           <button class="btn" data-c="no">${L`Отмена`}</button>
@@ -163,6 +163,58 @@ function flashCopied(btn) {
   }, 5000);
 }
 
+/* A profile used to switch files as soon as its button was pressed. The profile can still be
+ * applied in exactly the same way, but its effects now get a named, read-only stop first:
+ * people can see the difference and decide, instead of inferring it from the saved name.
+ */
+async function changeSetDialog(preset, { allowApply = true } = {}) {
+  let plan;
+  try {
+    plan = await window.api.presets.changeSet(preset.id);
+  } catch (err) {
+    toast(String(err?.message || err), 'error', 6000);
+    return false;
+  }
+  if (plan.error) { toast(plan.error, 'error', 6000); return false; }
+
+  const modRow = (change) => {
+    const enabling = change.type === 'enable';
+    return `<div class="change-row ${enabling ? 'enable' : 'disable'}">
+      <span class="ms">${enabling ? 'toggle_on' : 'toggle_off'}</span>
+      <div class="change-row-copy"><b>${esc(change.mod.name)}</b><span>${enabling ? L`Включить` : L`Выключить`} · ${esc(catName(change.mod.categoryId))}</span></div>
+    </div>`;
+  };
+  const missingRows = plan.missing.slice(0, 6).map((mod) => `
+    <div class="change-row missing"><span class="ms">cloud_off</span><div class="change-row-copy"><b>${esc(mod.name)}</b><span>${esc(catName(mod.categoryId))}</span></div></div>`).join('');
+  const moreMissing = plan.missing.length - Math.min(plan.missing.length, 6);
+  const name = plan.profile?.name || preset.name;
+
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'confirm-overlay';
+    overlay.innerHTML = `
+      <div class="confirm-box change-set-box">
+        <div class="change-set-head"><span class="ms">fact_check</span><div><div class="change-set-title">${L`Изменения для «${name}»`}</div><div class="change-set-sub">${L`Сначала посмотри, что поменяется. Ничего ещё не записано.`}</div></div></div>
+        ${plan.changes.length ? `<div class="change-list">${plan.changes.map(modRow).join('')}</div>` : `<div class="change-set-clean"><span class="ms">check_circle</span>${L`Всё уже совпадает с профилем.`}</div>`}
+        ${plan.summary.unchanged ? `<div class="change-set-meta">${L`${plan.summary.unchanged} без изменений`}</div>` : ''}
+        ${plan.missing.length ? `
+          <div class="change-set-warning"><span class="ms">warning</span><div><b>${L`Нужно проверить`}</b><p>${L`В профиле есть моды, которых нет на этом компьютере. При применении менеджер попробует вернуть доступные из каталога; свои файлы пропустит.`}</p></div></div>
+          <div class="change-list missing-list">${missingRows}${moreMissing ? `<div class="change-set-meta">+${moreMissing}</div>` : ''}</div>` : ''}
+        <div class="confirm-actions">
+          <button class="btn" data-c="no">${allowApply ? L`Отмена` : L`Закрыть`}</button>
+          ${allowApply ? `<button class="btn btn-primary" data-c="yes"><span class="ms">play_arrow</span>${L`Применить после проверки`}</button>` : ''}
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    const done = (value) => { overlay.remove(); document.removeEventListener('keydown', onKey); resolve(value); };
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) done(false); });
+    overlay.querySelector('[data-c="no"]').addEventListener('click', () => done(false));
+    overlay.querySelector('[data-c="yes"]')?.addEventListener('click', () => done(true));
+    const onKey = (e) => { if (e.key === 'Escape') done(false); };
+    document.addEventListener('keydown', onKey);
+  });
+}
+
 /* What a preset looks like, instead of what it used to look like.
  *
  * A preset was printed as its mod names joined by dots. At five mods that is a sentence; at
@@ -175,7 +227,24 @@ function flashCopied(btn) {
  * The full list is still there for anybody who wants to check a specific mod, one click away
  * and grouped, rather than in the way of everybody who does not.
  */
-const STRIP = 12;
+const STRIP = 6;
+
+function sortProfiles(a, b) {
+  // Received profiles are pending actions, so keep them visible before the user's gallery.
+  if (!!a.wanted !== !!b.wanted) return a.wanted ? -1 : 1;
+  if (!!a.pinned !== !!b.pinned) return Number(!!b.pinned) - Number(!!a.pinned);
+  return (b.lastAppliedAt || 0) - (a.lastAppliedAt || 0)
+    || (b.updatedAt || 0) - (a.updatedAt || 0);
+}
+
+function lastAppliedLabel(ts) {
+  if (!ts) return L`Ещё не применялся`;
+  const locale = document.documentElement.lang === 'ru' ? 'ru-RU' : 'en-US';
+  const value = new Intl.DateTimeFormat(locale, {
+    day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit',
+  }).format(new Date(ts));
+  return L`Последнее применение: ${value}`;
+}
 
 function presetThumbHtml(rec) {
   return libThumbHtml(rec, 'preset-thumb');
@@ -242,6 +311,20 @@ function presetBodyHtml(recs, absent = []) {
     </details>`;
 }
 
+function profileWorkshopHtml(cards = []) {
+  if (!Array.isArray(cards) || !cards.length) return '';
+  return `
+    <div class="profile-workshop">
+      <span class="profile-workshop-label"><span class="ms">link</span>Workshop</span>
+      ${cards.map((card) => `
+        <button class="profile-workshop-chip" data-workshop-url="${esc(card.url)}"
+                title="${esc(card.title || ('Workshop #' + card.workshopId))}">
+          ${esc(card.title || ('#' + card.workshopId))}
+          <span class="profile-workshop-id">#${esc(card.workshopId)}</span>
+        </button>`).join('')}
+    </div>`;
+}
+
 // a received preset that hasn't been installed yet
 function sharedPresetCardHtml(p) {
   const s = p.status || { installed: 0, download: 0, embedded: 0, free: 0, unavailable: [] };
@@ -260,13 +343,14 @@ function sharedPresetCardHtml(p) {
       <button class="btn btn-sm btn-danger" data-pdel="${p.id}">${L`Удалить`}</button>
     </div>
     ${p.source?.note ? `<div class="preset-note">${esc(p.source.note)}</div>` : ''}
+    ${profileWorkshopHtml(p.workshop)}
     <div class="preset-mods">${bits.join(' · ') || L`нечего устанавливать`}</div>
     ${s.unavailable.length ? `
       <div class="preset-warn"><span class="ms">warning</span>${L`Не найдены ни у тебя, ни в файле:`} ${esc(s.unavailable.slice(0, 5).join(', '))}${s.unavailable.length > 5 ? '…' : ''}</div>` : ''}`;
 }
 
 export async function renderPresets() {
-  const presets = await window.api.presets.list();
+  const presets = (await window.api.presets.list()).sort(sortProfiles);
   const { installed } = await window.api.mods.list();
   const byId = new Map(installed.map((m) => [m.id, m]));
 
@@ -301,20 +385,43 @@ export async function renderPresets() {
       // or never installed on this machine. Saying so beats a count that quietly shrank.
       const absent = p.absent || [];
       const link = p.link || { count: 0, skipped: [] };
+      const summary = p.changeSet?.summary;
+      const active = !!summary && !summary.missing && !summary.enable && !summary.disable;
+      card.classList.toggle('active', active);
+      card.classList.toggle('pinned', !!p.pinned);
+      const stateChip = !summary ? ''
+        : summary.missing ? `<span class="profile-state missing"><span class="ms">cloud_off</span>${L`Отсутствует: ${summary.missing}`}</span>`
+          : active ? `<span class="profile-state active"><span class="ms">check_circle</span>${L`Активный профиль`}</span>`
+            : `<span class="profile-state"><span class="ms">sync</span>${L`Включить ${summary.enable} · выключить ${summary.disable}`}</span>`;
       const linkTitle = !link.count
         ? L`В пресете только свои моды — ссылка их не донесёт, отправь файлом`
         : link.skipped.length
           ? L`Ссылка донесёт ${link.count} из каталога; свои моды (${link.skipped.length}) в неё не влезут — для них нужен файл`
           : L`Скопировать короткую ссылку на пресет`;
+      const pinTitle = p.pinned ? L`Открепить профиль` : L`Закрепить профиль`;
       card.innerHTML = `
         <div class="preset-head">
-          <div class="preset-name">${esc(p.name)}</div>
-          <span class="text-meta">${recs.length + absent.length} ${plural(recs.length + absent.length, 'мод', 'мода', 'модов')}</span>
-          ${absent.length ? `<span class="text-meta preset-absent" title="${esc(absent.map((a) => a.name).join(', '))}">${L`${absent.length} не установлено`}</span>` : ''}
-          <button class="btn btn-sm btn-primary" data-apply="${p.id}">${L`Применить`}</button>
-          <button class="btn btn-sm" data-share="${p.id}" title="${esc(linkTitle)}"><span class="ms">ios_share</span>${L`Поделиться`}</button>
+          <div class="preset-title-wrap">
+            <div class="preset-name">${esc(p.name)}</div>
+            <div class="profile-meta">
+              <span><span class="ms">inventory_2</span>${recs.length + absent.length} ${plural(recs.length + absent.length, 'мод', 'мода', 'модов')}</span>
+              <span><span class="ms">history</span>${esc(lastAppliedLabel(p.lastAppliedAt))}</span>
+            </div>
+          </div>
+          <button class="profile-pin ${p.pinned ? 'on' : ''}" data-pin="${p.id}" title="${esc(pinTitle)}" aria-label="${esc(pinTitle)}"><span class="ms">star</span></button>
         </div>
-        ${presetBodyHtml(recs, absent)}`;
+        <div class="profile-status-row">
+          ${stateChip}
+          ${absent.length ? `<span class="text-meta preset-absent" title="${esc(absent.map((a) => a.name).join(', '))}">${L`${absent.length} не установлено`}</span>` : ''}
+        </div>
+        ${p.note ? `<div class="preset-note profile-description">${esc(p.note)}</div>` : ''}
+        ${profileWorkshopHtml(p.workshop)}
+        ${presetBodyHtml(recs, absent)}
+        <div class="preset-actions">
+          <button class="btn btn-sm" data-changeset="${p.id}" title="${esc(L`Открыть ChangeSet без применения`)}"><span class="ms">fact_check</span>ChangeSet</button>
+          <button class="btn btn-sm btn-primary" data-apply="${p.id}"><span class="ms">play_arrow</span>${L`Применить`}</button>
+          <button class="btn btn-sm" data-share="${p.id}" title="${esc(linkTitle)}"><span class="ms">ios_share</span>${L`Поделиться`}</button>
+        </div>`;
     }
     list.appendChild(card);
   });
@@ -328,8 +435,31 @@ export async function renderPresets() {
   });
   $('#importPresetBtn').addEventListener('click', async () => handlePresetImport(await window.api.presets.importDialog()));
 
+  list.querySelectorAll('[data-workshop-url]').forEach((b) => {
+    b.addEventListener('click', () => window.api.misc.openExternal(b.dataset.workshopUrl));
+  });
+
+  list.querySelectorAll('[data-pin]').forEach((b) => {
+    b.addEventListener('click', async () => {
+      const preset = presets.find((p) => p.id === b.dataset.pin);
+      if (!preset) return;
+      const r = await window.api.presets.pin(preset.id, !preset.pinned);
+      if (r.error) { toast(r.error, 'error', 6000); return; }
+      renderPresets();
+    });
+  });
+
+  list.querySelectorAll('[data-changeset]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const preset = presets.find((p) => p.id === b.dataset.changeset);
+      if (preset) changeSetDialog(preset, { allowApply: false });
+    });
+  });
+
   list.querySelectorAll('[data-apply]').forEach((b) => {
     b.addEventListener('click', async () => {
+      const preset = presets.find((p) => p.id === b.dataset.apply);
+      if (!preset || !await changeSetDialog(preset)) return;
       // Applying can now download the members that are not installed, which takes long enough
       // to press twice. And a channel that rejects must not leave the button lying about it:
       // that is the shape of the bug that made Install look like a hang for two releases.
@@ -357,8 +487,10 @@ export async function renderPresets() {
     const p = presets.find((x) => x.id === card.querySelector('[data-apply]')?.dataset.apply);
     if (!p) return null;
     return [
+      { label: p.pinned ? L`Открепить профиль` : L`Закрепить профиль`, icon: 'star', onPick: async () => { await window.api.presets.pin(p.id, !p.pinned); renderPresets(); } },
       { label: L`Обновить по текущему состоянию`, icon: 'save', onPick: () => updatePreset(p.id) },
       { label: L`Переименовать`, icon: 'edit', onPick: () => renamePreset(p) },
+      { label: p.note ? L`Изменить описание` : L`Добавить описание`, icon: 'notes', onPick: () => editPresetNote(p) },
       { separator: true },
       { label: L`Удалить`, icon: 'delete', danger: true, onPick: () => deletePreset(p) },
     ];
@@ -374,7 +506,7 @@ export async function renderPresets() {
       const plan = await window.api.presets.exportPlan(b.dataset.share);
       if (plan.error) { toast(plan.error, 'error', 6000); return; }
       if (!plan.entries.length) { toast(L`В пресете нет модов`, 'warn'); return; }
-      const opts = await shareDialog(plan);
+      const opts = await shareDialog(plan, preset);
       if (!opts) return;
       const r = await window.api.presets.exportFile(b.dataset.share, opts);
       if (r.cancelled) return;
@@ -414,6 +546,17 @@ async function renamePreset(p) {
   if (!name) return;
   const r = await window.api.presets.rename(p.id, name);
   if (r.error) { toast(r.error, 'error', 6000); return; }
+  renderPresets();
+}
+
+async function editPresetNote(p) {
+  const note = await promptDialog(L`Коротко опиши эту сборку`, {
+    placeholder: L`Напр. «Тёмная минималистичная тема для вечерних игр»`, value: p.note || '', okLabel: L`Сохранить описание`, allowEmpty: true,
+  });
+  if (note === null) return;
+  const r = await window.api.presets.setNote(p.id, note);
+  if (r.error) { toast(r.error, 'error', 6000); return; }
+  toast(r.note ? L`Описание сохранено` : L`Описание очищено`, 'ok');
   renderPresets();
 }
 

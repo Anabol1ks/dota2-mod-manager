@@ -254,6 +254,7 @@ function presetsService({ catalog, installer, library, schemaService, deployAndA
       if (!manifest.mods.length) return { error: t('В пресете нет модов') };
       const preset = library.addSharedPreset({
         name: manifest.name, note: manifest.note, author: manifest.author, wanted: manifest.mods,
+        workshop: manifest.workshop,
       });
       // the archive has to survive until "Install": its embedded VPKs live nowhere else
       const embeds = (e) => e.kind === 'embedded' || (e.kind === 'pack' && e.members.some((m) => m.kind === 'embedded'));

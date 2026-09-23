@@ -31,6 +31,31 @@ test('a preset written by the app reads back with its mods intact', (t) => {
   assert.equal(readMod(manifest.mods[1].file).toString(), 'vpk bytes here');
 });
 
+test('Workshop cards travel in a preset without local paths or internal record ids', (t) => {
+  const out = tempFile(t, 'workshop.d2mm');
+  share.writePresetFile(out, {
+    name: 'Workshop build',
+    workshop: [{
+      workshopId: '2482407495',
+      appId: 570,
+      title: 'Siltbreaker Revised',
+      author: 'Brat Pup 9',
+      previewUrl: 'https://images.steamusercontent.com/ugc/example/preview/',
+      localPath: 'C:\\Users\\Private\\Desktop\\mod.vpk',
+      linkedModIds: ['private-record-id'],
+      provenance: { source: '/home/private/mod.vpk' },
+    }],
+  }, [{ kind: 'catalog', categoryId: 'heroes', name: 'A', styleLabel: null, fp: null }]);
+
+  const { manifest } = share.readPresetFile(out);
+  assert.equal(manifest.workshop.length, 1);
+  assert.equal(manifest.workshop[0].workshopId, '2482407495');
+  const json = JSON.stringify(manifest);
+  assert.equal(json.includes('Private'), false);
+  assert.equal(json.includes('/home/private'), false);
+  assert.equal(json.includes('private-record-id'), false);
+});
+
 test('a zip that is not a preset is refused before anything is read out of it', (t) => {
   const out = tempFile(t, 'random.d2mm');
   const zip = new AdmZip();

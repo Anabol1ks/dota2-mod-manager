@@ -2,11 +2,12 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { sanitizeWorkshopCard } = require('./workshop');
 
 class Library {
   constructor(userDataDir) {
     this.file = path.join(userDataDir, 'manifest.json');
-    this.data = { installed: [], presets: [] };
+    this.data = { installed: [], presets: [], workshopLinks: [] };
     this.load();
   }
 
@@ -14,7 +15,7 @@ class Library {
     try {
       if (fs.existsSync(this.file)) {
         const parsed = JSON.parse(fs.readFileSync(this.file, 'utf-8'));
-        this.data = { installed: [], presets: [], ...parsed };
+        this.data = { installed: [], presets: [], workshopLinks: [], ...parsed };
       }
     } catch {
       // keep defaults; corrupted manifest is preserved as .bak for manual recovery
@@ -41,7 +42,7 @@ class Library {
     ) || null;
   }
 
-  add({ name, categoryId, styleLabel, fileRef, preview, files, kind, members }) {
+  add({ name, categoryId, styleLabel, fileRef, preview, files, kind, members, provenance }) {
     const id = crypto.randomUUID();
     const rec = {
       id,
@@ -56,6 +57,7 @@ class Library {
     };
     if (kind) rec.kind = kind;            // e.g. 'pack' — a combined multi-mod slot
     if (members) rec.members = members;   // pack members: [{ id, name, categoryId, enabled, ... }]
+    if (provenance) rec.provenance = provenance;
     this.data.installed.push(rec);
     this.save();
     return rec;
@@ -106,6 +108,72 @@ class Library {
       for (const f of m.files) out.push({ root: f.root, relPath: f.relPath });
     }
     return out;
+  }
+
+  // ---------- Workshop links ----------
+  // These are bookmarks and provenance, not install sources. Only the fixed public metadata
+  // shape from src/workshop.js is stored; a local path selected for an import never enters it.
+  listWorkshopLinks() {
+    return this.data.workshopLinks || [];
+  }
+
+  saveWorkshopLink(card) {
+    const clean = sanitizeWorkshopCard(card);
+    if (!clean) return null;
+    if (!Array.isArray(this.data.workshopLinks)) this.data.workshopLinks = [];
+    let stored = this.data.workshopLinks.find((x) => x.workshopId === clean.workshopId);
+    if (stored) {
+      const linkedModIds = Array.isArray(stored.linkedModIds) ? stored.linkedModIds : [];
+      Object.assign(stored, clean, { linkedModIds, updatedAt: Date.now() });
+    } else {
+      stored = { ...clean, linkedModIds: [], savedAt: Date.now(), updatedAt: Date.now() };
+      this.data.workshopLinks.push(stored);
+    }
+    this.save();
+    return stored;
+  }
+
+  linkWorkshopMods(workshopId, modIds) {
+    const card = this.listWorkshopLinks().find((x) => x.workshopId === String(workshopId)) || null;
+    if (!card) return null;
+    const ids = [...new Set(Array.isArray(modIds) ? modIds : [])].filter((id) => this.find(id));
+    card.linkedModIds = [...new Set([...(card.linkedModIds || []), ...ids])];
+    for (const id of ids) {
+      const rec = this.find(id);
+      const provenance = {
+        ...(rec.provenance || {}),
+        workshopId: card.workshopId,
+        workshopUrl: card.url,
+      };
+      this.update(id, { provenance });
+    }
+    card.updatedAt = Date.now();
+    this.save();
+    return card;
+  }
+
+  addWorkshopToPreset(presetId, workshopId) {
+    const preset = this.getPreset(presetId);
+    const card = this.listWorkshopLinks().find((x) => x.workshopId === String(workshopId));
+    if (!preset || preset.wanted || !card) return null;
+    preset.workshopIds = [...new Set([...(preset.workshopIds || []), card.workshopId])];
+    preset.updatedAt = Date.now();
+    this.save();
+    return preset;
+  }
+
+  presetWorkshopCards(preset) {
+    const ids = new Set(Array.isArray(preset?.workshopIds) ? preset.workshopIds.map(String) : []);
+    const cards = [
+      ...(Array.isArray(preset?.workshop) ? preset.workshop : []),
+      ...this.listWorkshopLinks().filter((card) => ids.has(card.workshopId)),
+    ].map((card) => sanitizeWorkshopCard(card)).filter(Boolean);
+    const seen = new Set();
+    return cards.filter((card) => {
+      if (seen.has(card.workshopId)) return false;
+      seen.add(card.workshopId);
+      return true;
+    });
   }
 
   // ---------- presets ----------
@@ -174,13 +242,14 @@ class Library {
 
   // A preset that arrived as a .d2mm and hasn't been installed yet: it holds the sender's
   // wish list (`wanted`) instead of local mod ids, plus where the file is stashed.
-  addSharedPreset({ name, note, author, wanted, sourceFile }) {
+  addSharedPreset({ name, note, author, wanted, sourceFile, workshop }) {
     const preset = {
       id: crypto.randomUUID(),
       name,
       modIds: [],
       updatedAt: Date.now(),
       wanted,
+      workshop: (Array.isArray(workshop) ? workshop : []).map(sanitizeWorkshopCard).filter(Boolean),
       source: { note: note || '', author: author || '', file: sourceFile || null, importedAt: Date.now() },
     };
     this.data.presets.push(preset);

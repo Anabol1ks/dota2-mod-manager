@@ -26,6 +26,7 @@ import { paintCosmeticIcons, watchCosmeticIcons } from '../ui/cosmetic-icons.js'
 import { paint } from '../ui/transitions.js';
 import { bindContextMenu } from '../ui/menu.js';
 import { refreshNotices, noticeBannerHtml, bindNotice } from '../ui/notice.js';
+import { provenanceContextItem, provenanceMetaHtml } from '../ui/provenance.js';
 
 const viewRoot = pane('library');
 
@@ -46,8 +47,6 @@ function libMatchesSearch(rec) {
   const q = libSearch.trim().toLowerCase();
   return !q || rec.name.toLowerCase().includes(q) || (rec.members || []).some((m) => m.name.toLowerCase().includes(q));
 }
-
-
 // 2x2 preview grid built from a pack's first members. When not one of them has a picture of
 // its own, four empty boxes say nothing a single "several heroes in one" stand-in wouldn't
 // say better - the same generic image an unsplit multi-hero import falls back to.
@@ -211,7 +210,7 @@ function normalRowHtml(rec, i, masterOff) {
         : libThumbHtml(rec, 'lib-thumb')}
       <div class="lib-info">
         <div class="lib-name">${esc(rec.name)}${rec.styleLabel ? ` <span class="lib-style-label">(${esc(rec.styleLabel)})</span>` : ''}${rec.match ? ` <span class="lib-tag match">${esc(matchLabel(rec.match))}</span>` : rec.info ? ` <span class="lib-tag">${esc(rec.info)}</span>` : ''}${schemaTagHtml(rec)}${coveredTagHtml(rec)}</div>
-        <div class="lib-meta"><span>${esc(catLabel)}</span>${pakFileHtml(rec)}</div>
+        <div class="lib-meta"><span>${esc(catLabel)}</span>${provenanceMetaHtml(rec)}${pakFileHtml(rec)}</div>
       </div>
       <div class="lib-actions">
         ${isFontRec(rec)
@@ -249,6 +248,7 @@ function rowMenuItems(rec) {
     },
     langDir && { label: L`Распаковать в папку`, icon: 'folder_open', onPick: () => unpackRecord(rec.id) },
     rec.subjects >= 2 && { label: L`Разобрать по героям`, icon: 'call_split', onPick: () => splitRecord(rec.id) },
+    provenanceContextItem(rec),
     { separator: true },
     { label: L`Удалить`, icon: 'delete', danger: true, onPick: () => deleteRecord(rec.id) },
   ].filter(Boolean);

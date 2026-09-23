@@ -18,6 +18,7 @@ the code, not in this page.
 | [`src/capture.js`](#srccapturejs) |  |
 | [`src/catalog-signature.js`](#srccatalog-signaturejs) | Making the catalog's own author the only person who can change the catalog. |
 | [`src/catalog.js`](#srccatalogjs) | Catalog: fetch + cache mods.json / constants.json / guides.json from the Dota2PornFx repo |
+| [`src/change-set.js`](#srcchange-setjs) | The difference between a saved profile and what is active right now. |
 | [`src/cursors.js`](#srccursorsjs) | Which cursor set is live, and which look a slot is wearing. |
 | [`src/diagnostics.js`](#srcdiagnosticsjs) | A support report a user can send instead of a round of screenshots: Dota's own path and |
 | [`src/discord-auth.js`](#srcdiscord-authjs) | Sign in with Discord, without a server of our own. |
@@ -54,6 +55,7 @@ the code, not in this page.
 | [`src/updater.js`](#srcupdaterjs) | Where an installed copy looks for a new version, and on which channel. |
 | [`src/vpk.js`](#srcvpkjs) | Minimal reader for the index of Source-engine VPK "_dir" files (v1/v2). |
 | [`src/vtex.js`](#srcvtexjs) | The picture inside a compiled Source 2 texture, when it is already a picture. |
+| [`src/workshop.js`](#srcworkshopjs) | Dota 2's Steam application id, required for every verified Workshop card. |
 
 ## src/adopt.js
 
@@ -336,6 +338,27 @@ on the mod itself. 32 mods still carry the old pair and 26 of those are previews
 whole TI battle-pass row - so a reader that knows only the array shows them with no
 preview at all. The site reads both; folding one into the other here means the rest of the
 app only ever sees the array. The cache on disk keeps whatever the author wrote.
+
+## src/change-set.js
+
+The difference between a saved profile and what is active right now.
+
+This module deliberately does not receive an installer or a game path. A profile needs a
+place to be inspected before it changes anything, and handing the planner write-capable
+services would make that boundary a convention instead of a fact.
+
+### `planChangeSet`
+
+```js
+function planChangeSet({ library, preset })
+```
+
+Describe, without applying, the operations needed to make `preset` current.
+
+```
+@param {{library: Library, preset: object}} input
+@returns {{profile: object, changes: object[], unchanged: object[], missing: object[], summary: object, ready: boolean}}
+```
 
 ## src/cursors.js
 
@@ -3408,3 +3431,63 @@ function pngFromVtex(buf)
 @param {Buffer} buf contents of a .vtex_c
 @returns {Buffer|null} the PNG file it carries, or null when it carries pixels instead
 ```
+
+## src/workshop.js
+
+Dota 2's Steam application id, required for every verified Workshop card.
+
+### `DOTA_APP_ID`
+
+```js
+const DOTA_APP_ID = 570
+```
+
+Dota 2's Steam application id, required for every verified Workshop card.
+
+### `DETAILS_URL`
+
+```js
+const DETAILS_URL = 'https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/'
+```
+
+Public metadata endpoint; it returns item facts, not Workshop file bytes.
+
+### `WorkshopLinkError`
+
+```js
+class WorkshopLinkError extends Error
+```
+
+A parse/validation error carrying a stable code for the IPC layer to localise.
+
+### `parseWorkshopUrl`
+
+```js
+function parseWorkshopUrl(input)
+```
+
+Parse one HTTPS Steam Community Workshop URL and return its canonical numeric identity.
+
+### `resolveWorkshopLink`
+
+```js
+async function resolveWorkshopLink(input, { fetchImpl = globalThis.fetch, timeoutMs = 12000 } = {})
+```
+
+Resolve public metadata when possible; otherwise return the parsed ID-only fallback card.
+
+### `sanitizeWorkshopCard`
+
+```js
+function sanitizeWorkshopCard(raw)
+```
+
+Reduce any card-like input to the small path-free shape safe to store or export.
+
+### `safePreviewUrl`
+
+```js
+function safePreviewUrl(value)
+```
+
+Keep only HTTPS preview URLs from Steam's known image hosts.

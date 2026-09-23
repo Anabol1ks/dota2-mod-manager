@@ -90,6 +90,41 @@ export async function showWhatsNew({ force = false } = {}) {
   window.api.update.notesSeen();
 }
 
+// A read-only result from Mod Doctor.  It is separate from the support report: the app keeps
+// the detailed report private until the user explicitly exports it.
+export function diagnosticsDialog(result) {
+  return new Promise((resolve) => {
+    const problems = Array.isArray(result?.problems) ? result.problems : [];
+    const overlay = document.createElement('div');
+    overlay.className = 'confirm-overlay';
+    overlay.innerHTML = `
+      <div class="confirm-box notes-box doctor-box">
+        <div class="notes-head">
+          <span class="ms">${problems.length ? 'health_and_safety' : 'verified_user'}</span>
+          <div>
+            <div class="notes-title">${problems.length ? L`Найдены замечания` : L`Всё в порядке`}</div>
+            <div class="notes-ver">${problems.length ? L`Проверка ничего не меняла` : L`Проверка не нашла проблем`}</div>
+          </div>
+        </div>
+        <div class="notes-body doctor-results">
+          ${problems.length ? problems.map((p) => `
+            <div class="doctor-result ${p.level === 'broken' ? 'broken' : 'note'}">
+              <span class="ms">${p.level === 'broken' ? 'error' : 'info'}</span>
+              <div><b>${esc(p.what)}</b><span>${esc(p.detail)}</span></div>
+            </div>`).join('') : `<p>${L`Путь к Dota, текущие моды и состояние менеджера выглядят нормально.`}</p>`}
+        </div>
+        <div class="confirm-actions"><button class="btn btn-primary" data-c="ok">${L`Понятно`}</button></div>
+      </div>`;
+    document.body.appendChild(overlay);
+    const done = () => { overlay.remove(); document.removeEventListener('keydown', onKey); resolve(); };
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) done(); });
+    overlay.querySelector('[data-c="ok"]').addEventListener('click', done);
+    const onKey = (e) => { if (e.key === 'Escape' || e.key === 'Enter') done(); };
+    document.addEventListener('keydown', onKey);
+    overlay.querySelector('[data-c="ok"]').focus();
+  });
+}
+
 // ---------- custom confirm dialog ----------
 
 export function confirmDialog(message, { okLabel = L`Удалить`, danger = true } = {}) {
@@ -116,7 +151,7 @@ export function confirmDialog(message, { okLabel = L`Удалить`, danger = t
 }
 
 // text-input dialog (returns the entered string, or null if cancelled)
-export function promptDialog(message, { placeholder = '', value = '', okLabel = L`ОК` } = {}) {
+export function promptDialog(message, { placeholder = '', value = '', okLabel = L`ОК`, allowEmpty = false } = {}) {
   return new Promise((resolve) => {
     const overlay = document.createElement('div');
     overlay.className = 'confirm-overlay';
@@ -134,10 +169,16 @@ export function promptDialog(message, { placeholder = '', value = '', okLabel = 
     const done = (v) => { overlay.remove(); document.removeEventListener('keydown', onKey); resolve(v); };
     overlay.addEventListener('click', (e) => { if (e.target === overlay) done(null); });
     overlay.querySelector('[data-c="no"]').addEventListener('click', () => done(null));
-    overlay.querySelector('[data-c="yes"]').addEventListener('click', () => done(input.value.trim() || null));
+    overlay.querySelector('[data-c="yes"]').addEventListener('click', () => {
+      const answer = input.value.trim();
+      done(allowEmpty ? answer : answer || null);
+    });
     const onKey = (e) => {
       if (e.key === 'Escape') done(null);
-      if (e.key === 'Enter') done(input.value.trim() || null);
+      if (e.key === 'Enter') {
+        const answer = input.value.trim();
+        done(allowEmpty ? answer : answer || null);
+      }
     };
     document.addEventListener('keydown', onKey);
     input.focus();

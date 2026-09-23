@@ -15,12 +15,14 @@ const fs = require('fs');
 const AdmZip = require('adm-zip');
 const { openZip } = require('./safe-zip');
 const { t } = require('./i18n');
+const { sanitizeWorkshopCard } = require('./workshop');
 
 const FORMAT = 'dota2-mod-manager/preset';
 const VERSION = 1;
 const MANIFEST_NAME = 'preset.json';
 const MAX_MANIFEST_BYTES = 1 << 20;   // a manifest is KBs; a megabyte is already absurd
 const MAX_MODS = 500;
+const MAX_WORKSHOP = 100;
 const MOD_FILE_RE = /^mods\/[A-Za-z0-9_-]{1,64}\.vpk$/;
 
 const str = (v, max = 300) => (typeof v === 'string' ? v.slice(0, max) : '');
@@ -71,6 +73,10 @@ function validateManifest(raw) {
   if (!Array.isArray(raw.mods)) throw new Error(t('preset.json повреждён'));
   if (raw.mods.length > MAX_MODS) throw new Error(t('Слишком много модов в пресете'));
   const mods = raw.mods.map((m) => normalizeEntry(m)).filter(Boolean);
+  const workshop = (Array.isArray(raw.workshop) ? raw.workshop : [])
+    .slice(0, MAX_WORKSHOP)
+    .map((card) => sanitizeWorkshopCard(card))
+    .filter(Boolean);
   return {
     format: FORMAT,
     version: raw.version,
@@ -81,6 +87,7 @@ function validateManifest(raw) {
     app: str(raw.app, 20),
     catalogFetchedAt: Number.isFinite(raw.catalogFetchedAt) ? raw.catalogFetchedAt : null,
     mods,
+    workshop,
   };
 }
 
@@ -103,7 +110,11 @@ function writePresetFile(outPath, manifest, entries) {
     ? { ...e, members: e.members.map(place) }
     : place(e)));
 
-  const full = { format: FORMAT, version: VERSION, createdAt: Date.now(), ...manifest, mods };
+  const workshop = (Array.isArray(manifest?.workshop) ? manifest.workshop : [])
+    .slice(0, MAX_WORKSHOP)
+    .map((card) => sanitizeWorkshopCard(card))
+    .filter(Boolean);
+  const full = { format: FORMAT, version: VERSION, createdAt: Date.now(), ...manifest, workshop, mods };
   zip.addFile(MANIFEST_NAME, Buffer.from(JSON.stringify(full, null, 2), 'utf-8'));
   zip.writeZip(outPath);
   return { path: outPath, size: fs.statSync(outPath).size, mods };

@@ -18,9 +18,9 @@
 import { $ } from '../core/dom.js';
 import { state } from '../core/store.js';
 import { registerView, pane } from '../core/router.js';
-import { esc, fmtMB } from '../ui/format.js';
+import { esc, fmtMB, plural } from '../ui/format.js';
 import { toast } from '../ui/toast.js';
-import { showWhatsNew } from '../ui/dialog.js';
+import { diagnosticsDialog, showWhatsNew } from '../ui/dialog.js';
 import { refreshSidebarStatus } from '../ui/statusbar.js';
 import { clampScale, currentScalePct, paintScale, applyScalePct, clampPanelZoom, paintPanels, savePanels } from '../ui/chrome.js';
 import { applyLanguage } from '../ui/language.js';
@@ -37,6 +37,8 @@ export async function renderSettings() {
   const scalePct = Math.round((Number(s.uiScale) || 1) * 100);
   const cacheSize = await window.api.misc.cacheSize();
   const appVersion = await window.api.update.version();
+  let cleanHistory = [];
+  try { cleanHistory = await window.api.patch.history(); } catch { /* older build */ }
   // the Source 2 toolchain: shown as a size and a button, never downloaded on its own
   let vrf = null;
   try { vrf = (await window.api.tools.state()).tools.find((x) => x.name === 'vrf') || null; } catch { /* older build */ }
@@ -140,9 +142,15 @@ export async function renderSettings() {
     <div class="settings-block" style="--i:5">
       <h3>${L`Диагностика`}</h3>
       <div class="settings-row spaced">
+        <button class="btn btn-sm btn-primary" id="diagCheckBtn"><span class="ms">health_and_safety</span>${L`Проверить состояние`}</button>
         <button class="btn btn-sm" id="diagExportBtn"><span class="ms">bug_report</span>${L`Экспортировать отчёт`}</button>
       </div>
-      <div class="settings-hint">${L`Путь к игре, список модов и последние записи журнала в одном файле. Пришли его, если что-то не работает.`}</div>
+      <div class="settings-hint">${L`Проверка только читает состояние и ничего не меняет. Отчёт содержит путь к игре, список модов и журнал — он нужен, если что-то не работает.`}</div>
+      ${cleanHistory.length ? `
+      <div class="restore-history">
+        <div class="restore-history-title"><span class="ms">history</span>${L`Последние возвраты к чистой Dota`}</div>
+        ${cleanHistory.slice(0, 5).map((h) => `<div class="restore-history-row"><span>${new Date(h.at).toLocaleString(window.i18nLocale())}</span><span>${h.modsDisabled || 0} ${plural(h.modsDisabled || 0, 'мод отключён', 'мода отключено', 'модов отключено')}</span><span class="restore-ok"><span class="ms">check_circle</span>${L`готово`}</span></div>`).join('')}
+      </div>` : ''}
     </div>
 
     <div class="settings-block" style="--i:6">
@@ -150,7 +158,7 @@ export async function renderSettings() {
       <div class="settings-row">
         <span class="settings-label">${L`Версия`}</span>
         <span class="num">v${esc(appVersion)}</span>
-        <a class="settings-link" id="repoLink">github.com/TheFleece/dota2-mod-manager</a>
+        <a class="settings-link" id="repoLink">github.com/Anabol1ks/dota2-mod-manager</a>
       </div>
       <div class="settings-row">
         <button class="btn btn-sm" id="whatsNewBtn"><span class="ms">auto_awesome</span>${L`Что нового`}</button>
@@ -162,10 +170,10 @@ export async function renderSettings() {
         <span>${L`hanta снял видео о менеджере`}</span>
         <a class="settings-link" id="thanksLink">youtube.com/@hqnta</a>
       </div>
-      <div class="settings-hint">© 2026 TheFleece · GPL-3.0 · ${L`свободная программа без каких-либо гарантий`}</div>
+      <div class="settings-hint">© 2026 Grigor Ogannisyan · ${L`основано на Dota 2 Mod Manager by TheFleece`} · GPL-3.0 · ${L`свободная программа без каких-либо гарантий`}</div>
     </div>
   `; });
-  $('#repoLink').addEventListener('click', () => window.api.misc.openExternal('https://github.com/TheFleece/dota2-mod-manager'));
+  $('#repoLink').addEventListener('click', () => window.api.misc.openExternal('https://github.com/Anabol1ks/dota2-mod-manager'));
   $('#thanksLink').addEventListener('click', () => window.api.misc.openExternal('https://www.youtube.com/@hqnta'));
   // 48 MB is a real download, so it says so and waits for the press
   $('#toolInstallBtn')?.addEventListener('click', async (ev) => {
@@ -187,6 +195,16 @@ export async function renderSettings() {
     if (r?.cancelled) return;
     if (r?.error) toast(r.error, 'error', 7000);
     else toast(L`Отчёт сохранён`);
+  });
+  $('#diagCheckBtn').addEventListener('click', async (ev) => {
+    ev.currentTarget.disabled = true;
+    try {
+      const r = await window.api.diag.check();
+      if (r?.error) toast(r.error, 'error', 7000);
+      else await diagnosticsDialog(r);
+    } finally {
+      ev.currentTarget.disabled = false;
+    }
   });
 
   // The app language, and only the app: what somebody reads Dota in was decided when they

@@ -185,6 +185,48 @@ test('every handler runs far enough to prove its own names exist', async () => {
   assert.deepEqual(notDefined, [], notDefined.join('; '));
 });
 
+test('clean Dota state restores the game files and turns managed mods off only while the game is closed', async () => {
+  const Module = require('module');
+  const handlers = new Map();
+  const electron = { ipcMain: { handle: (channel, fn) => handlers.set(channel, fn) } };
+  const load = Module._load;
+  Module._load = function stubbed(request, ...rest) {
+    return request === 'electron' ? electron : load.call(this, request, ...rest);
+  };
+  try {
+    const file = path.join(ROOT, 'src', 'ipc-game.js');
+    delete require.cache[require.resolve(file)];
+    const { registerGameIpc } = require(file);
+    const calls = [];
+    registerGameIpc({
+      settings: { get: () => '/dota/game' },
+      dotaIsRunning: async () => false,
+      schemaService: { setEnabled: (on) => { calls.push(`patch ${on}`); return { ok: true }; } },
+      installer: { setMasterEnabled: (on) => { calls.push(`mods ${on}`); return { changed: 3 }; } },
+      applyMasterToCursors: (on) => calls.push(`cursors ${on}`),
+      refreshPresence: () => calls.push('presence'),
+    });
+    assert.deepEqual(await handlers.get('patch:restoreCleanState')(), {
+      ok: true, modsDisabled: 3, restoredGameFiles: true,
+    });
+    assert.deepEqual(calls, ['patch false', 'mods false', 'cursors false', 'presence']);
+
+    handlers.clear();
+    registerGameIpc({
+      settings: { get: () => '/dota/game' },
+      dotaIsRunning: async () => true,
+      schemaService: { setEnabled: () => { throw new Error('must not write'); } },
+      installer: { setMasterEnabled: () => { throw new Error('must not write'); } },
+      applyMasterToCursors: () => { throw new Error('must not write'); },
+      refreshPresence: () => { throw new Error('must not write'); },
+    });
+    assert.match((await handlers.get('patch:restoreCleanState')()).error, /(?:Закрой|Close) Dota 2/);
+  } finally {
+    Module._load = load;
+    delete require.cache[require.resolve(path.join(ROOT, 'src', 'ipc-game.js'))];
+  }
+});
+
 /*
  * And that main.js hands each module everything the module unpacks.
  *

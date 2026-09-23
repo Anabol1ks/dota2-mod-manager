@@ -28,6 +28,13 @@ const EN = {
   'Выбери .vpk файлы модов или .zip с ними': 'Pick mod .vpk files, or a .zip holding them',
   'Моды (.vpk, .zip)': 'Mods (.vpk, .zip)',
   'Выбери папку с модами': 'Pick a folder with mods',
+  'Некорректная ссылка Steam Workshop': 'Invalid Steam Workshop link',
+  'Некорректный Workshop ID': 'Invalid Workshop ID',
+  'Эта Workshop-ссылка не относится к Dota 2': 'This Workshop link is not for Dota 2',
+  'Workshop-карточка не найдена': 'Workshop card not found',
+  'Пресет или Workshop-карточка не найдены': 'Preset or Workshop card not found',
+  'Выбери папку локального мода': 'Pick the local mod folder',
+  'Выбери локальный .vpk или .zip для привязки': 'Pick a local .vpk or .zip to link',
   // the two counted passes of an import, shown on the progress bar
   'Копирование модов': 'Copying mods',
   'Разбор модов': 'Reading mods',

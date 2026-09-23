@@ -1,8 +1,8 @@
 {
-  "name": "dota2-mod-manager",
-  "productName": "Dota 2 Mod Manager",
+  "name": "loadout-lab",
+  "productName": "Loadout Lab",
   "version": "2.7.0",
-  "description": "Desktop mod manager for Dota 2 — browse, install, toggle and preset 1100+ cosmetic mods from the D2PFX catalog",
+  "description": "Personal visual-mod collection manager for Dota 2 — profiles, change planning and restore points",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -28,11 +28,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TheFleece/dota2-mod-manager.git"
+    "url": "https://github.com/Anabol1ks/dota2-mod-manager.git"
   },
-  "author": "TheFleece",
+  "author": "Grigor Ogannisyan",
   "license": "GPL-3.0-or-later",
-  "homepage": "https://github.com/TheFleece/dota2-mod-manager",
+  "homepage": "https://github.com/Anabol1ks/dota2-mod-manager",
   "devDependencies": {
     "electron": "^44.4.3",
     "electron-builder": "^26.15.3",
@@ -45,8 +45,8 @@
     "electron-updater": "^6.3.9"
   },
   "build": {
-    "appId": "com.thefleece.dota2modmanager",
-    "productName": "Dota 2 Mod Manager",
+    "appId": "io.anabol1ks.loadoutlab",
+    "productName": "Loadout Lab",
     "icon": "build/icon.ico",
     "files": [
       "main.js",
@@ -62,7 +62,7 @@
     ],
     "protocols": [
       {
-        "name": "Dota 2 Mod Manager preset",
+        "name": "Loadout Lab preset",
         "schemes": [
           "d2mm"
         ]
@@ -71,7 +71,7 @@
     "fileAssociations": [
       {
         "ext": "d2mm",
-        "name": "Dota 2 Mod Manager preset",
+        "name": "Loadout Lab preset",
         "role": "Editor",
         "mimeType": "application/x-d2mm"
       }
@@ -82,10 +82,10 @@
         "portable"
       ],
       "icon": "build/icon.ico",
-      "artifactName": "Dota-2-Mod-Manager-Setup.${ext}"
+      "artifactName": "Loadout-Lab-Setup.${ext}"
     },
     "portable": {
-      "artifactName": "Dota-2-Mod-Manager-Portable.${ext}",
+      "artifactName": "Loadout-Lab-Portable.${ext}",
       "requestExecutionLevel": "user"
     },
     "linux": {
@@ -94,7 +94,7 @@
       ],
       "icon": "build/icon.png",
       "category": "Game",
-      "artifactName": "Dota-2-Mod-Manager.${ext}",
+      "artifactName": "Loadout-Lab.${ext}",
       "synopsis": "Mods for Dota 2, without the file juggling"
     },
     "nsis": {
@@ -102,13 +102,13 @@
       "perMachine": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Dota 2 Mod Manager",
+      "shortcutName": "Loadout Lab",
       "deleteAppDataOnUninstall": false,
       "include": "build/installer.nsh"
     },
     "publish": {
       "provider": "github",
-      "owner": "TheFleece",
+      "owner": "Anabol1ks",
       "repo": "dota2-mod-manager",
       "releaseType": "release"
     }

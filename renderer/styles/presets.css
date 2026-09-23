@@ -1,35 +1,155 @@
 /* ============ Presets ============ */
 .preset-new { display: flex; gap: 10px; margin-bottom: 18px; }
 .preset-new .input { flex: 1; max-width: 340px; }
+#presetList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+#presetList > .empty-state { grid-column: 1 / -1; }
 .preset-card {
-  background: var(--surface);
+  min-width: 0;
+  background: linear-gradient(155deg, var(--surface), var(--bg-elev));
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 14px 16px;
-  margin-bottom: 10px;
-  transition: border-color 0.2s;
+  padding: 17px;
+  margin: 0;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s var(--ease), border-color 0.2s, box-shadow 0.2s;
   animation: cardIn 0.35s var(--ease) both;
 }
-.preset-card:hover { border-color: var(--border-strong); }
-.preset-head { display: flex; align-items: center; gap: 12px; }
-.preset-name { font-weight: 700; font-size: 15px; flex: 1; font-family: var(--font-head); }
+.preset-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.16);
+}
+.preset-card.active { border-color: var(--success); }
+.preset-card.pinned:not(.active) { border-color: var(--primary); }
+.preset-head { display: flex; align-items: flex-start; gap: 12px; }
+.preset-title-wrap { min-width: 0; flex: 1; }
+.preset-name {
+  font-weight: 750;
+  font-size: 17px;
+  line-height: 1.25;
+  font-family: var(--font-head);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  margin-top: 5px;
+  color: var(--text-muted);
+  font-size: 11.5px;
+}
+.profile-meta > span { display: inline-flex; align-items: center; gap: 4px; }
+.profile-meta .ms { font-size: 14px; color: var(--text-faint); }
+.profile-status-row {
+  min-height: 23px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.profile-pin {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  background: var(--bg-elev);
+  color: var(--text-faint);
+  cursor: pointer;
+  transition: color 0.18s, border-color 0.18s, background 0.18s;
+}
+.profile-pin:hover { color: var(--primary-soft); border-color: var(--border-strong); }
+.profile-pin.on { color: var(--primary-soft); border-color: var(--primary); background: var(--primary-dim); }
+.profile-pin.on .ms { font-variation-settings: 'FILL' 1; }
+.profile-description {
+  min-height: 36px;
+  line-height: 1.45;
+  padding: 9px 10px;
+  border-radius: var(--radius-xs);
+  background: var(--surface-hover);
+}
+.profile-workshop {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.profile-workshop-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+.profile-workshop-label .ms { font-size: 14px; color: var(--primary-soft); }
+.profile-workshop-chip {
+  max-width: 220px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--bg-elev);
+  color: var(--text-muted);
+  padding: 3px 8px;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-workshop-chip:hover { color: var(--text); border-color: var(--border-strong); }
+.profile-workshop-id { color: var(--text-faint); margin-left: 3px; }
+.preset-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.preset-actions .btn-primary { margin-left: auto; }
 .preset-mods { font-size: 12.5px; color: var(--text-muted); margin-top: 8px; line-height: 1.7; }
+.profile-state {
+  display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;
+  color: var(--text-muted); font-size: 11.5px; font-variant-numeric: tabular-nums;
+}
+.profile-state .ms { font-size: 14px; color: var(--primary-soft); }
+.profile-state.active, .profile-state.active .ms { color: var(--success); }
+.profile-state.missing, .profile-state.missing .ms { color: var(--warning); }
 
 /* ---------- what a preset is made of ---------- */
 /* the covers, because a set of mods is recognised by its pictures long before its names */
-.preset-strip { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+.preset-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
 .preset-thumb {
-  width: 62px; height: 39px;
+  width: 100%;
+  height: 64px;
   border-radius: var(--radius-xs);
   background: var(--bg-elev);
   overflow: hidden;
-  flex: none;
   display: flex; align-items: center; justify-content: center;
 }
-.preset-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.preset-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.2s var(--ease); }
+.preset-card:hover .preset-thumb img { transform: scale(1.025); }
 .preset-thumb .thumb-glyph { font-size: var(--icon-md); color: var(--text-faint); }
 .preset-more {
-  width: 62px; height: 39px; flex: none;
+  width: 100%;
+  height: 64px;
   border-radius: var(--radius-xs);
   border: 1px dashed var(--border-strong);
   display: grid; place-items: center;
@@ -171,3 +291,29 @@
 }
 .preset-thumb-absent .ms { font-size: var(--icon-md); }
 .preset-name-absent { color: var(--text-faint); text-decoration: line-through; }
+
+/* The change set is deliberately a compact audit sheet, not a second editor: it answers the
+   one question that has to be answered before Apply - what the profile would change. */
+.change-set-box { width: min(500px, calc(92vw / var(--content-zoom))); text-align: left; }
+.change-set-head { display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4); }
+.change-set-head > .ms { color: var(--primary-soft); font-size: 25px; }
+.change-set-title { font-family: var(--font-head); font-size: var(--text-md); font-weight: 700; }
+.change-set-sub { color: var(--text-muted); font-size: var(--text-sm); margin-top: 2px; }
+.change-list { max-height: 208px; overflow: auto; border: 1px solid var(--border); border-radius: var(--radius-xs); }
+.change-row { display: flex; gap: var(--space-2); align-items: center; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.change-row:last-child { border-bottom: 0; }
+.change-row > .ms { font-size: var(--icon-md); }
+.change-row.enable > .ms { color: var(--success); }
+.change-row.disable > .ms { color: var(--warning); }
+.change-row.missing > .ms { color: var(--text-faint); }
+.change-row-copy { min-width: 0; display: grid; gap: 1px; }
+.change-row-copy b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--text-sm); }
+.change-row-copy span, .change-set-meta { color: var(--text-muted); font-size: 11.5px; }
+.change-set-clean { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3); border-radius: var(--radius-xs); background: var(--bg-elev); color: var(--text-muted); font-size: var(--text-sm); }
+.change-set-clean .ms { color: var(--success); }
+.change-set-meta { margin-top: var(--space-2); }
+.change-set-warning { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-4); padding: var(--space-3); border-radius: var(--radius-xs); background: rgba(251, 191, 36, 0.08); color: var(--warning); font-size: var(--text-sm); }
+.change-set-warning > .ms { font-size: var(--icon-md); }
+.change-set-warning b { color: var(--warning); }
+.change-set-warning p { margin: 3px 0 0; color: var(--text-muted); line-height: 1.45; }
+.missing-list { margin-top: var(--space-2); }

@@ -56,9 +56,12 @@ contextBridge.exposeInMainWorld('api', {
   patch: {
     state: () => ipcRenderer.invoke('patch:state'),
     setEnabled: (on) => ipcRenderer.invoke('patch:setEnabled', on),
+    // One reversible exit: turn off every managed mod and restore the game's original files.
+    restoreCleanState: () => ipcRenderer.invoke('patch:restoreCleanState'),
     refreshSchema: () => ipcRenderer.invoke('schema:refresh'),
     // what was done about the last Dota patch, and the two things the banner can ask for
     repairState: () => ipcRenderer.invoke('patch:repairState'),
+    history: () => ipcRenderer.invoke('patch:history'),
     repairNow: () => ipcRenderer.invoke('patch:repairNow'),
     repairSeen: () => ipcRenderer.invoke('patch:repairSeen'),
     onRepair: (cb) => ipcRenderer.on('patch-repair', (e, st) => cb(st)),
@@ -95,12 +98,22 @@ contextBridge.exposeInMainWorld('api', {
     extractMembers: (packId, memberIds) => ipcRenderer.invoke('packs:extractMembers', packId, memberIds),
     disband: (packId) => ipcRenderer.invoke('packs:disband', packId),
   },
+  workshop: {
+    resolve: (url) => ipcRenderer.invoke('workshop:resolve', url),
+    list: () => ipcRenderer.invoke('workshop:list'),
+    save: (card) => ipcRenderer.invoke('workshop:save', card),
+    addToPreset: (workshopId, presetId) => ipcRenderer.invoke('workshop:addToPreset', workshopId, presetId),
+    importLocal: (workshopId, mode) => ipcRenderer.invoke('workshop:importLocal', workshopId, mode),
+  },
   presets: {
     list: () => ipcRenderer.invoke('presets:list'),
     save: (name) => ipcRenderer.invoke('presets:save', name),
     update: (id) => ipcRenderer.invoke('presets:update', id),
     rename: (id, name) => ipcRenderer.invoke('presets:rename', id, name),
+    setNote: (id, note) => ipcRenderer.invoke('presets:note', id, note),
+    pin: (id, pinned) => ipcRenderer.invoke('presets:pin', id, pinned),
     delete: (id) => ipcRenderer.invoke('presets:delete', id),
+    changeSet: (id) => ipcRenderer.invoke('presets:changeSet', id),
     apply: (id) => ipcRenderer.invoke('presets:apply', id),
     exportPlan: (id) => ipcRenderer.invoke('presets:exportPlan', id),
     exportFile: (id, opts) => ipcRenderer.invoke('presets:export', id, opts),
@@ -131,6 +144,7 @@ contextBridge.exposeInMainWorld('api', {
     runTool: (dirName) => ipcRenderer.invoke('misc:runTool', dirName),
   },
   diag: {
+    check: () => ipcRenderer.invoke('diag:check'),
     export: () => ipcRenderer.invoke('diag:export'),
     reportError: (msg) => ipcRenderer.send('diag:rendererError', msg),
   },

@@ -13,8 +13,9 @@ const { t } = require('./i18n');
 function registerGameIpc({
   // patchRepair() is read late and written through setPatchRepair: it changes while the app
   // runs, and a value captured at registration would answer for the wrong moment forever.
-  blocked, diag, dotaIsRunning, gameIcons, icons, library, modPreviews, remoteConfig,
-  repairAfterPatch, schemaService, settings, toolchain, patchRepair, setPatchRepair,
+  applyMasterToCursors, blocked, diag, dotaIsRunning, gameIcons, icons, installer, library,
+  modPreviews, refreshPresence, remoteConfig, repairAfterPatch, schemaService, settings,
+  toolchain, patchRepair, setPatchRepair,
 }) {
 
   // A switch is honoured here rather than in the renderer: this is the boundary an old
@@ -53,6 +54,11 @@ function registerGameIpc({
     return patchRepair();
   });
 
+  ipcMain.handle('patch:history', () => {
+    const rows = settings.get('cleanRestoreHistory');
+    return Array.isArray(rows) ? rows.slice(0, 20) : [];
+  });
+
   // The one moment the app touches files of the game install: gated on an explicit yes,
   // reversible from the same switch, and every original is backed up in userData first.
   ipcMain.handle('patch:setEnabled', async (e, enabled) => {
@@ -64,6 +70,30 @@ function registerGameIpc({
     if (await dotaIsRunning()) return { error: t('Закрой Dota 2 перед изменением файлов игры') };
     try {
       return schemaService.setEnabled(!!enabled);
+    } catch (err) {
+      return { error: String(err.message || err) };
+    }
+  });
+
+  /* The easy way back to a normal Dota launch.  It deliberately removes no library entries:
+   * managed paks are renamed off, cursors follow the same master switch, and the search-path
+   * patch restores the saved originals.  The game must be closed for the same reason as when
+   * safe mode is turned back on from the status bar. */
+  ipcMain.handle('patch:restoreCleanState', async () => {
+    if (!settings.get('dotaGamePath')) return { error: t('Путь к Dota 2 не задан') };
+    if (await dotaIsRunning()) return { error: t('Закрой Dota 2 перед изменением файлов игры') };
+    try {
+      const patch = schemaService.setEnabled(false);
+      if (patch?.error) return patch;
+      const mods = installer.setMasterEnabled(false);
+      applyMasterToCursors(false);
+      refreshPresence();
+      const entry = { at: Date.now(), modsDisabled: mods.changed || 0, restoredGameFiles: true };
+      const history = settings.get('cleanRestoreHistory');
+      if (typeof settings.set === 'function') {
+        settings.set('cleanRestoreHistory', [entry, ...(Array.isArray(history) ? history : [])].slice(0, 20));
+      }
+      return { ok: true, modsDisabled: entry.modsDisabled, restoredGameFiles: true };
     } catch (err) {
       return { error: String(err.message || err) };
     }

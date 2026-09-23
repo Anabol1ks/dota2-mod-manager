@@ -182,6 +182,7 @@ function createSchemaService({ settings, library, installer, userDataDir }) {
         fileRef: rec.fileRef || rec.name,
         preview: null,
         files: part.files,
+        provenance: rec.provenance || null,
       });
       const fields = { schemaChecked: true };
       if (mine.length) fields.schema = mine;

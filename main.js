@@ -60,6 +60,7 @@ const { settingsViewFor } = require('./src/settings-view');
 const { registerSettingsIpc } = require('./src/ipc-settings');
 const { registerGameIpc } = require('./src/ipc-game');
 const { registerDiagnosticsIpc } = require('./src/ipc-diagnostics');
+const { registerWorkshopIpc } = require('./src/ipc-workshop');
 
 /* Presets and sharing, wired once the services they use exist. Assigned in whenReady
  * below; every call site reads it late, which is the same lifetime the bare functions had
@@ -97,7 +98,7 @@ const IS_PORTABLE = !!process.env.PORTABLE_EXECUTABLE_DIR;
 const IS_UNINSTALL = isUninstallRun(process.argv);
 if (IS_PORTABLE) {
   try {
-    const beside = path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'Dota 2 Mod Manager Data');
+    const beside = path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'Loadout Lab Data');
     fs.mkdirSync(beside, { recursive: true });
     fs.accessSync(beside, fs.constants.W_OK);
     app.setPath('userData', beside);
@@ -682,15 +683,15 @@ function installDesktopEntry() {
   const exe = process.env.APPIMAGE || process.execPath;
   try {
     const dir = path.join(app.getPath('home'), '.local', 'share', 'applications');
-    const file = path.join(dir, 'dota2-mod-manager.desktop');
+    const file = path.join(dir, 'loadout-lab.desktop');
     const entry = [
       '[Desktop Entry]',
       'Type=Application',
-      'Name=Dota 2 Mod Manager',
-      'Comment=Mods for Dota 2, without the file juggling',
+      'Name=Loadout Lab',
+      'Comment=Personal visual-mod collections for Dota 2',
       // %u passes the clicked link through; the quotes are for a path with a space in it
       `Exec="${exe}" %u`,
-      'Icon=dota2-mod-manager',
+      'Icon=loadout-lab',
       'Categories=Game;',
       'Terminal=false',
       `MimeType=x-scheme-handler/${SCHEME};application/x-d2mm;`,
@@ -770,10 +771,10 @@ function importStep(stage) {
 // Copy what the user handed over into the lang folder and register it in the library. The two
 // ways in differ only in which importer reads them, so they share the bar, the error and the
 // "done" that has to arrive whichever way it ends.
-async function runImport(take, input) {
+async function runImport(take, input, origin = {}) {
   try {
     const staged = await take(installer, input, importStep(t('Копирование модов')));
-    return await registerImportResults(staged, importStep(t('Разбор модов')));
+    return await registerImportResults(staged, importStep(t('Разбор модов')), origin);
   } catch (err) {
     return { error: String(err.message || err) };
   } finally {
@@ -781,9 +782,14 @@ async function runImport(take, input) {
   }
 }
 
-const importVpkPaths = (paths) => runImport(importer.importVpks, Array.isArray(paths) ? paths : []);
+const importVpkPaths = (paths, origin = 'manual') => runImport(
+  importer.importVpks, Array.isArray(paths) ? paths : [],
+  typeof origin === 'string' ? { kind: origin } : origin,
+);
 // from raw bytes: the drag-and-drop fallback for when a real path cannot be resolved
-const importVpkBuffers = (items) => runImport(importer.importVpkBuffers, Array.isArray(items) ? items : []);
+const importVpkBuffers = (items) => runImport(
+  importer.importVpkBuffers, Array.isArray(items) ? items : [], { kind: 'dropped' },
+);
 
 // ---------- item schema (game/dota_mods) ----------
 // The engine reads scripts/items/items_game.txt through the MOD path - the game's own dota
@@ -813,6 +819,7 @@ const PRESENCE_VIEWS = {
   catalog: 'Смотрит каталог модов',
   library: 'В своей библиотеке',
   presets: 'Собирает пресет',
+  workshop: 'Смотрит Workshop',
   cosmetics: 'Выбирает косметику',
   tools: 'В инструментах',
   guides: 'Читает гайды',
@@ -1048,6 +1055,7 @@ function registerIpc() {
     // read late: Steam's verify rewrites this while the app is running
     verifyStuck: () => verifyStuck,
   });
+  registerWorkshopIpc({ library, importVpkPaths, win: () => win });
 
   // ----- launch + master mods switch -----
 
@@ -1065,8 +1073,8 @@ function registerIpc() {
 
   // ----- what the app was told from the network ----- (src/ipc-game.js)
   registerGameIpc({
-    blocked, diag, dotaIsRunning, gameIcons, icons, library, modPreviews, remoteConfig,
-    repairAfterPatch, schemaService, settings, toolchain,
+    applyMasterToCursors, blocked, diag, dotaIsRunning, gameIcons, icons, installer, library,
+    modPreviews, refreshPresence, remoteConfig, repairAfterPatch, schemaService, settings, toolchain,
     patchRepair: () => patchRepair,
     setPatchRepair,
   });

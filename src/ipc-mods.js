@@ -104,7 +104,7 @@ function registerModsIpc({
       filters: [{ name: t('Моды (.vpk, .zip)'), extensions: ['vpk', 'zip'] }],
     });
     if (res.canceled || !res.filePaths.length) return { cancelled: true };
-    return importVpkPaths(res.filePaths);
+    return importVpkPaths(res.filePaths, 'file');
   });
 
   // folder picker — Windows can't offer files and folders in one dialog, so a pack that
@@ -115,7 +115,7 @@ function registerModsIpc({
       properties: ['openDirectory'],
     });
     if (res.canceled || !res.filePaths.length) return { cancelled: true };
-    return importVpkPaths(res.filePaths);
+    return importVpkPaths(res.filePaths, 'folder');
   });
 
   ipcMain.handle('mods:importPaths', (e, paths) => importVpkPaths(Array.isArray(paths) ? paths : []));

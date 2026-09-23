@@ -108,6 +108,11 @@ const EN = {
   'Безопасный режим выключен — эффекты и косметика доступны': 'Safe mode off — effects and cosmetics are available',
   'Безопасный режим включён, файлы игры восстановлены. Эффекты и косметика ждут, пока не выключишь его снова.':
     'Safe mode on, game files restored. Effects and cosmetics wait until you turn it off again.',
+  'Чистая Dota': 'Clean Dota',
+  'Выключить все моды, восстановить оригинальные файлы Dota 2 и запустить игру?':
+    'Turn off all mods, restore Dota 2’s original files, and launch the game?',
+  'Запустить чистую Dota': 'Launch clean Dota',
+  'Чистая Dota 2 восстановлена и запущена': 'Clean Dota 2 restored and launched',
 
   // ---------- the beta channel (settings, for the accounts the signed list names) ----------
   'Бета-версии': 'Beta builds',
@@ -301,6 +306,24 @@ const EN = {
     ' of {0} slots. The game won’t load more than ~99 separate paks — combine mods into one to fit more.',
   'Поиск в библиотеке…': 'Search the library…',
   'Импорт VPK': 'Import VPK',
+  'Локальный импорт': 'Local import',
+  'выбранный файл': 'selected file',
+  'папка с модами': 'mods folder',
+  'перетащенный файл': 'dropped file',
+  'ручной импорт': 'manual import',
+  'добавлен': 'added',
+  'отпечаток содержимого': 'content fingerprint',
+  'свой импорт': 'own import',
+  'Скопировать отпечаток': 'Copy fingerprint',
+  'Отпечаток скопирован': 'Fingerprint copied',
+  'Не удалось скопировать отпечаток': 'Could not copy fingerprint',
+  'Изменить описание': 'Edit description',
+  'Добавить описание': 'Add description',
+  'Коротко опиши эту сборку': 'Briefly describe this collection',
+  'Напр. «Тёмная минималистичная тема для вечерних игр»': 'e.g. «A dark minimalist theme for evening games»',
+  'Сохранить описание': 'Save description',
+  'Описание сохранено': 'Description saved',
+  'Описание очищено': 'Description cleared',
   'Выбрать всё': 'Select all',
   'Отметь моды галочками — объединить в пак или массово управлять':
     'Tick mods to combine them into a pack or manage in bulk',
@@ -449,6 +472,23 @@ const EN = {
   'Пресет «{0}» сохранён': 'Preset «{0}» saved',
   'Пресет применён': 'Preset applied',
   'Пресет применён · доустановлено {0} {1}': 'Preset applied · installed {0} {1} it was missing',
+  'Активный профиль': 'Active profile',
+  'Закрепить профиль': 'Pin profile',
+  'Открепить профиль': 'Unpin profile',
+  'Ещё не применялся': 'Not applied yet',
+  'Последнее применение: {0}': 'Last applied: {0}',
+  'Открыть ChangeSet без применения': 'Open ChangeSet without applying',
+
+  // ---------- Workshop Link ----------
+  'Сначала создай профиль': 'Create a profile first', 'Выбери профиль…': 'Choose a profile…', 'Dota 2 · AppID 570 подтверждён': 'Dota 2 · AppID 570 verified', '{0} {1} привязано': '{0} {1} linked',
+  'AppID 570 указан в ссылке; метаданные Steam недоступны': 'AppID 570 is in the link; Steam metadata is unavailable', 'Метаданные Steam недоступны — AppID проверить не удалось': 'Steam metadata is unavailable — AppID could not be verified',
+  'Сохранить карточку': 'Save card', 'Автор не указан': 'Author unavailable', 'Открыть в Steam': 'Open in Steam', 'Сохранить в профиль': 'Save to profile', 'Привязать локальный мод': 'Link local mod', 'Выбери профиль': 'Choose a profile',
+  'Workshop-карточка сохранена': 'Workshop card saved', 'Workshop-карточка добавлена в профиль': 'Workshop card added to profile', 'Проверить ссылку': 'Check link', 'Только ссылка и публичные метаданные': 'Link and public metadata only',
+  'Workshop-ссылок пока нет': 'No Workshop links yet', 'Вставь ссылку Steam Workshop': 'Paste a Steam Workshop link', 'Импорт завершён, но мод для привязки не найден': 'Import finished, but no local mod was found to link',
+  'Файл выбираешь ты сам. Workshop ничего не скачивает: используется обычный проверяемый импорт Loadout Lab.': 'You choose the file yourself. Workshop downloads nothing: Loadout Lab uses its normal validated import.',
+  'Сохрани ссылку Steam Workshop как источник и при желании привяжи к ней свой локальный мод. Loadout Lab не подписывается, не авторизуется в Steam и не скачивает содержимое Workshop.': 'Save a Steam Workshop link as provenance and optionally link your own local mod. Loadout Lab does not subscribe, sign in to Steam, or download Workshop content.',
+  'Добавление карточки не меняет файлы Dota 2. Локальный файл импортируется только после отдельного выбора.': 'Adding a card does not change Dota 2 files. A local file is imported only after a separate explicit choice.',
+  'Вставь ссылку на страницу Dota 2 Workshop. Если Steam отдаст метаданные, здесь появятся название, автор и превью; иначе останутся ID и ссылка.': 'Paste a Dota 2 Workshop page link. If Steam returns metadata, the title, author and preview appear here; otherwise the ID and link remain.',
   'Своих модов нет на этом компьютере, из каталога их не вернуть: {0}': 'Your own mods are not on this computer, and the catalog cannot bring them back: {0}',
   'Удалить пресет «{0}»?': 'Delete preset «{0}»?',
 
@@ -670,10 +710,25 @@ const EN = {
 
   // ---------- thanks ----------
   'Спасибо': 'Thanks',
+  'основано на Dota 2 Mod Manager by TheFleece': 'based on Dota 2 Mod Manager by TheFleece',
   'hanta снял видео о менеджере': 'hanta made a video about the manager',
 
+  // ---------- profile change review (renderer/views/presets.js) ----------
+  'Проверить изменения': 'Review changes',
+  'Изменения для «{0}»': 'Changes for “{0}”',
+  'Сначала посмотри, что поменяется. Ничего ещё не записано.': 'Review what will change. Nothing has been written yet.',
+  '{0} без изменений': '{0} unchanged',
+  'Всё уже совпадает с профилем.': 'Everything already matches this profile.',
+  'Нужно проверить': 'Needs attention',
+  'В профиле есть моды, которых нет на этом компьютере. При применении менеджер попробует вернуть доступные из каталога; свои файлы пропустит.':
+    'This profile has mods that are not on this computer. Applying it will try to restore catalog mods; personal files will be skipped.',
+  'Применить после проверки': 'Apply after review',
+  'Отсутствует: {0}': 'Missing: {0}',
+  'Совпадает с текущим набором': 'Matches the current collection',
+  'Включить {0} · выключить {1}': 'Enable {0} · disable {1}',
+
   // ---------- being uninstalled (renderer/uninstall.js) ----------
-  'Удалить Dota 2 Mod Manager': 'Remove Dota 2 Mod Manager',
+  'Удалить Loadout Lab': 'Remove Loadout Lab',
   'Программа будет удалена. Отметь, что забрать вместе с ней.':
     'The program is going. Tick what should go with it.',
   'Вернуть файлы игры как были': 'Put the game files back',
@@ -694,6 +749,20 @@ const EN = {
 
   // ---------- diagnostics ----------
   'Диагностика': 'Diagnostics',
+  'Проверить состояние': 'Check state',
+  'Проверка только читает состояние и ничего не меняет. Отчёт содержит путь к игре, список модов и журнал — он нужен, если что-то не работает.':
+    'The check only reads the state and changes nothing. The report contains the game path, mod list and log — use it when something does not work.',
+  'Найдены замечания': 'Items need attention',
+  'Всё в порядке': 'Everything looks good',
+  'Проверка ничего не меняла': 'The check changed nothing',
+  'Проверка не нашла проблем': 'The check found no problems',
+  'Путь к Dota, текущие моды и состояние менеджера выглядят нормально.':
+    'The Dota path, current mods and manager state look normal.',
+  'Последние возвраты к чистой Dota': 'Recent returns to clean Dota',
+  'готово': 'done',
+  'мод отключён': 'mod disabled',
+  'мода отключено': 'mods disabled',
+  'модов отключено': 'mods disabled',
   'Экспортировать отчёт': 'Export report',
   'Отчёт сохранён': 'Report saved',
 };

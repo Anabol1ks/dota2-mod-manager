@@ -15,6 +15,7 @@ const { Library } = require('./library');
 const { readPresetFile, writePresetFile } = require('./preset-share');
 const { encodePresetLink } = require('./preset-link');
 const { installVpkBuffer } = require('./import');
+const { planChangeSet } = require('./change-set');
 const { t } = require('./i18n');
 
 /**
@@ -72,11 +73,17 @@ function registerPresetsIpc({
       // The screen shows the whole set and says which part of it is missing, rather than
       // quietly listing the leftovers as if that were the build.
       const members = library.presetMembers(p);
+      const changeSet = planChangeSet({ library, preset: p });
       return {
         ...p,
         modIds: members.filter((m) => m.rec).map((m) => m.rec.id),
         absent: members.filter((m) => !m.rec).map((m) => m.identity),
         link: { count: mods.length, skipped },
+        workshop: library.presetWorkshopCards(p),
+        // The gallery needs a small status chip, not another source of truth. Keep the full
+        // list of changes behind its own IPC call; this summary is enough to find a profile
+        // that already matches the current collection without writing anywhere.
+        changeSet: { summary: changeSet.summary, ready: changeSet.ready },
       };
     }));
   });
@@ -92,11 +99,35 @@ function registerPresetsIpc({
     return { ok: true, count: (p.mods || []).length };
   });
 
+  // The profile screen asks this before it ever offers Apply. Planning is pure: no installer
+  // method is called here, so opening the screen cannot mutate the game folder.
+  ipcMain.handle('presets:changeSet', (e, id) => {
+    const preset = library.getPreset(id);
+    if (!preset) return { error: t('Пресет не найден') };
+    return planChangeSet({ library, preset });
+  });
+
   ipcMain.handle('presets:rename', (e, id, name) => {
     const clean = String(name || '').trim().slice(0, 120);
     if (!clean) return { error: t('Введи название пресета') };
     if (!library.updatePreset(id, { name: clean })) return { error: t('Пресет не найден') };
     return { ok: true, name: clean };
+  });
+
+  // A profile note is local metadata: it describes the collection, never changes its mods.
+  // It is bounded before storage and can be carried into an explicit .d2mm export later.
+  ipcMain.handle('presets:note', (e, id, note) => {
+    const clean = String(note || '').trim().slice(0, 240);
+    if (!library.updatePreset(id, { note: clean })) return { error: t('Пресет не найден') };
+    return { ok: true, note: clean };
+  });
+
+  // Pinning is profile-library metadata only. It changes display order, never the mod set.
+  ipcMain.handle('presets:pin', (e, id, pinned) => {
+    const preset = library.getPreset(id);
+    if (!preset || preset.wanted) return { error: t('Пресет не найден') };
+    library.updatePreset(id, { pinned: !!pinned });
+    return { ok: true, pinned: !!pinned };
   });
 
   ipcMain.handle('presets:delete', (e, id) => {
@@ -140,6 +171,7 @@ function registerPresetsIpc({
     // A mod that could not be switched is the preset failing, exactly as before. A member that
     // could not be fetched is the preset applying without it, and is said as a warning.
     if (toggleErrors.length) return { error: [...errors, ...toggleErrors].join('\n') };
+    library.updatePreset(id, { lastAppliedAt: Date.now() });
     return { ok: true, installed, missing, errors };
   });
 
@@ -183,6 +215,7 @@ function registerPresetsIpc({
         author: { name: (opts && String(opts.author || '').slice(0, 80)) || '' },
         app: app.getVersion(),
         catalogFetchedAt: catalog.cacheInfo().fetchedAt,
+        workshop: library.presetWorkshopCards(preset),
       }, entries);
       sendProgress({ type: 'done', label: preset.name });
       return { ok: true, path: written.path, size: written.size };
@@ -290,6 +323,7 @@ function registerPresetsIpc({
     // its freshly lifted blocks would sit in the library without ever reaching the build
     if (schemaTouched) schemaService.refresh();
     afterDeployMaster();
+    library.updatePreset(preset.id, { lastAppliedAt: Date.now() });
     sendProgress({ type: 'done', label: preset.name });
     return { ok: true, installed: preset.mods.length, errors };
   });
