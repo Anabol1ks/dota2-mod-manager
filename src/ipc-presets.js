@@ -15,6 +15,7 @@ const { Library } = require('./library');
 const { readPresetFile, writePresetFile } = require('./preset-share');
 const { encodePresetLink } = require('./preset-link');
 const { installVpkBuffer } = require('./import');
+const { planChangeSet } = require('./change-set');
 const { t } = require('./i18n');
 
 /**
@@ -90,6 +91,14 @@ function registerPresetsIpc({
     const p = library.updatePresetMods(id);
     if (!p) return { error: t('Пресет не найден') };
     return { ok: true, count: (p.mods || []).length };
+  });
+
+  // The profile screen asks this before it ever offers Apply. Planning is pure: no installer
+  // method is called here, so opening the screen cannot mutate the game folder.
+  ipcMain.handle('presets:changeSet', (e, id) => {
+    const preset = library.getPreset(id);
+    if (!preset) return { error: t('Пресет не найден') };
+    return planChangeSet({ library, preset });
   });
 
   ipcMain.handle('presets:rename', (e, id, name) => {

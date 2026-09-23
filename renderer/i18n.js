@@ -670,10 +670,11 @@ const EN = {
 
   // ---------- thanks ----------
   'Спасибо': 'Thanks',
+  'основано на Dota 2 Mod Manager by TheFleece': 'based on Dota 2 Mod Manager by TheFleece',
   'hanta снял видео о менеджере': 'hanta made a video about the manager',
 
   // ---------- being uninstalled (renderer/uninstall.js) ----------
-  'Удалить Dota 2 Mod Manager': 'Remove Dota 2 Mod Manager',
+  'Удалить Loadout Lab': 'Remove Loadout Lab',
   'Программа будет удалена. Отметь, что забрать вместе с ней.':
     'The program is going. Tick what should go with it.',
   'Вернуть файлы игры как были': 'Put the game files back',

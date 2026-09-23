@@ -18,6 +18,7 @@ the code, not in this page.
 | [`src/capture.js`](#srccapturejs) |  |
 | [`src/catalog-signature.js`](#srccatalog-signaturejs) | Making the catalog's own author the only person who can change the catalog. |
 | [`src/catalog.js`](#srccatalogjs) | Catalog: fetch + cache mods.json / constants.json / guides.json from the Dota2PornFx repo |
+| [`src/change-set.js`](#srcchange-setjs) | The difference between a saved profile and what is active right now. |
 | [`src/cursors.js`](#srccursorsjs) | Which cursor set is live, and which look a slot is wearing. |
 | [`src/diagnostics.js`](#srcdiagnosticsjs) | A support report a user can send instead of a round of screenshots: Dota's own path and |
 | [`src/discord-auth.js`](#srcdiscord-authjs) | Sign in with Discord, without a server of our own. |
@@ -336,6 +337,27 @@ on the mod itself. 32 mods still carry the old pair and 26 of those are previews
 whole TI battle-pass row - so a reader that knows only the array shows them with no
 preview at all. The site reads both; folding one into the other here means the rest of the
 app only ever sees the array. The cache on disk keeps whatever the author wrote.
+
+## src/change-set.js
+
+The difference between a saved profile and what is active right now.
+
+This module deliberately does not receive an installer or a game path. A profile needs a
+place to be inspected before it changes anything, and handing the planner write-capable
+services would make that boundary a convention instead of a fact.
+
+### `planChangeSet`
+
+```js
+function planChangeSet({ library, preset })
+```
+
+Describe, without applying, the operations needed to make `preset` current.
+
+```
+@param {{library: Library, preset: object}} input
+@returns {{profile: object, changes: object[], unchanged: object[], missing: object[], summary: object, ready: boolean}}
+```
 
 ## src/cursors.js
 

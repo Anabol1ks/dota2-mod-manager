@@ -97,7 +97,7 @@ const IS_PORTABLE = !!process.env.PORTABLE_EXECUTABLE_DIR;
 const IS_UNINSTALL = isUninstallRun(process.argv);
 if (IS_PORTABLE) {
   try {
-    const beside = path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'Dota 2 Mod Manager Data');
+    const beside = path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'Loadout Lab Data');
     fs.mkdirSync(beside, { recursive: true });
     fs.accessSync(beside, fs.constants.W_OK);
     app.setPath('userData', beside);
@@ -682,15 +682,15 @@ function installDesktopEntry() {
   const exe = process.env.APPIMAGE || process.execPath;
   try {
     const dir = path.join(app.getPath('home'), '.local', 'share', 'applications');
-    const file = path.join(dir, 'dota2-mod-manager.desktop');
+    const file = path.join(dir, 'loadout-lab.desktop');
     const entry = [
       '[Desktop Entry]',
       'Type=Application',
-      'Name=Dota 2 Mod Manager',
-      'Comment=Mods for Dota 2, without the file juggling',
+      'Name=Loadout Lab',
+      'Comment=Personal visual-mod collections for Dota 2',
       // %u passes the clicked link through; the quotes are for a path with a space in it
       `Exec="${exe}" %u`,
-      'Icon=dota2-mod-manager',
+      'Icon=loadout-lab',
       'Categories=Game;',
       'Terminal=false',
       `MimeType=x-scheme-handler/${SCHEME};application/x-d2mm;`,
