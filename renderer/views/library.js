@@ -26,6 +26,7 @@ import { paintCosmeticIcons, watchCosmeticIcons } from '../ui/cosmetic-icons.js'
 import { paint } from '../ui/transitions.js';
 import { bindContextMenu } from '../ui/menu.js';
 import { refreshNotices, noticeBannerHtml, bindNotice } from '../ui/notice.js';
+import { provenanceContextItem, provenanceMetaHtml } from '../ui/provenance.js';
 
 const viewRoot = pane('library');
 
@@ -46,8 +47,6 @@ function libMatchesSearch(rec) {
   const q = libSearch.trim().toLowerCase();
   return !q || rec.name.toLowerCase().includes(q) || (rec.members || []).some((m) => m.name.toLowerCase().includes(q));
 }
-
-
 // 2x2 preview grid built from a pack's first members. When not one of them has a picture of
 // its own, four empty boxes say nothing a single "several heroes in one" stand-in wouldn't
 // say better - the same generic image an unsplit multi-hero import falls back to.
@@ -194,21 +193,6 @@ function pakFileHtml(rec) {
   return `<span class="lib-pak selectable" title="${esc(L`Файл в папке модов`)}">${esc(name)}</span>`;
 }
 
-// A manual import remains a local file: no Workshop lookup, account connection, or hidden
-// download. The record keeps only a human-readable source label and an optional content
-// fingerprint — never an absolute path from the user's computer.
-function provenanceMetaHtml(rec) {
-  const source = rec.provenance;
-  if (!source) return '';
-  const kind = {
-    file: L`выбранный файл`, folder: L`папка с модами`, dropped: L`перетащенный файл`, manual: L`ручной импорт`,
-  }[source.kind] || L`ручной импорт`;
-  const at = source.importedAt ? new Date(source.importedAt).toLocaleString(window.i18nLocale()) : null;
-  const detail = [kind, source.label, at && `${L`добавлен`}: ${at}`, source.fingerprint && L`отпечаток содержимого`]
-    .filter(Boolean).join(' · ');
-  return `<span class="lib-tag" title="${esc(`${L`Локальный импорт`}: ${detail}`)}"><span class="ms">fingerprint</span>${L`свой импорт`}</span>`;
-}
-
 function normalRowHtml(rec, i, masterOff) {
   const cosmetic = isCosmeticRec(rec);
   const selectable = !isFontRec(rec);
@@ -264,14 +248,7 @@ function rowMenuItems(rec) {
     },
     langDir && { label: L`Распаковать в папку`, icon: 'folder_open', onPick: () => unpackRecord(rec.id) },
     rec.subjects >= 2 && { label: L`Разобрать по героям`, icon: 'call_split', onPick: () => splitRecord(rec.id) },
-    rec.provenance?.fingerprint && {
-      label: L`Скопировать отпечаток`, icon: 'fingerprint', onPick: async () => {
-        try {
-          await navigator.clipboard?.writeText(rec.provenance.fingerprint);
-          toast(L`Отпечаток скопирован`, 'ok');
-        } catch { toast(L`Не удалось скопировать отпечаток`, 'error'); }
-      },
-    },
+    provenanceContextItem(rec),
     { separator: true },
     { label: L`Удалить`, icon: 'delete', danger: true, onPick: () => deleteRecord(rec.id) },
   ].filter(Boolean);
